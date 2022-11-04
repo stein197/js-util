@@ -1,0 +1,25 @@
+{
+  "name": "@stein197/util",
+  "version": "1.0.0",
+  "description": "Handy JavaScript utilities",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stein197/js-util.git"
+  },
+  "keywords": [
+    "util"
+  ],
+  "author": "Nail' Gafarov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stein197/js-util/issues"
+  },
+  "homepage": "https://github.com/stein197/js-util#readme",
+  "devDependencies": {
+    "typescript": "4.8.4"
+  }
+}

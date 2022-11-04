@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"outDir": ".",
+		"target": "ESNext",
+		"strict": true,
+		"rootDir": "src",
+		"declaration": true,
+		"noUnusedLocals": true,
+		"noImplicitAny": false,
+		"noUnusedParameters": true,
+		"allowUnusedLabels": false,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"importsNotUsedAsValues": "error"
+	},
+	"exclude": [],
+	"include": [
+		"src/*.ts"
+	]
+}
