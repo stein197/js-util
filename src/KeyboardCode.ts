@@ -1,7 +1,7 @@
 /**
  * Enum of entries that match KeyboardEvent.code property
  */
-export enum KeyboardCode {
+enum KeyboardCode {
 	AltLeft        = "AltLeft",
 	AltRight       = "AltRight",
 	Down           = "ArrowDown",
@@ -104,3 +104,5 @@ export enum KeyboardCode {
 	Space          = "Space",
 	Tab            = "Tab"
 }
+
+export default KeyboardCode;

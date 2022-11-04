@@ -18,3 +18,5 @@ export enum PromiseState {
 	 */
 	Fulfilled
 }
+
+export default PromiseState;
