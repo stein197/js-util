@@ -15,3 +15,4 @@ Enum that denotes statest that promises can have.
 
 ## NPM scripts
 - `build` - Compile TypeScript source code
+- `test` - Run unit tests
