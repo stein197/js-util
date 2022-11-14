@@ -1,6 +1,6 @@
 {
   "name": "@stein197/util",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/stein197/js-util#readme",
   "devDependencies": {
+    "@stein197/ts-util": "1.9.0",
     "@types/jsdom": "20.0.1",
     "@types/mocha": "10.0.0",
     "@types/node": "18.11.9",

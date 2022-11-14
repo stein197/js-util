@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.2.0](../../compare/1.1.0..1.2.0) - 2022-11-14
+### Added
+- `util` module with `curry` function
+
 ## [1.1.0](../../compare/1.0.1..1.1.0) - 2022-11-11
 ### Added
 - `getHighestZIndex()` function
