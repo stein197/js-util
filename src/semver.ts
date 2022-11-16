@@ -8,7 +8,7 @@ export function compare(v1: string, v2: string): -1 | 0 | 1 {}
 export function next(v: string, power: "major" | "minor" | "patch" | "prerelease" | "build"): string {}
 
 /**
- * Parses the given semver string into object.
+ * Parses the given semver string into object. It's the opposite of {@link stringify}
  * @param v String to parse.
  * @returns Parsed object or `null` if the string is not a correct semver.
  * @example
@@ -36,8 +36,18 @@ export function parse(v: string): Version | null {
 	return result;
 }
 
-// TODO
-export function stringify(v: Version): string {}
+/**
+ * Stringifies the given semver object. It's the opposite of {@link parse}.
+ * @param v Object to stringify.
+ * @returns Stringified version.
+ * @example
+ * ```ts
+ * stringify({major: 3, minor: 2, patch: 1}); // "3.2.1"
+ * ```
+ */
+export function stringify(v: Version): string {
+	return `${v.major}.${v.minor}.${v.patch}${v.prerelease ? `-${v.prerelease}` : ""}${v.build ? `+${v.build}` : ""}`;
+}
 
 function isMetadataValid(data: string): boolean {
 	return data.split(".").every(s => s);
