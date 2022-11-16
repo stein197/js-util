@@ -9,7 +9,7 @@
  * escape("String with \"quotes\""); // "String with \\\"quotes\\\""
  * ```
  */
- export function escape(s: string, char: string = "\"", chars: string[] = CHARS_ESCAPE): string {
+export function escape(s: string, char: string = "\"", chars: string[] = CHARS_ESCAPE): string {
 	let result = "";
 	for (const c of s)
 		result += chars.includes(c) ? char + c : c;
