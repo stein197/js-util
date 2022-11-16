@@ -1,3 +1,5 @@
+import * as util from "./util";
+
 // TODO: https://semver.org/
 const REGEX_SEMVER = /^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<!\.)(?<prerelease>[\.\-A-Za-z0-9]+)(?!=\.))?(?:\+(?<!\.)(?<build>[\.\-A-Za-z0-9]+)(?!=\.))?$/;
 
@@ -10,7 +12,8 @@ export function next(v: string, power: "major" | "minor" | "patch" | "prerelease
 /**
  * Parses the given semver string into object. It's the opposite of {@link stringify}
  * @param v String to parse.
- * @returns Parsed object or `null` if the string is not a correct semver.
+ * @returns Parsed object.
+ * @throws {@link SyntaxError} if the string is not a valid semver string.
  * @example
  * ```ts
  * const data = parse("1.2.3-45+67");
@@ -23,13 +26,13 @@ export function next(v: string, power: "major" | "minor" | "patch" | "prerelease
  * }
  * ```
  */
-export function parse(v: string): Version | null {
+export function parse(v: string): Version {
 	const match = v.match(REGEX_SEMVER);
 	if (!match || !match.groups)
-		return null;
+		throw new SyntaxError(`The string "${util.escape(v)}" is not a valid semver string`); // TODO: Replace with string.format(...)
 	const result = match.groups as unknown as Version;
 	if (result.prerelease && !isMetadataValid(result.prerelease) || result.build && !isMetadataValid(result.build))
-		return null;
+		throw new SyntaxError(`The string "${util.escape(v)}" is not a valid semver string`); // TODO: Replace with string.format(...)
 	result.major = +result.major;
 	result.minor = +result.minor;
 	result.patch = +result.patch;
