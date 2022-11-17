@@ -63,36 +63,34 @@ export function format(s: string, ...args: any[]): string {
 		}
 		switch (c) {
 			case "{": {
-				if (isEscape) {
+				if (isEscape)
 					result += c;
-				} else {
+				else
 					placeholder = "";
-				}
 				break;
 			}
 			case "}": {
 				if (isEscape) {
 					result += c;
-				} else if (placeholder == null) {
-					throw new SyntaxError(format(MSG_FORMAT_INVALID_CLOSE_BRACE, s, i));
-				} else if (placeholder === "") {
-					throw new SyntaxError(format(MSG_FORMAT_INVALID_PLACEHOLDER_EMPTY, s, i));
-				} else {
-					const value = args[+placeholder];
-					if (value != null)
-						result += String(value);
-					placeholder = null;
+					continue;
 				}
+				if (placeholder == null)
+					throw new SyntaxError(format(MSG_FORMAT_INVALID_CLOSE_BRACE, s, i));
+				if (placeholder === "")
+					throw new SyntaxError(format(MSG_FORMAT_INVALID_PLACEHOLDER_EMPTY, s, i));
+				const value = args[+placeholder];
+				if (value != null)
+					result += String(value);
+				placeholder = null;
 				break;
 			}
 			default: {
-				if (placeholder == null) {
+				if (placeholder == null)
 					result += c;
-				} else if (isNaN(+c)) {
+				else if (isNaN(+c))
 					throw new SyntaxError(format(MSG_FORMAT_INVALID_PLACEHOLDER, s, i));
-				} else {
+				else
 					placeholder += c;
-				}
 			}
 		}
 		isEscape = false;
