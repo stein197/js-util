@@ -12,12 +12,12 @@ mocha.describe("compare()", () => {
 		mocha.it.skip("Should return 1 patch number is greater in the first version", () => {});
 	});
 	mocha.describe("Comparing main numbers with metadata", () => {
-		mocha.it.skip("Should return -1 major number is lesser in the first version", () => {});
-		mocha.it.skip("Should return 1 major number is greater in the first version", () => {});
-		mocha.it.skip("Should return -1 minor number is lesser in the first version", () => {});
-		mocha.it.skip("Should return 1 minor number is greater in the first version", () => {});
-		mocha.it.skip("Should return -1 patch number is lesser in the first version", () => {});
-		mocha.it.skip("Should return 1 patch number is greater in the first version", () => {});
+		mocha.it.skip("Should return -1 when major number is lesser in the first version", () => {});
+		mocha.it.skip("Should return 1 when major number is greater in the first version", () => {});
+		mocha.it.skip("Should return -1 when minor number is lesser in the first version", () => {});
+		mocha.it.skip("Should return 1 when minor number is greater in the first version", () => {});
+		mocha.it.skip("Should return -1 when patch number is lesser in the first version", () => {});
+		mocha.it.skip("Should return 1 when patch number is greater in the first version", () => {});
 	});
 	mocha.describe("Main numbers are equal but pre-release parts differ", () => {
 		mocha.it.skip("Should return -1 when the first version has pre-release metadata but the second one does not", () => {});
