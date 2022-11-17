@@ -39,8 +39,12 @@ mocha.describe("compare()", () => {
 	});
 });
 
-// TODO
-mocha.describe("next()", () => {});
+mocha.describe("next()", () => {
+	mocha.it.skip("Should correctly increment the major number", () => {});
+	mocha.it.skip("Should correctly increment the minor number", () => {});
+	mocha.it.skip("Should correctly increment the patch number", () => {});
+	mocha.it.skip("Should discard any metadata when incrementing the version", () => {});
+});
 
 mocha.describe("parse()", () => {
 	mocha.it.skip("Should correctly parse when the version has only main numbers", () => {});
