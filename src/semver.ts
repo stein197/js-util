@@ -3,9 +3,34 @@ import * as string from "./string";
 // TODO: https://semver.org/
 const REGEX_SEMVER = /^(\d+)\.(\d+)\.(\d+)(?:-(?<!\.)([A-Za-z0-9]+(?:\.[\.\-A-Za-z0-9]+)*)(?!=\.))?(?:\+(?<!\.)([A-Za-z0-9]+(?:\.[\-A-Za-z0-9]+)*)(?!=\.))?$/;
 const MSG_INVALID = "\"{0}\" is not a valid semver string";
+const MAIN_NUMS_AMOUNT = 3;
 
-// TODO
-export function compare(v1: string, v2: string): -1 | 0 | 1 {}
+/**
+ * Compares two versions, according to {@link https://semver.org/#spec-item-11 this} article.
+ * @param v1 The first version to compare.
+ * @param v2 The second version to compare.
+ * @returns -1 if the first one is less than the second one, 1 if the first one is greater than second one, 0 if they
+ *          are both equal.
+ */
+export function compare(v1: string, v2: string): -1 | 0 | 1 {
+	const ver1 = parse(v1);
+	const ver2 = parse(v2);
+	for (let i = 0; i < MAIN_NUMS_AMOUNT; i++) {
+		if (ver1[i]! < ver2[i]!)
+			return -1;
+		if (ver1[i]! > ver2[i]!)
+			return 1;
+	}
+	const pre1 = ver1[3];
+	const pre2 = ver2[3];
+	if (pre1 && pre2)
+		return pre1 < pre2 ? -1 : pre1 > pre2 ? 1 : 0;
+	if (!pre1 && pre2)
+		return 1;
+	if (pre1 && !pre2)
+		return -1;
+	return 0;
+}
 
 /**
  * Increments the version number. If the version has pre-release or build metadata, they will be discarted.
