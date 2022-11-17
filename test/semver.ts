@@ -88,10 +88,18 @@ mocha.describe("compare()", () => {
 });
 
 mocha.describe("next()", () => {
-	mocha.it.skip("Should correctly increment the major number", () => {});
-	mocha.it.skip("Should correctly increment the minor number", () => {});
-	mocha.it.skip("Should correctly increment the patch number", () => {});
-	mocha.it.skip("Should discard any metadata when incrementing the version", () => {});
+	mocha.it("Should correctly increment the major number", () => {
+		assert.equal(semver.next("1.2.3", "major"), "2.0.0");
+	});
+	mocha.it("Should correctly increment the minor number", () => {
+		assert.equal(semver.next("1.2.3", "minor"), "1.3.0");
+	});
+	mocha.it("Should correctly increment the patch number", () => {
+		assert.equal(semver.next("1.2.3", "patch"), "1.2.4");
+	});
+	mocha.it("Should discard any metadata when incrementing the version", () => {
+		assert.equal(semver.next("0.1.0-pre-release+build", "major"), "1.0.0");
+	});
 });
 
 mocha.describe("parse()", () => {
