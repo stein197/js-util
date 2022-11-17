@@ -42,8 +42,13 @@ mocha.describe("compare()", () => {
 // TODO
 mocha.describe("next()", () => {});
 
-// TODO
-mocha.describe("parse()", () => {});
+mocha.describe("parse()", () => {
+	mocha.it.skip("Should correctly parse when the version has only main numbers", () => {});
+	mocha.it.skip("Should correctly parse when the version has the main numbers and the pre-release metadata", () => {});
+	mocha.it.skip("Should correctly parse when the version has the main numbers and the build metadata", () => {});
+	mocha.it.skip("Should correctly parse when the version has every possible data", () => {});
+	mocha.it.skip("Should throw an error when the version is invalid", () => {});
+});
 
 // TODO
 mocha.describe("stringify()", () => {});
