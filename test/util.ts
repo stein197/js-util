@@ -18,9 +18,3 @@ mocha.describe("curry()", () => {
 		assert.equal(curried("string"), "a: undefined, b: 12, c: string");
 	});
 });
-
-// TODO
-mocha.describe("escape()", () => {});
-
-// TODO
-mocha.describe("unescape()", () => {});
