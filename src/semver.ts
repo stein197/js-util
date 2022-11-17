@@ -1,7 +1,8 @@
 import * as string from "./string";
 
 // TODO: https://semver.org/
-const REGEX_SEMVER = /^(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)(?:-(?<!\.)(?<prerelease>[\.\-A-Za-z0-9]+)(?!=\.))?(?:\+(?<!\.)(?<build>[\.\-A-Za-z0-9]+)(?!=\.))?$/;
+const REGEX_SEMVER = /^(\d+)\.(\d+)\.(\d+)(?:-(?<!\.)([\-A-Za-z0-9]+(?:\.[\.\-A-Za-z0-9]+)*)(?!=\.))?(?:\+(?<!\.)([A-Za-z0-9]+(?:\.[\-A-Za-z0-9]+)*)(?!=\.))?$/;
+const MSG_INVALID = "\"{0}\" is not a valid semver string";
 
 // TODO
 export function compare(v1: string, v2: string): -1 | 0 | 1 {}
@@ -17,26 +18,20 @@ export function next(v: string, power: "major" | "minor" | "patch" | "prerelease
  * @example
  * ```ts
  * const data = parse("1.2.3-45+67");
- * {
- * 	major: 1,
- * 	minor: 2,
- * 	patch: 3,
- * 	prerelease: "45",
- * 	build: "67"
- * }
+ * [1, 2, 3, "45", "67"]
  * ```
  */
 export function parse(v: string): Version {
 	const match = v.match(REGEX_SEMVER);
-	if (!match || !match.groups)
-		throw new SyntaxError(`The string "${string.escape(v)}" is not a valid semver string`); // TODO: Replace with string.format(...)
-	const result = match.groups as unknown as Version;
-	if (result.prerelease && !isMetadataValid(result.prerelease) || result.build && !isMetadataValid(result.build))
-		throw new SyntaxError(`The string "${string.escape(v)}" is not a valid semver string`); // TODO: Replace with string.format(...)
-	result.major = +result.major;
-	result.minor = +result.minor;
-	result.patch = +result.patch;
-	return result;
+	if (!match)
+		throw new SyntaxError(string.format(MSG_INVALID, string.escape(v)));
+	return [
+		+match[1],
+		+match[2],
+		+match[3],
+		match[4],
+		match[5]
+	];
 }
 
 /**
@@ -49,17 +44,7 @@ export function parse(v: string): Version {
  * ```
  */
 export function stringify(v: Version): string {
-	return `${v.major}.${v.minor}.${v.patch}${v.prerelease ? `-${v.prerelease}` : ""}${v.build ? `+${v.build}` : ""}`;
+	return `${v[0]}.${v[1]}.${v[2]}${v[3] ? `-${v[3]}` : ""}${v[4] ? `+${v[4]}` : ""}`;
 }
 
-function isMetadataValid(data: string): boolean {
-	return data.split(".").every(s => s);
-}
-
-type Version = {
-	major: number;
-	minor: number;
-	patch: number;
-	prerelease?: string;
-	build?: string;
-}
+type Version = [major: number, minor: number, patch: number, prerelease?: string, build?: string];
