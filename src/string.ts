@@ -58,6 +58,8 @@ export function format(s: string, ...args: any[]): string {
 	let placeholder: string | null = null;
 	for (let i = 0, c = s[i]; i < s.length; c = s[++i]) {
 		if (c === "\\") {
+			if (isEscape)
+				result += "\\";
 			isEscape = true;
 			continue;
 		}
@@ -86,7 +88,7 @@ export function format(s: string, ...args: any[]): string {
 			}
 			default: {
 				if (placeholder == null)
-					result += c;
+					result += isEscape ? "\\" + c : c;
 				else if (isNaN(+c))
 					throw new SyntaxError(format(MSG_FORMAT_INVALID_PLACEHOLDER, s, i));
 				else

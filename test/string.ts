@@ -57,6 +57,9 @@ mocha.describe("format()", () => {
 	mocha.it("Should throw an error when placeholders are invalid", () => {
 		assert.throws(() => string.format("ab{1c}"), {message: "Invalid format string \"ab{1c}\" at 4: the placeholder is invalid"});
 	});
+	mocha.it("Should not omit backslashes when the following character is not a brace", () => {
+		assert.equal(string.format("a\\\\b\\c"), "a\\\\b\\c");
+	});
 	mocha.it("Should return correct string", () => {
 		assert.equal(string.format("a {0} c {1}", "b", "d"), "a b c d");
 	});
