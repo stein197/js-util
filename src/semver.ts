@@ -1,14 +1,26 @@
 import * as string from "./string";
 
 // TODO: https://semver.org/
-const REGEX_SEMVER = /^(\d+)\.(\d+)\.(\d+)(?:-(?<!\.)([\-A-Za-z0-9]+(?:\.[\.\-A-Za-z0-9]+)*)(?!=\.))?(?:\+(?<!\.)([A-Za-z0-9]+(?:\.[\-A-Za-z0-9]+)*)(?!=\.))?$/;
+const REGEX_SEMVER = /^(\d+)\.(\d+)\.(\d+)(?:-(?<!\.)([A-Za-z0-9]+(?:\.[\.\-A-Za-z0-9]+)*)(?!=\.))?(?:\+(?<!\.)([A-Za-z0-9]+(?:\.[\-A-Za-z0-9]+)*)(?!=\.))?$/;
 const MSG_INVALID = "\"{0}\" is not a valid semver string";
 
 // TODO
 export function compare(v1: string, v2: string): -1 | 0 | 1 {}
 
-// TODO
-export function next(v: string, power: "major" | "minor" | "patch" | "prerelease" | "build"): string {}
+/**
+ * Increments the version number. If the version has pre-release or build metadata, they will be discarted.
+ * @param v Version to increment.
+ * @param power Which field to increment. Allowed values are: "major", "minor" and "patch"
+ * @returns The next version.
+ */
+export function next(v: string, power: "major" | "minor" | "patch"): string {
+	const [major, minor, patch] = parse(v);
+	return stringify([
+		power === "major" ? major + 1 : major,
+		power === "major" ? 0 : power === "minor" ? minor + 1 : minor,
+		power === "patch" ? patch + 1 : 0
+	]);
+}
 
 /**
  * Parses the given semver string into object. It's the opposite of {@link stringify}
