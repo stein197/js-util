@@ -1,6 +1,6 @@
 {
   "name": "@stein197/util",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {

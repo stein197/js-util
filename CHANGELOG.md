@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.4.0](../../compare/1.3.0..1.4.0) - 2022-11-17
+### Added
+- `semver` module with functions: `compare()`, `next()`, `parse()` and `stringify()`
+
 ## [1.3.0](../../compare/1.2.0..1.3.0) - 2022-11-17
 ### Added
 - `string` module with functions: `escape()`, `unescape()` and `format()`

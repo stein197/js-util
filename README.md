@@ -18,8 +18,11 @@ const moduleName = require("@stein197/util/moduleName");
 | KeyboardCode | Enum of entries that match KeyboardEvent.code property |
 | PromiseState | Enum that denotes states that promises can have |
 | html | HTML DOM functions |
+| semver | Semantic versioning functions |
 | string | String functions |
 | util | Common functions |
+
+> NOTE: For more detailed documentation, please, refer to the TSDoc comments in the source code.
 
 ## NPM scripts
 - `build` - Compile TypeScript source code

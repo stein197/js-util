@@ -1,6 +1,5 @@
 import * as string from "./string";
 
-// TODO: https://semver.org/
 const REGEX_SEMVER = /^(\d+)\.(\d+)\.(\d+)(?:-(?<!\.)([\-A-Za-z0-9]+(?:\.[\.\-A-Za-z0-9]+)*)(?!=\.))?(?:\+(?<!\.)([\-A-Za-z0-9]+(?:\.[\-A-Za-z0-9]+)*)(?!=\.))?$/;
 const MSG_INVALID = "\"{0}\" is not a valid semver string";
 const MAIN_NUMS_AMOUNT = 3;
