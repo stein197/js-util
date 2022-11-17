@@ -50,5 +50,9 @@ mocha.describe("parse()", () => {
 	mocha.it.skip("Should throw an error when the version is invalid", () => {});
 });
 
-// TODO
-mocha.describe("stringify()", () => {});
+mocha.describe("stringify()", () => {
+	mocha.it.skip("Should correctly stringify when the array has only main numbers", () => {});
+	mocha.it.skip("Should correctly stringify when the array has the main numbers and the pre-release metadata", () => {});
+	mocha.it.skip("Should correctly stringify when the array has the main numbers and the build metadata", () => {});
+	mocha.it.skip("Should correctly stringify when the array has every possible data", () => {});
+});
