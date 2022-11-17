@@ -40,7 +40,7 @@ export function parse(v: string): Version {
  * @returns Stringified version.
  * @example
  * ```ts
- * stringify({major: 3, minor: 2, patch: 1}); // "3.2.1"
+ * stringify([3, 2, 1]); // "3.2.1"
  * ```
  */
 export function stringify(v: Version): string {
