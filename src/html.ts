@@ -15,3 +15,18 @@ export function getHighestZIndex(window: Window, element: Element): number {
 	}
 	return z;
 }
+
+// TODO
+export function getTableRow(table: HTMLTableElement, row: number): (string | null)[] | null {
+	return null;
+}
+
+// TODO
+export function getTableCol(table: HTMLTableElement, col: number): (string | null)[] | null {
+	return null;
+}
+
+// TODO
+export function getTable(table: HTMLTableElement): (string | null)[][] {
+	return [];
+}

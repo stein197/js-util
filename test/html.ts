@@ -28,3 +28,12 @@ mocha.describe("getHighestZIndex()", () => {
 		assert.equal(getHighestZIndex(window.document.body), 10);
 	});
 });
+
+// TODO
+mocha.describe("getTableRow()", () => {});
+
+// TODO
+mocha.describe("getTableCol()", () => {});
+
+// TODO
+mocha.describe("getTable()", () => {});
