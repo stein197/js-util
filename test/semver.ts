@@ -103,11 +103,21 @@ mocha.describe("next()", () => {
 });
 
 mocha.describe("parse()", () => {
-	mocha.it.skip("Should correctly parse when the version has only main numbers", () => {});
-	mocha.it.skip("Should correctly parse when the version has the main numbers and the pre-release metadata", () => {});
-	mocha.it.skip("Should correctly parse when the version has the main numbers and the build metadata", () => {});
-	mocha.it.skip("Should correctly parse when the version has every possible data", () => {});
-	mocha.it.skip("Should throw an error when the version is invalid", () => {});
+	mocha.it("Should correctly parse when the version has only main numbers", () => {
+		assert.deepStrictEqual(semver.parse("1.2.3"), [1, 2, 3, undefined, undefined]);
+	});
+	mocha.it("Should correctly parse when the version has the main numbers and the pre-release metadata", () => {
+		assert.deepStrictEqual(semver.parse("1.2.3-pre-release.data"), [1, 2, 3, "pre-release.data", undefined]);
+	});
+	mocha.it("Should correctly parse when the version has the main numbers and the build metadata", () => {
+		assert.deepStrictEqual(semver.parse("1.2.3+build.data"), [1, 2, 3, undefined, "build.data"]);
+	});
+	mocha.it("Should correctly parse when the version has every possible data", () => {
+		assert.deepStrictEqual(semver.parse("1.2.3-pre-release.data+build.data"), [1, 2, 3, "pre-release.data", "build.data"]);
+	});
+	mocha.it("Should throw an error when the version is invalid", () => {
+		assert.throws(() => semver.parse("1.3"), {message: "\"1.3\" is not a valid semver string"});
+	});
 });
 
 mocha.describe("stringify()", () => {
