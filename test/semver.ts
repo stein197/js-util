@@ -121,8 +121,16 @@ mocha.describe("parse()", () => {
 });
 
 mocha.describe("stringify()", () => {
-	mocha.it.skip("Should correctly stringify when the array has only main numbers", () => {});
-	mocha.it.skip("Should correctly stringify when the array has the main numbers and the pre-release metadata", () => {});
-	mocha.it.skip("Should correctly stringify when the array has the main numbers and the build metadata", () => {});
-	mocha.it.skip("Should correctly stringify when the array has every possible data", () => {});
+	mocha.it("Should correctly stringify when the array has only main numbers", () => {
+		assert.equal(semver.stringify([1, 2, 3]), "1.2.3");
+	});
+	mocha.it("Should correctly stringify when the array has the main numbers and the pre-release metadata", () => {
+		assert.equal(semver.stringify([1, 2, 3, "pre-release.data"]), "1.2.3-pre-release.data");
+	});
+	mocha.it("Should correctly stringify when the array has the main numbers and the build metadata", () => {
+		assert.equal(semver.stringify([1, 2, 3, undefined, "build.data"]), "1.2.3+build.data");
+	});
+	mocha.it("Should correctly stringify when the array has every possible data", () => {
+		assert.equal(semver.stringify([1, 2, 3, "pre-release.data", "build.data"]), "1.2.3-pre-release.data+build.data");
+	});
 });
