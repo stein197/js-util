@@ -7,17 +7,19 @@ npm install @stein197/util
 ```
 
 ## API
-### `@stein197/util/KeyboardCode`
-Enum of entries that match KeyboardEvent.code property
-
-### `@stein197/util/PromiseState`
-Enum that denotes statest that promises can have.
-
-### `@stein197/util/html`
-Contains utility function related to HTML DOM
-
-### `@stein197/util/util`
-Common utility functions
+To include the module, import it like this:
+```ts
+import * as moduleName from "@stein197/util/moduleName";
+// or
+const moduleName = require("@stein197/util/moduleName");
+```
+| Module | Description |
+|--------|-------------|
+| KeyboardCode | Enum of entries that match KeyboardEvent.code property |
+| PromiseState | Enum that denotes states that promises can have |
+| html | HTML DOM functions |
+| string | String functions |
+| util | Common functions |
 
 ## NPM scripts
 - `build` - Compile TypeScript source code

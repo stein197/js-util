@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.3.0](../../compare/1.2.0..1.3.0) - 2022-11-17
+### Added
+- `string` module with functions: `escape()`, `unescape()` and `format()`
+
 ## [1.2.0](../../compare/1.1.0..1.2.0) - 2022-11-14
 ### Added
 - `util` module with `curry` function
