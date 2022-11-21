@@ -52,6 +52,7 @@ export function unescape(s: string, char: string = "\\"): string {
  * format("Hello, {0}", "user"); // "Hello, user"
  * ```
  */
+// TODO: Replace escaping with double braces
 export function format(s: string, ...args: any[]): string {
 	let result = "";
 	let isEscape = false;
