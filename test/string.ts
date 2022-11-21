@@ -40,25 +40,25 @@ mocha.describe("format()", () => {
 		assert.equal(string.format("abc"), "abc");
 	});
 	mocha.it("Should insert braces as is when they are escaped", () => {
-		assert.equal(string.format("abc\\{\\}"), "abc{}");
+		assert.equal(string.format("abc{{}}"), "abc{}");
 	});
-	mocha.it("Should throw an error when an opening brace does not have the corresponding closing one", () => {
-		assert.throws(() => string.format("abc{0"), {message: "Invalid format string \"abc{0\": the opening brace does not have the corresponding closing one"});
+	mocha.it("Should return the original string when an opening brace does not have the corresponding closing one", () => {
+		assert.equal(string.format("abc{0"), "abc{0");
 	});
-	mocha.it("Should throw an error when a closing brace does not have the corresponding opening one", () => {
-		assert.throws(() => string.format("ab}c"), {message: "Invalid format string \"ab}c\" at 2: the closing brace does not have the corresponding opening one"});
+	mocha.it("Should return the original string when a closing brace does not have the corresponding opening one", () => {
+		assert.equal(string.format("ab}c"), "ab}c");
 	});
 	mocha.it("Should insert empty string when there is no argument with specified index", () => {
 		assert.equal(string.format("a {10} c"), "a  c");
 	});
-	mocha.it("Should throw an error when placeholders are empty", () => {
-		assert.throws(() => string.format("ab{}c"), {message: "Invalid format string \"ab{}c\" at 3: the placeholder is empty"});
+	mocha.it("Should return the original string when placeholders are empty", () => {
+		assert.equal(string.format("ab{}c"), "ab{}c");
 	});
-	mocha.it("Should throw an error when placeholders are invalid", () => {
-		assert.throws(() => string.format("ab{1c}"), {message: "Invalid format string \"ab{1c}\" at 4: the placeholder is invalid"});
+	mocha.it("Should return the original string when placeholders are invalid", () => {
+		assert.equal(string.format("ab{1c}"), "ab{1c}");
 	});
-	mocha.it("Should not omit backslashes when the following character is not a brace", () => {
-		assert.equal(string.format("a\\\\b\\c"), "a\\\\b\\c");
+	mocha.it("Should return correct string when placeholder is enclosed in double braces", () => {
+		assert.equal(string.format("{{{0}}}", "String"), "{String}");
 	});
 	mocha.it("Should return correct string", () => {
 		assert.equal(string.format("a {0} c {1}", "b", "d"), "a b c d");

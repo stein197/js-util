@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.4.1](../../compare/1.4.0..1.4.1) - 2022-11-21
+### Added
+- Added `clean` script
+
+### Changed
+- Escape strategy for `string.format()` changed from backslash to doubling braces
+
 ## [1.4.0](../../compare/1.3.0..1.4.0) - 2022-11-17
 ### Added
 - `semver` module with functions: `compare()`, `next()`, `parse()` and `stringify()`

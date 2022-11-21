@@ -1,7 +1,5 @@
-const MSG_FORMAT_INVALID_OPEN_BRACE = "Invalid format string \"{0}\": the opening brace does not have the corresponding closing one";
-const MSG_FORMAT_INVALID_CLOSE_BRACE = "Invalid format string \"{0}\" at {1}: the closing brace does not have the corresponding opening one";
-const MSG_FORMAT_INVALID_PLACEHOLDER = "Invalid format string \"{0}\" at {1}: the placeholder is invalid";
-const MSG_FORMAT_INVALID_PLACEHOLDER_EMPTY = "Invalid format string \"{0}\" at {1}: the placeholder is empty";
+const REGEX_FORMAT_PLACEHOLDER = /\{(\d+)\}/g;
+const REGEX_FORMAT_DOUBLE_BRACE = /\{\{|\}\}/g;
 const CHARS_ESCAPE: string[] = [
 	"\"", "'", "\\"
 ];
@@ -43,7 +41,7 @@ export function unescape(s: string, char: string = "\\"): string {
 
 /**
  * Formats the given string using passed arguments. Format string uses numeric zero-indexed placeholders enclosed in
- * curly braces. The placeholder braces can be escaped using backslash.
+ * curly braces. Double braces to escape them.
  * @param s Format string.
  * @param args Arguments to replace placeholders in the string.
  * @returns Formatted string.
@@ -52,53 +50,6 @@ export function unescape(s: string, char: string = "\\"): string {
  * format("Hello, {0}", "user"); // "Hello, user"
  * ```
  */
-// TODO: Replace escaping with double braces
 export function format(s: string, ...args: any[]): string {
-	let result = "";
-	let isEscape = false;
-	let placeholder: string | null = null;
-	for (let i = 0, c = s[i]; i < s.length; c = s[++i]) {
-		if (c === "\\") {
-			if (isEscape)
-				result += "\\";
-			isEscape = true;
-			continue;
-		}
-		switch (c) {
-			case "{": {
-				if (isEscape)
-					result += c;
-				else
-					placeholder = "";
-				break;
-			}
-			case "}": {
-				if (isEscape) {
-					result += c;
-					continue;
-				}
-				if (placeholder == null)
-					throw new SyntaxError(format(MSG_FORMAT_INVALID_CLOSE_BRACE, s, i));
-				if (placeholder === "")
-					throw new SyntaxError(format(MSG_FORMAT_INVALID_PLACEHOLDER_EMPTY, s, i));
-				const value = args[+placeholder];
-				if (value != null)
-					result += String(value);
-				placeholder = null;
-				break;
-			}
-			default: {
-				if (placeholder == null)
-					result += isEscape ? "\\" + c : c;
-				else if (isNaN(+c))
-					throw new SyntaxError(format(MSG_FORMAT_INVALID_PLACEHOLDER, s, i));
-				else
-					placeholder += c;
-			}
-		}
-		isEscape = false;
-	}
-	if (placeholder != null)
-		throw new SyntaxError(format(MSG_FORMAT_INVALID_OPEN_BRACE, s));
-	return result;
+	return s.replace(REGEX_FORMAT_PLACEHOLDER, (...[, index]) => args[index] == null ? "" : args[index]).replace(REGEX_FORMAT_DOUBLE_BRACE, match => match === "{{" ? "{" : "}");
 }

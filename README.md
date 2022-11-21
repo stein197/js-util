@@ -25,5 +25,6 @@ const moduleName = require("@stein197/util/moduleName");
 > NOTE: For more detailed documentation, please, refer to the TSDoc comments in the source code.
 
 ## NPM scripts
+- `clean` - Clean the working directory from compiled files
 - `build` - Compile TypeScript source code
 - `test` - Run unit tests
