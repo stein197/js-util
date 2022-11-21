@@ -9,7 +9,6 @@ import * as string from "./string";
  */
 export function between(min: number, max: number): Function {
 	return function (target: object, name: string, index: number): void {
-		console.log(target, name, index)
 		const original = target[name];
 		target[name] = function (...args): any {
 			if (args[index] < min || max < args[index])
