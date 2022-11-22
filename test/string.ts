@@ -60,6 +60,9 @@ mocha.describe("format()", () => {
 	mocha.it("Should return correct string when placeholder is enclosed in double braces", () => {
 		assert.equal(string.format("{{{0}}}", "String"), "{String}");
 	});
+	mocha.it("Should return correct string when replacement contains curly braces", () => {
+		assert.equal(string.format("{0}", "{{}}"), "{{}}")
+	});
 	mocha.it("Should return correct string", () => {
 		assert.equal(string.format("a {0} c {1}", "b", "d"), "a b c d");
 	});

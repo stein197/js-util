@@ -51,5 +51,5 @@ export function unescape(s: string, char: string = "\\"): string {
  * ```
  */
 export function format(s: string, ...args: any[]): string {
-	return s.replace(REGEX_FORMAT_PLACEHOLDER, (...[, index]) => args[index] == null ? "" : args[index]).replace(REGEX_FORMAT_DOUBLE_BRACE, match => match === "{{" ? "{" : "}");
+	return s.replace(REGEX_FORMAT_DOUBLE_BRACE, match => match === "{{" ? "{" : "}").replace(REGEX_FORMAT_PLACEHOLDER, (...[, index]) => args[index] == null ? "" : args[index]);
 }
