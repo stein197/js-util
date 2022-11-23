@@ -1,3 +1,4 @@
-src/
-test/
-tsconfig.*
+/scripts/
+/src/
+/test/
+/tsconfig.*

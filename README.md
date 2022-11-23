@@ -28,3 +28,4 @@ const moduleName = require("@stein197/util/moduleName");
 - `clean` - Clean the working directory from compiled files
 - `build` - Compile TypeScript source code
 - `test` - Run unit tests
+- `make:index` - Generate `index.js` and `index.d.ts` files

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.5.0](../../compare/1.4.2..1.5.0) - 2022-11-23
+### Added
+- Main `index.js` file that exports all available modules
+
 ## [1.4.2](../../compare/1.4.1..1.4.2) - 2022-11-22
 ### Changed
 - `string.format()` now inserts double braces in arguments list as is instead of considering them as a escape sequence
