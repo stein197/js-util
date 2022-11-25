@@ -10,25 +10,16 @@ const MULTIPLIER_DECIMAL = 1000;
 const MULTIPLIER_BINARY = 1024;
 const REGEX_STRING = /^((?:\d+)?(?:\.\d+))\s*([a-zA-Z]+)$/; // TODO: Parse spaces, dots and commas?
 const DEFAULT_OPTIONS: Options = {
-	binary: true,
-	precision: "Q",
-	space: false,
-	lang: "en"
+	scale: "binary",
+	space: false
 }
 
-export function parse(s: string): Info {}
-
-export function bytes(data: number | bigint | string): number | bigint {}
+export function parse(s: string): number | bigint {}
 
 export function stringify(bytes: number | bigint, options: Options): string {}
 
-export function registerLang(lang: string, data: string[]): void {}
-
 type Options = {
-	binary: boolean;
-	precision: string;
+	scale: "decimal" | "binary";
+	precision?: string;
 	space: boolean;
-	lang: string;
 }
-
-type Info = [number: number, unit: string];
