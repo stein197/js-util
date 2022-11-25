@@ -18,7 +18,7 @@ const DEFAULT_OPTIONS: Options = {
 
 export function parse(s: string): Info {}
 
-export function bytes(data: number | bigint | string): Info {}
+export function bytes(data: number | bigint | string): number | bigint {}
 
 export function stringify(bytes: number | bigint, options: Options): string {}
 
