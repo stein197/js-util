@@ -8,33 +8,32 @@ const UNIT_BINARY: string[] = [
 ];
 const UNIT_DECIMAL_LOWERCASE = UNIT_DECIMAL.map(unit => unit.toLowerCase());
 const UNIT_BINARY_LOWERCASE = UNIT_BINARY.map(unit => unit.toLowerCase());
-const MULTIPLIER_DECIMAL = 1000n;
-const MULTIPLIER_BINARY = 1024n;
+const MULTIPLIER_DECIMAL = 1000;
+const MULTIPLIER_BINARY = 1024;
 const REGEX_STRING = /^((?:\d+)?(?:\.\d+))\s*([a-zA-Z]{2,3})$/; // TODO: Parse spaces, dots and commas?
-const DEFAULT_OPTIONS: Options = {
-	scale: "binary",
-	space: false
-}
 
 /**
- * Parses the string an returns the number of bytes encoded with string. Case-insensetive
- * @param s String to parse. Should be in format "<number> <unit>".
+ * Parses the string and returns the number of bytes encoded with the string.
+ * @param s String to parse. Should be in format "<number> <unit>". Case-insensetive.
  * @returns Parsed number of bytes. If the number is greater than {@link Number.MAX_SAFE_INTEGER}, then `bigint` will be
  *          returned, number otherwise.
  * @throws {@link SyntaxError} If the string format is invalid.
  * @example
  * ```ts
- * parse("10KB"); // 10000
+ * parse("10KB");  // 10000
+ * parse("1 mib"); // 1048576
+ * parse("1QiB");  // 1267650600228229401496703205376n
+ * parse("1 ds");  // throws an error
  * ```
  */
 export function parse(s: string): number | bigint {
 	const parsed = s.match(REGEX_STRING);
 	if (!parsed)
 		throw new SyntaxError(`The string "${string.escape(s)}" is not a valid`);
-	const n = BigInt(parsed[1]);
+	const numRaw = +parsed[1];
 	const unitRaw = parsed[2];
 	const unitLowercased = unitRaw.toLowerCase();
-	let multiplier: bigint;
+	let multiplier: number | bigint;
 	let unitIndex: number;
 	let unitArray: string[];
 	unitIndex = UNIT_DECIMAL_LOWERCASE.indexOf(unitLowercased);
@@ -48,10 +47,18 @@ export function parse(s: string): number | bigint {
 		unitArray = UNIT_DECIMAL;
 		multiplier = MULTIPLIER_DECIMAL;
 	}
-	let result = n;
-	for (let i = unitIndex; i !== 0; i--)
-		result *= multiplier;
-	return result <= Number.MAX_SAFE_INTEGER ? Number(result) : result;
+	let result: number | bigint = numRaw;
+	for (let i = unitIndex; i !== 0; i--) {
+		// @ts-ignore
+		let resultTmp: number | bigint = result * multiplier;
+		if (Number.MAX_SAFE_INTEGER < resultTmp && typeof result !== "bigint") {
+			// @ts-ignore
+			resultTmp = BigInt(result * multiplier);
+			multiplier = BigInt(multiplier);
+		}
+		result = resultTmp;
+	}
+	return result;
 }
 
 export function stringify(bytes: number | bigint, options: Options): string {}
