@@ -15,7 +15,7 @@ const DICTIONARY = {
 
 // TODO
 export function parse(num: string): number {
-	const data = toArray(num);
+	const data = toArray(num.toUpperCase());
 }
 
 // TODO
