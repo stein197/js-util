@@ -23,10 +23,12 @@ export function stringify(num: number): string {
 	if (!Number.isInteger(num))
 		throw new Error(`Cannot convert ${num} to a roman number: only integers are allowed`);
 	if (num < MIN_NUMBER || MAX_NUMBER < num)
-		throw new Error(`Cannot convert ${num} to a roman number: only numbers within range of [${MIN_NUMBER};${MAX_NUMBER}] are allowed`);
+		throw new Error(`Cannot convert ${num} to a roman number: only numbers within range of [${MIN_NUMBER}..${MAX_NUMBER}] are allowed`);
 }
 
 function toArray(num: string): number[] {
+	if (!num.length)
+		throw new SyntaxError("Cannot parse string \"\": the string is empty");
 	let result = new Array(num.length);
 	for (let i = 0, char = num[i], prevChar = "", curCharCount = 1; i < num.length; i++, prevChar = char, char = num[i], curCharCount = prevChar === char ? curCharCount + 1 : 1) {
 		if (!(char in DICTIONARY))
