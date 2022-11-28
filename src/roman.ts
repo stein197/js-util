@@ -15,7 +15,7 @@ const DICTIONARY = {
 
 // TODO
 export function parse(num: string): number {
-	const data = toArray(num.toUpperCase());
+	const data = toArray(num);
 }
 
 // TODO
@@ -30,12 +30,12 @@ function toArray(num: string): number[] {
 	if (!num.length)
 		throw new SyntaxError("Cannot parse string \"\": the string is empty");
 	let result = new Array(num.length);
-	for (let i = 0, char = num[i], prevChar = "", curCharCount = 1; i < num.length; i++, prevChar = char, char = num[i], curCharCount = prevChar === char ? curCharCount + 1 : 1) {
-		if (!(char in DICTIONARY))
+	for (let i = 0, char = num[i], prevChar = "", ucChar = char.toUpperCase(), curCharCount = 1; i < num.length; i++, prevChar = char, char = num[i], ucChar = char.toUpperCase(), curCharCount = prevChar === char ? curCharCount + 1 : 1) {
+		if (!(ucChar in DICTIONARY))
 			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} is not valid roman digit`);
 		if (MAX_CHARS < curCharCount)
 			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} occurs more than ${MAX_CHARS} times in a row`);
-		result[i] = DICTIONARY[char];
+		result[i] = DICTIONARY[ucChar];
 	}
 	return result;
 }
