@@ -1,6 +1,13 @@
 import * as string from "./string";
 
+/**
+ * Minimum value that roman numerals can have.
+ */
 export const MIN_VALUE = 1;
+
+/**
+ * Maximum value that roman numberals can have.
+ */
 export const MAX_VALUE = 3999;
 const MAX_CHARS = 3;
 const DICTIONARY = {
