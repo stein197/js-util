@@ -13,6 +13,7 @@ const DICTIONARY = {
 	M: 1000
 };
 
+// TODO: Remove, use only DICTIONARY const
 const DICTIONARY_RADIX = {
 	//  1       10      100    1000
 	1: ["I",    "X",    "C",   "M"  ],
