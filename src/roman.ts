@@ -1,8 +1,8 @@
 import * as string from "./string";
 
+export const MIN_NUMBER = 1;
+export const MAX_NUMBER = 3999;
 const MAX_CHARS = 3;
-const MIN_NUMBER = 1;
-const MAX_NUMBER = 3999;
 const DICTIONARY = {
 	I: 1,
 	V: 5,
