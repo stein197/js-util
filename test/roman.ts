@@ -432,7 +432,17 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("xxxixx"));
 		assert.throws(() => roman.parse("dddixd"));
 	});
-	mocha.it("Should throw an error when there are invalid subtraction combinations", () => {
+	// TODO: Add error messages
+	mocha.it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
+		assert.throws(() => roman.parse("il"));
+		assert.throws(() => roman.parse("ic"));
+		assert.throws(() => roman.parse("id"));
+		assert.throws(() => roman.parse("im"));
+		assert.throws(() => roman.parse("xd"));
+		assert.throws(() => roman.parse("xm"));
+	});
+	// TODO: Add error messages
+	mocha.it("Should throw an error when there are invalid subtraction (subtraction of digits that are multiple of five)", () => {
 		assert.throws(() => roman.parse("vx"));
 		assert.throws(() => roman.parse("vl"));
 		assert.throws(() => roman.parse("vc"));
