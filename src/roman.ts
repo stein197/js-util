@@ -37,6 +37,12 @@ export function parse(num: string): number {
  * @param num Number to convert. Must be an integer and fall in range of [1..3999].
  * @returns Number in roman notation.
  * @throws {Error} If the number is not an integer or does not fall in range of [1..3999].
+ * @example
+ * ```ts
+ * stringify(12); // "XII"
+ * stringify(19); // "XIX"
+ * stringify(21); // "XXI"
+ * ```
  */
 export function stringify(num: number): string {
 	if (!Number.isInteger(num))
