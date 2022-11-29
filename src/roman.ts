@@ -23,7 +23,7 @@ export function stringify(num: number): string {
 	if (!Number.isInteger(num))
 		throw new Error(`Cannot convert ${num} to a roman number: only integers are allowed`);
 	if (num < MIN_VALUE || MAX_VALUE < num)
-		throw new Error(`Cannot convert ${num} to a roman number: only numbers within range of [${MIN_VALUE}..${MAX_VALUE}] are allowed`);
+		throw new Error(`Cannot convert ${num} to a roman number: only integers within range of [${MIN_VALUE}..${MAX_VALUE}] are allowed`);
 }
 
 function toArray(num: string): number[] {

@@ -456,10 +456,10 @@ mocha.describe("stringify()", () => {
 		assert.equal(roman.stringify(3999), "MMMCMXCIX");
 	});
 	mocha.it("Should throw an error when the argument is less than 1", () => {
-		assert.throws(() => roman.stringify(0), {message: "Cannot convert 0 to a roman number: only numbers within range of [1..3999] are allowed"});
+		assert.throws(() => roman.stringify(0), {message: "Cannot convert 0 to a roman number: only integers within range of [1..3999] are allowed"});
 	});
 	mocha.it("Should throw an error when the argument is greater than 3999", () => {
-		assert.throws(() => roman.stringify(4000), {message: "Cannot convert 4000 to a roman number: only numbers within range of [1..3999] are allowed"});
+		assert.throws(() => roman.stringify(4000), {message: "Cannot convert 4000 to a roman number: only integers within range of [1..3999] are allowed"});
 	});
 	mocha.it("Should throw an error when the argument is not an integer", () => {
 		assert.throws(() => roman.stringify(1.5), {message: "Cannot convert 1.5 to a roman number: only integers are allowed"});
