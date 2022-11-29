@@ -13,17 +13,55 @@ const DICTIONARY = {
 	M: 1000
 };
 
+const DICTIONARY_RADIX = {
+	//  1       10      100    1000
+	1: ["I",    "X",    "C",   "M"  ],
+	2: ["II",   "XX",   "CC",  "MM" ],
+	3: ["III",  "XXX",  "CCC", "MMM"],
+	4: ["IV",   "XL",   "CD"        ],
+	5: ["V",    "L",    "D"         ],
+	6: ["VI",   "LX",   "DC"        ],
+	7: ["VII",  "LXX",  "DCC"       ],
+	8: ["VIII", "LXXX", "DCCC"      ],
+	9: ["IX",   "XC",   "CM"        ]
+};
+
 // TODO
 export function parse(num: string): number {
 	const data = toArray(num);
 }
 
-// TODO
+/**
+ * Converts integers into roman numbers.
+ * @param num Number to convert. Must be an integer and fall in range of [1..3999].
+ * @returns Number in roman notation.
+ * @throws {Error} If the number is not an integer or does not fall in range of [1..3999].
+ */
 export function stringify(num: number): string {
 	if (!Number.isInteger(num))
 		throw new Error(`Cannot convert ${num} to a roman number: only integers are allowed`);
 	if (num < MIN_VALUE || MAX_VALUE < num)
 		throw new Error(`Cannot convert ${num} to a roman number: only integers within range of [${MIN_VALUE}..${MAX_VALUE}] are allowed`);
+	let result = "";
+	let radix = 1000;
+	while (radix >= 1) {
+		let radixAmount = 0;
+		while (num >= radix) {
+			num -= radix;
+			radixAmount++;
+		}
+		if (radixAmount) {
+			let radixIndex = 0;
+			let tmpRadix = radix;
+			while (tmpRadix >= 1) {
+				tmpRadix /= 10;
+				radixIndex++;
+			}
+			result += DICTIONARY_RADIX[radixAmount][radixIndex - 1];
+		}
+		radix /= 10;
+	}
+	return result;
 }
 
 function toArray(num: string): number[] {
