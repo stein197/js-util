@@ -512,11 +512,13 @@ mocha.describe("tokenize()", () => {
 		["M", "CM", "XC", "V", "I", "I", "I"],
 		["M", "M", "X", "X", "V", "I", "I", "I"],
 		["M", "M", "X", "X", "X", "V", "I", "I", "I"],
-		["M", "M", "M", "CM", "XC", "IX"]
+		["M", "M", "M", "CM", "XC", "IX"],
+		["IV", "XL", "CD"],
+		["X", "X", "IV", "X"]
 	]
 	mocha.it("Should return correct result", () => {
 		for (const tokenArray of CASES)
-			assert.deepStrictEqual(roman.tokenize(tokenArray.join("")), tokenArray);
+			assert.deepStrictEqual([...roman.tokenize(tokenArray.join(""))], tokenArray);
 	});
 });
 mocha.describe("valid()", () => {

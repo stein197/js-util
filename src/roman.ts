@@ -78,23 +78,34 @@ export function stringify(num: number): string {
 	return result;
 }
 
-// TODO
-export function tokenize(num: string): string[] {
-	num = prepare(num);
-}
-
-function prepare(num: string): string {
-	if (!num.length)
-		throw new SyntaxError("Cannot parse string \"\": the string is empty");
-	let result = "";
-	for (let i = 0, char = num[i], prevChar = "", ucChar = char.toUpperCase(), curCharCount = 1; i < num.length; i++, prevChar = char, char = num[i], ucChar = char.toUpperCase(), curCharCount = prevChar === char ? curCharCount + 1 : 1) {
-		if (!(ucChar in DICTIONARY))
+/**
+ * Performs tokenization on roman number. Token is a sequence of characters (1 or 2) that can represent single number.
+ * The function tokenizes the string regardless of its validity, so it's possible to pass incorrect roman number.
+ * @param num String to tokenize.
+ * @returns Array of tokens
+ * @throws {SyntaxError} If the string contains invalid characters that are not allowed for roman numbers.
+ * @example
+ * ```ts
+ * [...tokenize("XIX")]; // ["X", "IX"]
+ * [...tokenize("XXIC")]; // ["X", "X", "IC"] despite that the string is invalid
+ * ```
+ */
+export function* tokenize(num: string): Generator<string> {
+	let curToken = "";
+	for (let i = 0, char = num[i], charUppercased = char.toUpperCase(), nextChar = num[i + 1], curCharCount = 1; i < num.length; i++, char = num[i], charUppercased = char?.toUpperCase(), nextChar = num[i + 1], curCharCount = char === num[i - 1] ? curCharCount + 1 : 1) {
+		const digit: number = DICTIONARY[charUppercased];
+		if (!digit)
 			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} is not valid roman digit`);
-		if (MAX_CHARS < curCharCount)
-			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} occurs more than ${MAX_CHARS} times in a row`);
-		// TODO: Add error for cases like "XXXIXX"
-		result += DICTIONARY[ucChar];
+		const nextDigit: number = DICTIONARY[nextChar?.toUpperCase()];
+		const isLess = digit < nextDigit;
+		if ((isLess && curToken) || !isLess) {
+			yield curToken + charUppercased;
+			curToken = "";
+		} else {
+			curToken = charUppercased;
+		}
 	}
+}
 
 /**
  * Checks if the string is valid roman number.
