@@ -10,7 +10,7 @@ export const MIN_VALUE = 1;
  */
 export const MAX_VALUE = 3999;
 const MAX_CHARS = 3;
-const DICTIONARY = {
+const DICTIONARY = { // TODO: Replace with ["I", "V", "X", "L", "C", "D", "M"]?
 	I: 1,
 	V: 5,
 	X: 10,
@@ -36,7 +36,7 @@ const DICTIONARY_RADIX = {
 
 // TODO
 export function parse(num: string): number {
-	const data = toArray(num);
+	num = prepare(num);
 }
 
 /**
@@ -78,16 +78,22 @@ export function stringify(num: number): string {
 	return result;
 }
 
-function toArray(num: string): number[] {
+// TODO
+export function tokenize(num: string): string[] {
+	num = prepare(num);
+}
+
+function prepare(num: string): string {
 	if (!num.length)
 		throw new SyntaxError("Cannot parse string \"\": the string is empty");
-	let result = new Array(num.length);
+	let result = "";
 	for (let i = 0, char = num[i], prevChar = "", ucChar = char.toUpperCase(), curCharCount = 1; i < num.length; i++, prevChar = char, char = num[i], ucChar = char.toUpperCase(), curCharCount = prevChar === char ? curCharCount + 1 : 1) {
 		if (!(ucChar in DICTIONARY))
 			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} is not valid roman digit`);
 		if (MAX_CHARS < curCharCount)
 			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} occurs more than ${MAX_CHARS} times in a row`);
-		result[i] = DICTIONARY[ucChar];
+		// TODO: Add error for cases like "XXXIXX"
+		result += DICTIONARY[ucChar];
 	}
 	return result;
 }
