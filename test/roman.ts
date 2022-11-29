@@ -428,10 +428,21 @@ mocha.describe("parse()", () => {
 	mocha.it("Should throw an error when string contains more than 3 same digits in a row", () => {
 		assert.throws(() => roman.parse("viiii"), {message: "Cannot parse string \"viiii\": the character \"i\" at 4 occurs more than 3 times in a row"});
 	});
-	// TODO
-	mocha.it.skip("Should throw an error when consequent digits combinations are bigger than previous ones", () => {});
-	// TODO
-	mocha.it.skip("Should throw an error when there are invalid subtraction combinations", () => {});
+	mocha.it("Should throw an error when consequent digits combinations are bigger than previous ones", () => {
+		assert.throws(() => roman.parse("xxxixx"));
+		assert.throws(() => roman.parse("dddixd"));
+	});
+	mocha.it("Should throw an error when there are invalid subtraction combinations", () => {
+		assert.throws(() => roman.parse("vx"));
+		assert.throws(() => roman.parse("vl"));
+		assert.throws(() => roman.parse("vc"));
+		assert.throws(() => roman.parse("vd"));
+		assert.throws(() => roman.parse("vm"));
+		assert.throws(() => roman.parse("lc"));
+		assert.throws(() => roman.parse("ld"));
+		assert.throws(() => roman.parse("lm"));
+		assert.throws(() => roman.parse("dm"));
+	});
 });
 mocha.describe("stringify()", () => {
 	mocha.it("Should return correct result", () => {
