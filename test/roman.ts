@@ -508,3 +508,15 @@ mocha.describe("tokenize()", () => {
 			assert.deepStrictEqual(roman.tokenize(tokenArray.join("")), tokenArray);
 	});
 });
+mocha.describe("valid()", () => {
+	// TODO
+	mocha.it.skip("Should return false when the string is empty", () => {});
+	// TODO
+	mocha.it.skip("Should return false when the string contains invalid characters", () => {});
+	// TODO
+	mocha.it.skip("Should return false when the string contains more than 3 occurences of the same digit in a row", () => {});
+	// TODO
+	mocha.it.skip("Should return false when the string contains bigger subsequent digits than previous ones", () => {});
+	// TODO
+	mocha.it.skip("Should return true when the string is correct", () => {});
+});

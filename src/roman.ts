@@ -95,5 +95,17 @@ function prepare(num: string): string {
 		// TODO: Add error for cases like "XXXIXX"
 		result += DICTIONARY[ucChar];
 	}
-	return result;
+
+/**
+ * Checks if the string is valid roman number.
+ * @param num Number to validate.
+ * @returns `true` if the string is valid roman number, `false` otherwise.
+ */
+export function valid(num: string): boolean {
+	try {
+		parse(num);
+		return true;
+	} catch {
+		return false;
+	}
 }
