@@ -6,7 +6,7 @@ import * as string from "./string";
 export const MIN_VALUE = 1;
 
 /**
- * Maximum value that roman numberals can have.
+ * Maximum value that roman numerals can have.
  */
 export const MAX_VALUE = 3999;
 const MAX_CHARS = 3;
