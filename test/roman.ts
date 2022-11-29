@@ -478,6 +478,7 @@ mocha.describe("stringify()", () => {
 // TODO: Test for errors
 mocha.describe("tokenize()", () => {
 	const CASES = [
+		[],
 		["I"],
 		["V"],
 		["X"],
