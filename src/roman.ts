@@ -1,7 +1,7 @@
 import * as string from "./string";
 
-export const MIN_NUMBER = 1;
-export const MAX_NUMBER = 3999;
+export const MIN_VALUE = 1;
+export const MAX_VALUE = 3999;
 const MAX_CHARS = 3;
 const DICTIONARY = {
 	I: 1,
@@ -22,8 +22,8 @@ export function parse(num: string): number {
 export function stringify(num: number): string {
 	if (!Number.isInteger(num))
 		throw new Error(`Cannot convert ${num} to a roman number: only integers are allowed`);
-	if (num < MIN_NUMBER || MAX_NUMBER < num)
-		throw new Error(`Cannot convert ${num} to a roman number: only numbers within range of [${MIN_NUMBER}..${MAX_NUMBER}] are allowed`);
+	if (num < MIN_VALUE || MAX_VALUE < num)
+		throw new Error(`Cannot convert ${num} to a roman number: only numbers within range of [${MIN_VALUE}..${MAX_VALUE}] are allowed`);
 }
 
 function toArray(num: string): number[] {
