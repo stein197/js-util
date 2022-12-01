@@ -486,7 +486,7 @@ mocha.describe("valid()", () => {
 	mocha.it("Should return false when the string contains bigger subsequent digits than previous ones", () => {
 		assert.equal(roman.valid("XXXIXX"), false);
 	});
-	mocha.it.skip("Should return true when the string is correct", () => {
+	mocha.it("Should return true when the string is correct", () => {
 		for (const [romanNum] of CASES)
 			assert.equal(roman.valid(romanNum), true);
 	});
