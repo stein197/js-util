@@ -54,7 +54,7 @@ const DICTIONARY_RADIX = {
  */
 export function parse(num: string): number {
 	if (!num)
-		throw new SyntaxError("Cannot parse string \"\": the string is empty");
+		throw new SyntaxError("Cannot parse \"\": the string is empty");
 	let result = 0;
 	let curToken = "";
 	let lastTokenValue = Infinity;
@@ -72,18 +72,17 @@ export function parse(num: string): number {
 				const [lowChar, highChar] = token;
 				const lowValue: number = DICTIONARY[lowChar];
 				const highValue: number = DICTIONARY[highChar];
-				if (lowValue.toString()[0] === "5")
-					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: lower digit in token "${token}" cannot be a multiple of five`);
+				if (isDigitMultipleOfFive(lowChar))
+					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: lower digit in token "${num.substring(i - 1, i + 1)}" cannot be a multiple of five`);
 				const maxHigh = lowValue * 10;
 				if (maxHigh < highValue)
-					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: higher digit in token "${token}" is too high`);
+					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: higher digit in token "${num.substring(i - 1, i + 1)}" is too high`);
 			}
 			const tokenValue = getTokenValue(token);
 			if (lastTokenValue < tokenValue)
-				throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: token "${token}" cannot be greater than the previous one`);
+				throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: token "${num.substring(i - 1, i + 1)}" cannot be greater than the previous one`);
 			result += tokenValue;
 			lastTokenValue = tokenValue;
-			// yield token;
 			curToken = "";
 		} else {
 			curToken = charUppercased;
@@ -154,4 +153,8 @@ function getTokenValue(token: string): number {
 		default:
 			throw new Error(`Invalid token ${token}`);
 	}
+}
+
+function isDigitMultipleOfFive(digit: string): boolean {
+	return digit === "V" || digit === "L" || digit === "D";
 }

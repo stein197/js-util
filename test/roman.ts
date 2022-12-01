@@ -420,13 +420,13 @@ mocha.describe("parse()", () => {
 			assert.equal(roman.parse(romanNum.toLowerCase()), arabicNum);
 	});
 	mocha.it("Should throw an error when string is empty", () => {
-		assert.throws(() => roman.parse(""), {message: "Cannot parse string \"\": the string is empty"});
+		assert.throws(() => roman.parse(""), {message: "Cannot parse \"\": the string is empty"});
 	});
 	mocha.it("Should throw an error when string contains invalid characters", () => {
-		assert.throws(() => roman.parse("VIa"), {message: "Cannot parse string \"VIa\": the character \"a\" at 2 is not valid roman digit"});
+		assert.throws(() => roman.parse("VIa"), {message: "Cannot parse \"VIa\" at 2: the character \"a\" is not valid roman digit"});
 	});
 	mocha.it("Should throw an error when string contains more than 3 same digits in a row", () => {
-		assert.throws(() => roman.parse("viiii"), {message: "Cannot parse string \"viiii\": the character \"i\" at 4 occurs more than 3 times in a row"});
+		assert.throws(() => roman.parse("viiii"), {message: "Cannot parse \"viiii\" at 4: the character \"i\" occurs more than 3 times in a row"});
 	});
 	mocha.it("Should throw an error when consequent digits combinations are bigger than previous ones", () => {
 		assert.throws(() => roman.parse("xxxixx"));
