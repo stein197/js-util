@@ -88,9 +88,10 @@ export function parse(num: string): number {
  * @throws {Error} If the number is not an integer or does not fall in range of [1..3999].
  * @example
  * ```ts
- * stringify(12); // "XII"
- * stringify(19); // "XIX"
- * stringify(21); // "XXI"
+ * stringify(12);   // "XII"
+ * stringify(19);   // "XIX"
+ * stringify(21);   // "XXI"
+ * stringify(4000); // throws an error
  * ```
  */
 export function stringify(num: number): string {
