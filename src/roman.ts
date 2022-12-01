@@ -34,7 +34,24 @@ const DICTIONARY_RADIX = {
 	9: ["IX",   "XC",   "CM"        ]
 };
 
-// TODO
+/**
+ * Parses the given roman number into a plain one. Case-insensetive. Throws errors if:
+ * - String is empty
+ * - String contains invalid characters
+ * - Characters occur more than 3 times in a row
+ * - String contains invalid subtraction sequences
+ * - The are sequences that are higher than the previous ones
+ * @param num Roman number to parse.
+ * @returns Plain parsed number.
+ * @throws {SyntaxError} In case of syntax error. The cases are listed in the description above.
+ * @example
+ * ```ts
+ * parse("XIX");       // 19
+ * parse("XXXIX");     // 39
+ * parse("mmmcmxcix"); // 3999
+ * parse("");          // throws an error
+ * ```
+ */
 export function parse(num: string): number {
 	if (!num)
 		throw new SyntaxError("Cannot parse string \"\": the string is empty");
