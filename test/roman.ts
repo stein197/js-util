@@ -432,6 +432,13 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("xxxixx"));
 		assert.throws(() => roman.parse("dddixd"));
 	});
+	mocha.it("Should throw an error when there are invalid token sequences", () => {
+		assert.throws(() => roman.parse("IVI"));
+		assert.throws(() => roman.parse("XIVI"));
+		assert.throws(() => roman.parse("VIVI"));
+		assert.throws(() => roman.parse("IVII"));
+		assert.throws(() => roman.parse("XIVIV"));
+	});
 	mocha.it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
 		assert.throws(() => roman.parse("il"), {message: "Cannot parse \"il\" at 1: higher digit in token \"il\" is too high"});
 		assert.throws(() => roman.parse("ic"), {message: "Cannot parse \"ic\" at 1: higher digit in token \"ic\" is too high"});
