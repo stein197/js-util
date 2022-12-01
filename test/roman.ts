@@ -474,14 +474,20 @@ mocha.describe("stringify()", () => {
 	});
 });
 mocha.describe("valid()", () => {
-	// TODO
-	mocha.it.skip("Should return false when the string is empty", () => {});
-	// TODO
-	mocha.it.skip("Should return false when the string contains invalid characters", () => {});
-	// TODO
-	mocha.it.skip("Should return false when the string contains more than 3 occurences of the same digit in a row", () => {});
-	// TODO
-	mocha.it.skip("Should return false when the string contains bigger subsequent digits than previous ones", () => {});
-	// TODO
-	mocha.it.skip("Should return true when the string is correct", () => {});
+	mocha.it("Should return false when the string is empty", () => {
+		assert.equal(roman.valid(""), false);
+	});
+	mocha.it("Should return false when the string contains invalid characters", () => {
+		assert.equal(roman.valid("a"), false);
+	});
+	mocha.it("Should return false when the string contains more than 3 occurences of the same digit in a row", () => {
+		assert.equal(roman.valid("iiii"), false);
+	});
+	mocha.it("Should return false when the string contains bigger subsequent digits than previous ones", () => {
+		assert.equal(roman.valid("XXXIXX"), false);
+	});
+	mocha.it.skip("Should return true when the string is correct", () => {
+		for (const [romanNum] of CASES)
+			assert.equal(roman.valid(romanNum), true);
+	});
 });
