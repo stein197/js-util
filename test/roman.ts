@@ -432,26 +432,24 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("xxxixx"));
 		assert.throws(() => roman.parse("dddixd"));
 	});
-	// TODO: Add error messages
 	mocha.it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
-		assert.throws(() => roman.parse("il"));
-		assert.throws(() => roman.parse("ic"));
-		assert.throws(() => roman.parse("id"));
-		assert.throws(() => roman.parse("im"));
-		assert.throws(() => roman.parse("xd"));
-		assert.throws(() => roman.parse("xm"));
+		assert.throws(() => roman.parse("il"), {message: "Cannot parse \"il\" at 1: higher digit in token \"il\" is too high"});
+		assert.throws(() => roman.parse("ic"), {message: "Cannot parse \"ic\" at 1: higher digit in token \"ic\" is too high"});
+		assert.throws(() => roman.parse("id"), {message: "Cannot parse \"id\" at 1: higher digit in token \"id\" is too high"});
+		assert.throws(() => roman.parse("im"), {message: "Cannot parse \"im\" at 1: higher digit in token \"im\" is too high"});
+		assert.throws(() => roman.parse("xd"), {message: "Cannot parse \"xd\" at 1: higher digit in token \"xd\" is too high"});
+		assert.throws(() => roman.parse("xm"), {message: "Cannot parse \"xm\" at 1: higher digit in token \"xm\" is too high"});
 	});
-	// TODO: Add error messages
 	mocha.it("Should throw an error when there are invalid subtraction (subtraction of digits that are multiple of five)", () => {
-		assert.throws(() => roman.parse("vx"));
-		assert.throws(() => roman.parse("vl"));
-		assert.throws(() => roman.parse("vc"));
-		assert.throws(() => roman.parse("vd"));
-		assert.throws(() => roman.parse("vm"));
-		assert.throws(() => roman.parse("lc"));
-		assert.throws(() => roman.parse("ld"));
-		assert.throws(() => roman.parse("lm"));
-		assert.throws(() => roman.parse("dm"));
+		assert.throws(() => roman.parse("vx"), {message: "Cannot parse \"vx\" at 1: lower digit in token \"vx\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("vl"), {message: "Cannot parse \"vl\" at 1: lower digit in token \"vl\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("vc"), {message: "Cannot parse \"vc\" at 1: lower digit in token \"vc\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("vd"), {message: "Cannot parse \"vd\" at 1: lower digit in token \"vd\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("vm"), {message: "Cannot parse \"vm\" at 1: lower digit in token \"vm\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("lc"), {message: "Cannot parse \"lc\" at 1: lower digit in token \"lc\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("ld"), {message: "Cannot parse \"ld\" at 1: lower digit in token \"ld\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("lm"), {message: "Cannot parse \"lm\" at 1: lower digit in token \"lm\" cannot be a multiple of five"});
+		assert.throws(() => roman.parse("dm"), {message: "Cannot parse \"dm\" at 1: lower digit in token \"dm\" cannot be a multiple of five"});
 	});
 });
 mocha.describe("stringify()", () => {
