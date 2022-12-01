@@ -475,52 +475,6 @@ mocha.describe("stringify()", () => {
 		assert.throws(() => roman.stringify(1.5), {message: "Cannot convert 1.5 to a roman number: only integers are allowed"});
 	});
 });
-// TODO: Test for errors
-mocha.describe("tokenize()", () => {
-	const CASES = [
-		[],
-		["I"],
-		["V"],
-		["X"],
-		["L"],
-		["C"],
-		["D"],
-		["M"],
-		["I"],
-		["I", "I"],
-		["I", "I", "I"],
-		["IV"],
-		["V"],
-		["V", "I"],
-		["V", "I", "I"],
-		["V", "I", "I", "I"],
-		["IX"],
-		["X"],
-		["X", "I"],
-		["X", "I", "I"],
-		["X", "I", "I", "I"],
-		["X", "IV"],
-		["X", "V"],
-		["X", "V", "I"],
-		["X", "V", "I", "I"],
-		["X", "V", "I", "I", "I"],
-		["X", "IX"],
-		["X", "X"],
-		["X", "X", "I"],
-		["C", "L", "X", "X", "X", "V", "I", "I", "I"],
-		["M", "CM", "L", "X"],
-		["M", "CM", "XC", "V", "I", "I", "I"],
-		["M", "M", "X", "X", "V", "I", "I", "I"],
-		["M", "M", "X", "X", "X", "V", "I", "I", "I"],
-		["M", "M", "M", "CM", "XC", "IX"],
-		["IV", "XL", "CD"],
-		["X", "X", "IV", "X"]
-	]
-	mocha.it("Should return correct result", () => {
-		for (const tokenArray of CASES)
-			assert.deepStrictEqual([...roman.tokenize(tokenArray.join(""))], tokenArray);
-	});
-});
 mocha.describe("valid()", () => {
 	// TODO
 	mocha.it.skip("Should return false when the string is empty", () => {});

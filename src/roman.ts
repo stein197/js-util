@@ -10,7 +10,7 @@ export const MIN_VALUE = 1;
  */
 export const MAX_VALUE = 3999;
 const MAX_CHARS = 3;
-const DICTIONARY = { // TODO: Replace with ["I", "V", "X", "L", "C", "D", "M"]?
+const DICTIONARY = {
 	I: 1,
 	V: 5,
 	X: 10,
@@ -36,7 +36,43 @@ const DICTIONARY_RADIX = {
 
 // TODO
 export function parse(num: string): number {
-	num = prepare(num);
+	if (!num)
+		throw new SyntaxError("Cannot parse string \"\": the string is empty");
+	let result = 0;
+	let curToken = "";
+	let lastTokenValue = Infinity;
+	for (let i = 0, char = num[i], charUppercased = char.toUpperCase(), nextChar = num[i + 1], curCharCount = 1; i < num.length; i++, char = num[i], charUppercased = char?.toUpperCase(), nextChar = num[i + 1], curCharCount = char === num[i - 1] ? curCharCount + 1 : 1) {
+		const digit: number = DICTIONARY[charUppercased];
+		if (!digit)
+			throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: the character "${string.escape(char)}" is not valid roman digit`);
+		if (MAX_CHARS < curCharCount)
+			throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: the character "${char}" occurs more than ${MAX_CHARS} times in a row`);
+		const nextDigit: number = DICTIONARY[nextChar?.toUpperCase()];
+		const isLess = digit < nextDigit;
+		if ((isLess && curToken) || !isLess) {
+			const token = curToken + charUppercased;
+			if (token.length === 2) {
+				const [lowChar, highChar] = token;
+				const lowValue: number = DICTIONARY[lowChar];
+				const highValue: number = DICTIONARY[highChar];
+				if (lowValue % 5 === 0)
+					throw new SyntaxError(`Cannot parse "${string.escape(num)} at ${i}: lower digit in token "${token}" cannot be a multiple of five`);
+				const maxHigh = lowValue * 10;
+				if (maxHigh < highValue)
+					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: higher digit in token "${token}" is too high`);
+			}
+			const tokenValue = getTokenValue(token);
+			if (lastTokenValue < tokenValue)
+				throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: token "${token}" cannot be greater than the previous one`);
+			result += tokenValue;
+			lastTokenValue = tokenValue;
+			// yield token;
+			curToken = "";
+		} else {
+			curToken = charUppercased;
+		}
+	}
+	return result;
 }
 
 /**
@@ -79,35 +115,6 @@ export function stringify(num: number): string {
 }
 
 /**
- * Performs tokenization on roman number. Token is a sequence of characters (1 or 2) that can represent single number.
- * The function tokenizes the string regardless of its validity, so it's possible to pass incorrect roman number.
- * @param num String to tokenize.
- * @returns Array of tokens
- * @throws {SyntaxError} If the string contains invalid characters that are not allowed for roman numbers.
- * @example
- * ```ts
- * [...tokenize("XIX")]; // ["X", "IX"]
- * [...tokenize("XXIC")]; // ["X", "X", "IC"] despite that the string is invalid
- * ```
- */
-export function* tokenize(num: string): Generator<string> {
-	let curToken = "";
-	for (let i = 0, char = num[i], charUppercased = char.toUpperCase(), nextChar = num[i + 1], curCharCount = 1; i < num.length; i++, char = num[i], charUppercased = char?.toUpperCase(), nextChar = num[i + 1], curCharCount = char === num[i - 1] ? curCharCount + 1 : 1) {
-		const digit: number = DICTIONARY[charUppercased];
-		if (!digit)
-			throw new SyntaxError(`Cannot parse string "${string.escape(num)}": the character "${string.escape(char)}" at ${i} is not valid roman digit`);
-		const nextDigit: number = DICTIONARY[nextChar?.toUpperCase()];
-		const isLess = digit < nextDigit;
-		if ((isLess && curToken) || !isLess) {
-			yield curToken + charUppercased;
-			curToken = "";
-		} else {
-			curToken = charUppercased;
-		}
-	}
-}
-
-/**
  * Checks if the string is valid roman number.
  * @param num Number to validate.
  * @returns `true` if the string is valid roman number, `false` otherwise.
@@ -118,5 +125,16 @@ export function valid(num: string): boolean {
 		return true;
 	} catch {
 		return false;
+	}
+}
+
+function getTokenValue(token: string): number {
+	switch (token.length) {
+		case 1:
+			return DICTIONARY[token];
+		case 2:
+			return DICTIONARY[token[1]] - DICTIONARY[token[0]];
+		default:
+			throw new Error(`Invalid token ${token}`);
 	}
 }
