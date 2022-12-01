@@ -115,7 +115,6 @@ export function stringify(num: number): string {
 			result = DICTIONARY_REVERSED[radix / 2] + DICTIONARY_REVERSED[prevRadix].repeat((rest / prevRadix) % 5) + result;
 		else
 			result = DICTIONARY_REVERSED[prevRadix] + DICTIONARY_REVERSED[radix] + result;
-
 		prevRadix = radix;
 		radix *= 10;
 	}
