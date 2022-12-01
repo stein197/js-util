@@ -19,20 +19,10 @@ const DICTIONARY = {
 	D: 500,
 	M: 1000
 };
-
-// TODO: Remove, use only DICTIONARY const
-const DICTIONARY_RADIX = {
-	//  1       10      100    1000
-	1: ["I",    "X",    "C",   "M"  ],
-	2: ["II",   "XX",   "CC",  "MM" ],
-	3: ["III",  "XXX",  "CCC", "MMM"],
-	4: ["IV",   "XL",   "CD"        ],
-	5: ["V",    "L",    "D"         ],
-	6: ["VI",   "LX",   "DC"        ],
-	7: ["VII",  "LXX",  "DCC"       ],
-	8: ["VIII", "LXXX", "DCCC"      ],
-	9: ["IX",   "XC",   "CM"        ]
-};
+const DICTIONARY_REVERSED = Object.entries(DICTIONARY).reduce((dict, [key, value]) => {
+	dict[value] = key;
+	return dict;
+}, {});
 
 /**
  * Parses the given roman number into a plain one. Case-insensetive. Throws errors if:
@@ -109,23 +99,24 @@ export function stringify(num: number): string {
 	if (num < MIN_VALUE || MAX_VALUE < num)
 		throw new Error(`Cannot convert ${num} to a roman number: only integers within range of [${MIN_VALUE}..${MAX_VALUE}] are allowed`);
 	let result = "";
-	let radix = 1000;
-	while (radix >= 1) {
-		let radixAmount = 0;
-		while (num >= radix) {
-			num -= radix;
-			radixAmount++;
-		}
-		if (radixAmount) {
-			let radixIndex = 0;
-			let tmpRadix = radix;
-			while (tmpRadix >= 1) {
-				tmpRadix /= 10;
-				radixIndex++;
-			}
-			result += DICTIONARY_RADIX[radixAmount][radixIndex - 1];
-		}
-		radix /= 10;
+	let prevRadix = 1;
+	let radix = 10;
+	while (num > 0) {
+		const rest = num % radix;
+		num -= rest;
+		if (rest <= prevRadix * 3)
+			result = DICTIONARY_REVERSED[prevRadix].repeat(rest / prevRadix) + result;
+		else if (rest === prevRadix * 4)
+			result = DICTIONARY_REVERSED[prevRadix] + DICTIONARY_REVERSED[radix / 2] + result;
+		else if (rest === prevRadix * 5)
+			result = DICTIONARY_REVERSED[radix / 2] + result;
+		else if (rest <= prevRadix * 8)
+			result = DICTIONARY_REVERSED[radix / 2] + DICTIONARY_REVERSED[prevRadix].repeat((rest / prevRadix) % 5) + result;
+		else
+			result = DICTIONARY_REVERSED[prevRadix] + DICTIONARY_REVERSED[radix] + result;
+
+		prevRadix = radix;
+		radix *= 10;
 	}
 	return result;
 }
