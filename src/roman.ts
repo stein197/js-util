@@ -73,7 +73,7 @@ export function parse(num: string): number {
 				const lowValue: number = DICTIONARY[lowChar];
 				const highValue: number = DICTIONARY[highChar];
 				if (lowValue % 5 === 0)
-					throw new SyntaxError(`Cannot parse "${string.escape(num)} at ${i}: lower digit in token "${token}" cannot be a multiple of five`);
+					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: lower digit in token "${token}" cannot be a multiple of five`);
 				const maxHigh = lowValue * 10;
 				if (maxHigh < highValue)
 					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: higher digit in token "${token}" is too high`);
