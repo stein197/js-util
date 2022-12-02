@@ -438,6 +438,9 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("VIVI"));
 		assert.throws(() => roman.parse("IVII"));
 		assert.throws(() => roman.parse("XIVIV"));
+		assert.throws(() => roman.parse("XLXLXLXL"));
+		assert.throws(() => roman.parse("XCXCXC"));
+		assert.throws(() => roman.parse("CDCDCD"));
 		assert.throws(() => roman.parse("MXCXCXCXCXCXCXCXCXCXCXCXCXCXCVIVIVIVI"));
 	});
 	mocha.it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
