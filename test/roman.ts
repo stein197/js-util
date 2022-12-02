@@ -432,6 +432,7 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("xxxixx"));
 		assert.throws(() => roman.parse("dddixd"));
 	});
+	// TODO: Add error messages
 	mocha.it("Should throw an error when there are invalid token sequences equal to the previous ones", () => {
 		assert.throws(() => roman.parse("IVI"));
 		assert.throws(() => roman.parse("XIVI"));

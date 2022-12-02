@@ -48,6 +48,7 @@ export function parse(num: string): number {
 	let result = 0;
 	let curToken = "";
 	let lastTokenValue = Infinity;
+	let lastToken = "";
 	for (let i = 0, char = num[i], charUppercased = char.toUpperCase(), nextChar = num[i + 1], curCharCount = 1; i < num.length; i++, char = num[i], charUppercased = char?.toUpperCase(), nextChar = num[i + 1], curCharCount = char === num[i - 1] ? curCharCount + 1 : 1) {
 		const digit: number = DICTIONARY[charUppercased];
 		if (!digit)
@@ -69,10 +70,11 @@ export function parse(num: string): number {
 					throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: higher digit in token "${num.substring(i - 1, i + 1)}" is too high`);
 			}
 			const tokenValue = getTokenValue(token);
-			if (lastTokenValue < tokenValue)
+			if (lastTokenValue < tokenValue || lastTokenValue <= tokenValue && lastToken.length === 2 || lastToken.length === 2 && lastTokenValue.toString().length === tokenValue.toString().length)
 				throw new SyntaxError(`Cannot parse "${string.escape(num)}" at ${i}: token "${num.substring(i - 1, i + 1)}" cannot be greater than the previous one`);
 			result += tokenValue;
 			lastTokenValue = tokenValue;
+			lastToken = token;
 			curToken = "";
 		} else {
 			curToken = charUppercased;
