@@ -438,6 +438,7 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("VIVI"));
 		assert.throws(() => roman.parse("IVII"));
 		assert.throws(() => roman.parse("XIVIV"));
+		assert.throws(() => roman.parse("MXCXCXCXCXCXCXCXCXCXCXCXCXCXCVIVIVIVI"));
 	});
 	mocha.it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
 		assert.throws(() => roman.parse("il"), {message: "Cannot parse \"il\" at 1: higher digit in token \"il\" is too high"});
