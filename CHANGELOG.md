@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.6.0](../../compare/1.5.0..1.6.0) - 2022-12-02
+### Added
+- `roman` module with functions: `parse()`, `stringify()` and `valid()`
+
+### Removed
+- Main `index.js` entry file
+
 ## [1.5.0](../../compare/1.4.2..1.5.0) - 2022-11-23
 ### Added
 - Main `index.js` file that exports all available modules

@@ -18,6 +18,7 @@ const moduleName = require("@stein197/util/moduleName");
 | KeyboardCode | Enum of entries that match KeyboardEvent.code property |
 | PromiseState | Enum that denotes states that promises can have |
 | html | HTML DOM functions |
+| roman | Roman number functions |
 | semver | Semantic versioning functions |
 | string | String functions |
 | util | Common functions |
@@ -28,4 +29,3 @@ const moduleName = require("@stein197/util/moduleName");
 - `clean` - Clean the working directory from compiled files
 - `build` - Compile TypeScript source code
 - `test` - Run unit tests
-- `make:index` - Generate `index.js` and `index.d.ts` files
