@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.7.0](../../compare/1.6.0..1.7.0) - 2022-12-09
+### Added
+- `object` module with functions: `deepSeal()` and `deepFreeze()`
+
 ## [1.6.0](../../compare/1.5.0..1.6.0) - 2022-12-02
 ### Added
 - `roman` module with functions: `parse()`, `stringify()` and `valid()`
