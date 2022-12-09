@@ -8,7 +8,7 @@ export function deepSeal(object: any): void {
 
 /**
  * Same as {@link Object.freeze} but performs the freezing recursively.
- * @param object Object to
+ * @param object Object to freeze.
  */
 export function deepFreeze(object: any): void {
 	applyRecursive(Object.freeze, object);
