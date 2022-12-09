@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.8.0](../../compare/1.7.0..1.8.0) - 2022-12-09
+### Added
+- Functions to `object` module: `equal()`, `partlyEqual()`, `strictlyEqual()` and `clone()`
+
 ## [1.7.0](../../compare/1.6.0..1.7.0) - 2022-12-09
 ### Added
 - `object` module with functions: `deepSeal()` and `deepFreeze()`
