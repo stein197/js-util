@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.9.0](../../compare/1.8.0..1.9.0) - 2022-12-12
+### Added
+- File module with functions: `getBase()`, `getExt()`
+
 ## [1.8.0](../../compare/1.7.0..1.8.0) - 2022-12-09
 ### Added
 - Functions to `object` module: `equal()`, `partlyEqual()`, `strictlyEqual()` and `clone()`

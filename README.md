@@ -17,8 +17,9 @@ const moduleName = require("@stein197/util/moduleName");
 |--------|-------------|
 | KeyboardCode | Enum of entries that match KeyboardEvent.code property |
 | PromiseState | Enum that denotes states that promises can have |
-| object | Object functions |
+| file | File functions |
 | html | HTML DOM functions |
+| object | Object functions |
 | roman | Roman number functions |
 | semver | Semantic versioning functions |
 | string | String functions |
