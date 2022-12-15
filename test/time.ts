@@ -2,7 +2,6 @@ import * as assert from "assert";
 import * as mocha from "mocha";
 import * as time from "../src/time";
 
-// TODO
 mocha.describe("ms()", () => {
 	mocha.it("Should return correct result", () => {
 		assert.equal(time.ms("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 39593228009);
