@@ -59,16 +59,14 @@ const MS_REGEX_ARRAY = (Object.keys(MS_NAMES)).sort((a, b) => b.length - a.lengt
  */
 export function ms(time: string): number {
 	let tmpTime = time.toLowerCase().trim();
-	let result = -1;
+	let result = 0;
 	for (let i = 0, regex = MS_REGEX_ARRAY[i]; i < MS_REGEX_ARRAY.length && tmpTime; i++, regex = MS_REGEX_ARRAY[i]) {
 		const match = tmpTime.match(regex);
 		if (!match)
 			continue;
 		const [fullMatch, value, name] = match;
-		if (result < 0)
-			result = 0;
 		result += MS_NAMES[name] * +value;
 		tmpTime = tmpTime.replace(fullMatch, "").trim();
 	}
-	return tmpTime ? -1 : result;
+	return !time || tmpTime ? -1 : result;
 }
