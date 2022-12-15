@@ -68,7 +68,7 @@ export function ms(time: string): number {
 		if (result < 0)
 			result = 0;
 		result += MS_NAMES[name] * +value;
-		tmpTime = tmpTime.replace(fullMatch, "");
+		tmpTime = tmpTime.replace(fullMatch, "").trim();
 	}
-	return result;
+	return tmpTime ? -1 : result;
 }
