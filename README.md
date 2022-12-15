@@ -13,17 +13,18 @@ import * as moduleName from "@stein197/util/moduleName";
 // or
 const moduleName = require("@stein197/util/moduleName");
 ```
-| Module | Description |
-|--------|-------------|
-| KeyboardCode | Enum of entries that match KeyboardEvent.code property |
-| PromiseState | Enum that denotes states that promises can have |
-| file | File functions |
-| html | HTML DOM functions |
-| object | Object functions |
-| roman | Roman number functions |
-| semver | Semantic versioning functions |
-| string | String functions |
-| util | Common functions |
+
+**Modules**
+- `KeyboardCode`
+- `PromiseState`
+- `file`
+- `html`
+- `object`
+- `roman`
+- `semver`
+- `string`
+- `time`
+- `util`
 
 > NOTE: For more detailed documentation, please, refer to the TSDoc comments in the source code.
 

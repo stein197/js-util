@@ -2,9 +2,13 @@
 
 ## [Unreleased]
 
+## [1.10.0](../../compare/1.9.0..1.10.0) - 2022-12-15
+### Added
+- `time` module with function `ms()`
+
 ## [1.9.0](../../compare/1.8.0..1.9.0) - 2022-12-12
 ### Added
-- File module with functions: `getBase()`, `getExt()`
+- `file` module with functions: `getBase()`, `getExt()`
 
 ## [1.8.0](../../compare/1.7.0..1.8.0) - 2022-12-09
 ### Added
