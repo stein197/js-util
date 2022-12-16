@@ -61,10 +61,4 @@ export function parse(s: string): number | bigint {
 	return result;
 }
 
-export function stringify(bytes: number | bigint, options: Options): string {}
-
-type Options = {
-	scale: "decimal" | "binary";
-	precision?: string;
-	space: boolean;
-}
+export function format(format: string, bytes: number | bigint): string {}
