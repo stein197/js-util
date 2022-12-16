@@ -3,7 +3,7 @@ import * as mocha from "mocha";
 import * as byte from "../src/byte";
 
 // TODO
-mocha.describe("parse()", () => {});
+mocha.describe("bytes()", () => {});
 
 // TODO
 mocha.describe("format()", () => {});

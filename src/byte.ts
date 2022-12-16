@@ -61,4 +61,7 @@ export function bytes(s: string): number | bigint {
 	return result;
 }
 
-export function format(format: string, bytes: number | bigint): string {}
+export function format(format: string, bytes: number | bigint): string {
+	format; bytes;
+	return "";
+}
