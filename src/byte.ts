@@ -20,13 +20,13 @@ const REGEX_STRING = /^((?:\d+)?(?:\.\d+))\s*([a-zA-Z]{2,3})$/; // TODO: Parse s
  * @throws {@link SyntaxError} If the string format is invalid.
  * @example
  * ```ts
- * parse("10KB");  // 10000
- * parse("1 mib"); // 1048576
- * parse("1QiB");  // 1267650600228229401496703205376n
- * parse("1 ds");  // throws an error
+ * bytes("10KB");  // 10000
+ * bytes("1 mib"); // 1048576
+ * bytes("1QiB");  // 1267650600228229401496703205376n
+ * bytes("1 ds");  // throws an error
  * ```
  */
-export function parse(s: string): number | bigint {
+export function bytes(s: string): number | bigint {
 	const parsed = s.match(REGEX_STRING);
 	if (!parsed)
 		throw new SyntaxError(`The string "${string.escape(s)}" is not a valid`);
