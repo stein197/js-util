@@ -1,13 +1,12 @@
 {
   "name": "@stein197/util",
-  "version": "1.5.0",
+  "version": "1.10.0",
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {
     "clean": "del .\\*.js .\\*.d.ts 2>nul",
     "build": "tsc",
-    "test": "ts-mocha test\\*.ts",
-    "make:index": "node scripts/make-index.js"
+    "test": "ts-mocha test\\*.ts"
   },
   "repository": {
     "type": "git",
