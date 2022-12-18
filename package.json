@@ -1,10 +1,10 @@
 {
   "name": "@stein197/util",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {
-    "clean": "del .\\*.js .\\*.d.ts 2>nul",
+    "clean": "del .\\*.js .\\*.d.ts .\\*.map 2>nul",
     "build": "tsc",
     "test": "ts-mocha test\\*.ts"
   },

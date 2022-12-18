@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [1.11.0](../../compare/1.10.0..1.11.0) - 2022-12-18
+### Added
+- `array` module with functions: `diff()` and `uniq()`
+- Sourcemaps
+
 ## [1.10.0](../../compare/1.9.0..1.10.0) - 2022-12-15
 ### Added
 - `time` module with function `ms()`

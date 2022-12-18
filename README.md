@@ -15,6 +15,7 @@ const moduleName = require("@stein197/util/moduleName");
 ```
 
 **Modules**
+- `array`
 - `KeyboardCode`
 - `PromiseState`
 - `file`
