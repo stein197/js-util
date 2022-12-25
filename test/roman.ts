@@ -1,5 +1,5 @@
+import "mocha";
 import * as assert from "assert";
-import * as mocha from "mocha";
 import * as roman from "../src/roman";
 
 const CASES: [string, number][] = [
@@ -410,30 +410,30 @@ const CASES: [string, number][] = [
 	["MMMCMXCIX", 3999]	
 ];
 
-mocha.describe("parse()", () => {
-	mocha.it("Should return correct result", () => {
+describe("parse()", () => {
+	it("Should return correct result", () => {
 		for (const [romanNum, arabicNum] of CASES)
 			assert.equal(roman.parse(romanNum), arabicNum);
 	});
-	mocha.it("Should return correct result when strings are lowercased", () => {
+	it("Should return correct result when strings are lowercased", () => {
 		for (const [romanNum, arabicNum] of CASES)
 			assert.equal(roman.parse(romanNum.toLowerCase()), arabicNum);
 	});
-	mocha.it("Should throw an error when string is empty", () => {
+	it("Should throw an error when string is empty", () => {
 		assert.throws(() => roman.parse(""), {message: "Cannot parse \"\": the string is empty"});
 	});
-	mocha.it("Should throw an error when string contains invalid characters", () => {
+	it("Should throw an error when string contains invalid characters", () => {
 		assert.throws(() => roman.parse("VIa"), {message: "Cannot parse \"VIa\" at 2: the character \"a\" is not valid roman digit"});
 	});
-	mocha.it("Should throw an error when string contains more than 3 same digits in a row", () => {
+	it("Should throw an error when string contains more than 3 same digits in a row", () => {
 		assert.throws(() => roman.parse("viiii"), {message: "Cannot parse \"viiii\" at 4: the character \"i\" occurs more than 3 times in a row"});
 	});
-	mocha.it("Should throw an error when consequent digits combinations are bigger than previous ones", () => {
+	it("Should throw an error when consequent digits combinations are bigger than previous ones", () => {
 		assert.throws(() => roman.parse("xxxixx"));
 		assert.throws(() => roman.parse("dddixd"));
 	});
 	// TODO: Add error messages
-	mocha.it("Should throw an error when there are invalid token sequences equal to the previous ones", () => {
+	it("Should throw an error when there are invalid token sequences equal to the previous ones", () => {
 		assert.throws(() => roman.parse("IVI"));
 		assert.throws(() => roman.parse("XIVI"));
 		assert.throws(() => roman.parse("VIVI"));
@@ -448,7 +448,7 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("CDCDCD"));
 		assert.throws(() => roman.parse("MXCXCXCXCXCXCXCXCXCXCXCXCXCXCVIVIVIVI"));
 	});
-	mocha.it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
+	it("Should throw an error when there are invalid subtraction (large gap between subtracted and subtractor)", () => {
 		assert.throws(() => roman.parse("il"), {message: "Cannot parse \"il\" at 1: higher digit in token \"il\" is too high"});
 		assert.throws(() => roman.parse("ic"), {message: "Cannot parse \"ic\" at 1: higher digit in token \"ic\" is too high"});
 		assert.throws(() => roman.parse("id"), {message: "Cannot parse \"id\" at 1: higher digit in token \"id\" is too high"});
@@ -456,7 +456,7 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("xd"), {message: "Cannot parse \"xd\" at 1: higher digit in token \"xd\" is too high"});
 		assert.throws(() => roman.parse("xm"), {message: "Cannot parse \"xm\" at 1: higher digit in token \"xm\" is too high"});
 	});
-	mocha.it("Should throw an error when there are invalid subtraction (subtraction of digits that are multiple of five)", () => {
+	it("Should throw an error when there are invalid subtraction (subtraction of digits that are multiple of five)", () => {
 		assert.throws(() => roman.parse("vx"), {message: "Cannot parse \"vx\" at 1: lower digit in token \"vx\" cannot be a multiple of five"});
 		assert.throws(() => roman.parse("vl"), {message: "Cannot parse \"vl\" at 1: lower digit in token \"vl\" cannot be a multiple of five"});
 		assert.throws(() => roman.parse("vc"), {message: "Cannot parse \"vc\" at 1: lower digit in token \"vc\" cannot be a multiple of five"});
@@ -468,41 +468,41 @@ mocha.describe("parse()", () => {
 		assert.throws(() => roman.parse("dm"), {message: "Cannot parse \"dm\" at 1: lower digit in token \"dm\" cannot be a multiple of five"});
 	});
 });
-mocha.describe("stringify()", () => {
-	mocha.it("Should return correct result", () => {
+describe("stringify()", () => {
+	it("Should return correct result", () => {
 		for (const [romanNum, arabicNum] of CASES)
 			assert.equal(roman.stringify(arabicNum), romanNum);
 	});
-	mocha.it("Should return correct result when number is the lower bound", () => {
+	it("Should return correct result when number is the lower bound", () => {
 		assert.equal(roman.stringify(1), "I");
 	});
-	mocha.it("Should return correct result when number is the upper bound", () => {
+	it("Should return correct result when number is the upper bound", () => {
 		assert.equal(roman.stringify(3999), "MMMCMXCIX");
 	});
-	mocha.it("Should throw an error when the argument is less than 1", () => {
+	it("Should throw an error when the argument is less than 1", () => {
 		assert.throws(() => roman.stringify(0), {message: "Cannot convert 0 to a roman number: only integers within range of [1..3999] are allowed"});
 	});
-	mocha.it("Should throw an error when the argument is greater than 3999", () => {
+	it("Should throw an error when the argument is greater than 3999", () => {
 		assert.throws(() => roman.stringify(4000), {message: "Cannot convert 4000 to a roman number: only integers within range of [1..3999] are allowed"});
 	});
-	mocha.it("Should throw an error when the argument is not an integer", () => {
+	it("Should throw an error when the argument is not an integer", () => {
 		assert.throws(() => roman.stringify(1.5), {message: "Cannot convert 1.5 to a roman number: only integers are allowed"});
 	});
 });
-mocha.describe("valid()", () => {
-	mocha.it("Should return false when the string is empty", () => {
+describe("valid()", () => {
+	it("Should return false when the string is empty", () => {
 		assert.equal(roman.valid(""), false);
 	});
-	mocha.it("Should return false when the string contains invalid characters", () => {
+	it("Should return false when the string contains invalid characters", () => {
 		assert.equal(roman.valid("a"), false);
 	});
-	mocha.it("Should return false when the string contains more than 3 occurences of the same digit in a row", () => {
+	it("Should return false when the string contains more than 3 occurences of the same digit in a row", () => {
 		assert.equal(roman.valid("iiii"), false);
 	});
-	mocha.it("Should return false when the string contains bigger subsequent digits than previous ones", () => {
+	it("Should return false when the string contains bigger subsequent digits than previous ones", () => {
 		assert.equal(roman.valid("XXXIXX"), false);
 	});
-	mocha.it("Should return true when the string is correct", () => {
+	it("Should return true when the string is correct", () => {
 		for (const [romanNum] of CASES)
 			assert.equal(roman.valid(romanNum), true);
 	});
