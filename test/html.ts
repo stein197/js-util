@@ -4,7 +4,7 @@ import * as jsdom from "jsdom";
 import * as html from "../src/html";
 import * as util from "../src/util";
 
-describe("getHighestZIndex()", () => {
+describe("html.getHighestZIndex()", () => {
 	const window: Window = new jsdom.JSDOM().window as unknown as Window;
 	const getHighestZIndex = util.curry(html.getHighestZIndex, window);
 	afterEach(() => window.document.body.innerHTML = "");

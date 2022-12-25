@@ -2,7 +2,7 @@ import "mocha";
 import * as assert from "assert";
 import * as time from "../src/time";
 
-describe("ms()", () => {
+describe("time.ms()", () => {
 	it("Should return correct result", () => {
 		assert.equal(time.ms("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 39593228009);
 	});

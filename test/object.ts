@@ -11,7 +11,7 @@ const complexObjectCopy = {a: 1, b: {c: [1, 2, 3]}};
 const diffComplexObject = {a: 1, b: {c: [1, 3]}};
 const partComplexObject = {b: {c: []}};
 
-describe("deepMerge()", () => {
+describe("object.deepMerge()", () => {
 	it("Should return empty object when both objects are empty", () => {
 		assert.deepStrictEqual(object.deepMerge({}, {}), {});
 	});
@@ -44,7 +44,7 @@ describe("deepMerge()", () => {
 	});
 });
 
-describe("deepSeal()", () => {
+describe("object.deepSeal()", () => {
 	it("Should recursively seal an object", () => {
 		const o = stub();
 		object.deepSeal(o);
@@ -54,7 +54,7 @@ describe("deepSeal()", () => {
 	});
 });
 
-describe("deepFreeze()", () => {
+describe("object.deepFreeze()", () => {
 	it("Should recursively freeze an object", () => {
 		const o = stub();
 		object.deepFreeze(o);
@@ -64,7 +64,7 @@ describe("deepFreeze()", () => {
 	});
 });
 
-describe("deepPreventExtensions()", () => {
+describe("object.deepPreventExtensions()", () => {
 	it("Should recursively prevent extensions", () => {
 		const o = stub();
 		object.deepPreventExtensions(o);
@@ -74,7 +74,7 @@ describe("deepPreventExtensions()", () => {
 	});
 });
 
-describe("equal()", () => {
+describe("object.equal()", () => {
 
 	describe("Nulls", () => {
 		it("equal(null, null) == true", () => assert.equal(object.equal(null, null), true));
@@ -130,7 +130,7 @@ describe("equal()", () => {
 	});
 });
 
-describe("partlyEqual()", () => {
+describe("object.partlyEqual()", () => {
 	describe("Arrays", () => {
 		it("Empty arrays == true", () => assert.equal(object.partlyEqual([], []), true));
 		it("Equal arrays == true", () => assert.equal(object.partlyEqual(["a"], ["a"]), true));
@@ -156,7 +156,7 @@ describe("partlyEqual()", () => {
 	});
 });
 
-describe("strictlyEqual()", () => {
+describe("object.strictlyEqual()", () => {
 	describe("Arrays", () => {
 		it("Empty arrays == true", () => assert.equal(object.strictlyEqual([], []), true));
 		it("Equal arrays == true", () => assert.equal(object.strictlyEqual(["a"], ["a"]), true));
@@ -182,7 +182,7 @@ describe("strictlyEqual()", () => {
 	});
 });
 
-describe("clone()", () => {
+describe("object.clone()", () => {
 	describe("Primitives", () => {
 		it("clone(null) === null", () => assert.equal(object.clone(null), null));
 		it("clone(true) === true", () => assert.equal(object.clone(true), true));

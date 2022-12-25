@@ -2,7 +2,7 @@ import "mocha";
 import * as assert from "assert";
 import * as file from "../src/file";
 
-describe("getBase()", () => {
+describe("file.getBase()", () => {
 	it("Should return a base", () => {
 		assert.equal(file.getBase("file.txt"), "file");
 	});
@@ -20,7 +20,7 @@ describe("getBase()", () => {
 	});
 });
 
-describe("getExt()", () => {
+describe("file.getExt()", () => {
 	it("Should return an extension", () => {
 		assert.equal(file.getExt("file.txt"), "txt");
 	});

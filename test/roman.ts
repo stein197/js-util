@@ -410,7 +410,7 @@ const CASES: [string, number][] = [
 	["MMMCMXCIX", 3999]	
 ];
 
-describe("parse()", () => {
+describe("roman.parse()", () => {
 	it("Should return correct result", () => {
 		for (const [romanNum, arabicNum] of CASES)
 			assert.equal(roman.parse(romanNum), arabicNum);
@@ -468,7 +468,7 @@ describe("parse()", () => {
 		assert.throws(() => roman.parse("dm"), {message: "Cannot parse \"dm\" at 1: lower digit in token \"dm\" cannot be a multiple of five"});
 	});
 });
-describe("stringify()", () => {
+describe("roman.stringify()", () => {
 	it("Should return correct result", () => {
 		for (const [romanNum, arabicNum] of CASES)
 			assert.equal(roman.stringify(arabicNum), romanNum);
@@ -489,7 +489,7 @@ describe("stringify()", () => {
 		assert.throws(() => roman.stringify(1.5), {message: "Cannot convert 1.5 to a roman number: only integers are allowed"});
 	});
 });
-describe("valid()", () => {
+describe("roman.valid()", () => {
 	it("Should return false when the string is empty", () => {
 		assert.equal(roman.valid(""), false);
 	});

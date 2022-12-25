@@ -2,7 +2,7 @@ import "mocha";
 import * as assert from "assert";
 import * as util from "../src/util";
 
-describe("curry()", () => {
+describe("util.curry()", () => {
 	const testFunction = (a: boolean | undefined, b: number, c: string): string => `a: ${a}, b: ${b}, c: ${c}`;
 	
 	it("Should return a function with the same behavior when no arguments were passed", () => {
@@ -19,7 +19,7 @@ describe("curry()", () => {
 	});
 });
 
-describe("isPrimitive()", () => {
+describe("util.isPrimitive()", () => {
 	it("Should return false for undefined", () => {
 		assert.equal(util.isPrimitive(undefined), false);
 	});

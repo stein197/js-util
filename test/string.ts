@@ -2,7 +2,7 @@ import "mocha";
 import * as assert from "assert";
 import * as string from "../src/string";
 
-describe("escape()", () => {
+describe("string.escape()", () => {
 	it("Should return empty string when escaping empty one", () => {
 		assert.equal(string.escape(""), "");
 	});
@@ -17,7 +17,7 @@ describe("escape()", () => {
 	});
 });
 
-describe("unescape()", () => {
+describe("string.unescape()", () => {
 	it("Should return empty string when unescaping empty one", () => {
 		assert.equal(string.unescape(""), "");
 	});
@@ -32,7 +32,7 @@ describe("unescape()", () => {
 	});
 });
 
-describe("format()", () => {
+describe("string.format()", () => {
 	it("Should return empty string when formatting the empty one", () => {
 		assert.equal(string.format(""), "");
 	});

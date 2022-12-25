@@ -2,7 +2,7 @@ import "mocha";
 import * as assert from "assert";
 import * as array from "../src/array";
 
-describe("diff()", () => {
+describe("array.diff()", () => {
 	it("Should return correct result", () => {
 		assert.deepStrictEqual(array.diff(["a", "b", "c"], ["a", "c"]), ["b"]);
 	});
@@ -26,7 +26,7 @@ describe("diff()", () => {
 	});
 });
 
-describe("uniq()", () => {
+describe("array.uniq()", () => {
 	it("Should return correct result", () => {
 		assert.deepStrictEqual(array.uniq(["a", "b", "c", "b", "a"]), ["a", "b", "c"]);
 	});

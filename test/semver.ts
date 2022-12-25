@@ -2,7 +2,7 @@ import "mocha";
 import * as assert from "assert";
 import * as semver from "../src/semver";
 
-describe("compare()", () => {
+describe("semver.compare()", () => {
 	describe("Comparing main numbers without metadata", () => {
 		it("Should return -1 when the major number is lesser in the first version", () => {
 			assert.equal(semver.compare("1.9.9", "2.0.0"), -1);
@@ -87,7 +87,7 @@ describe("compare()", () => {
 	});
 });
 
-describe("next()", () => {
+describe("semver.next()", () => {
 	it("Should correctly increment the major number", () => {
 		assert.equal(semver.next("1.2.3", "major"), "2.0.0");
 	});
@@ -102,7 +102,7 @@ describe("next()", () => {
 	});
 });
 
-describe("parse()", () => {
+describe("semver.parse()", () => {
 	it("Should correctly parse when the version has only main numbers", () => {
 		assert.deepStrictEqual(semver.parse("1.2.3"), [1, 2, 3, undefined, undefined]);
 	});
@@ -120,7 +120,7 @@ describe("parse()", () => {
 	});
 });
 
-describe("stringify()", () => {
+describe("semver.stringify()", () => {
 	it("Should correctly stringify when the array has only main numbers", () => {
 		assert.equal(semver.stringify([1, 2, 3]), "1.2.3");
 	});
