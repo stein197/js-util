@@ -18,3 +18,33 @@ mocha.describe("curry()", () => {
 		assert.equal(curried("string"), "a: undefined, b: 12, c: string");
 	});
 });
+
+mocha.describe("isPrimitive()", () => {
+	mocha.it("Should return false for undefined", () => {
+		assert.equal(util.isPrimitive(undefined), false);
+	});
+	mocha.it("Should return false for null", () => {
+		assert.equal(util.isPrimitive(null), false);
+	});
+	mocha.it("Should return true for boolean", () => {
+		assert.equal(util.isPrimitive(true), true);
+	});
+	mocha.it("Should return true for number", () => {
+		assert.equal(util.isPrimitive(12), true);
+	});
+	mocha.it("Should return true for bigint", () => {
+		assert.equal(util.isPrimitive(12n), true);
+	});
+	mocha.it("Should return true for string", () => {
+		assert.equal(util.isPrimitive("string"), true);
+	});
+	mocha.it("Should return false for array", () => {
+		assert.equal(util.isPrimitive([]), false);
+	});
+	mocha.it("Should return false for object", () => {
+		assert.equal(util.isPrimitive({}), false);
+	});
+	mocha.it("Should return false for function", () => {
+		assert.equal(util.isPrimitive(() => {}), false);
+	});
+});
