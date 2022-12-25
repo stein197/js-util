@@ -6,13 +6,13 @@ const REGEX_EXT = /\.([^\.]+)$/;
  * @returns The base name.
  * @example
  * ```ts
- * getBase("file.txt");     // "file"
- * getBase("file.ext.txt"); // "file.ext"
- * getBase("file");         // "file"
- * getBase(".txt");         // ""
+ * base("file.txt");     // "file"
+ * base("file.ext.txt"); // "file.ext"
+ * base("file");         // "file"
+ * base(".txt");         // ""
  * ```
  */
-export function getBase(fileName: string): string {
+export function base(fileName: string): string {
 	return fileName.replace(REGEX_EXT, "");
 }
 
@@ -22,13 +22,13 @@ export function getBase(fileName: string): string {
  * @returns Extension name without leading dot.
  * @example
  * ```ts
- * getExt("file.txt");     // "txt"
- * getExt("file.ext.txt"); // "txt"
- * getExt("file");         // ""
- * getExt(".txt");         // "txt"
+ * ext("file.txt");     // "txt"
+ * ext("file.ext.txt"); // "txt"
+ * ext("file");         // ""
+ * ext(".txt");         // "txt"
  * ```
  */
-export function getExt(fileName: string): string {
+export function ext(fileName: string): string {
 	const match = fileName.match(REGEX_EXT);
 	return match ? match[1] : "";
 }

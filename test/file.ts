@@ -2,38 +2,38 @@ import "mocha";
 import * as assert from "assert";
 import * as file from "../src/file";
 
-describe("file.getBase()", () => {
+describe("file.base()", () => {
 	it("Should return a base", () => {
-		assert.equal(file.getBase("file.txt"), "file");
+		assert.equal(file.base("file.txt"), "file");
 	});
 	it("Should return a base when there are multiple dots in the filename", () => {
-		assert.equal(file.getBase("file.ext.txt"), "file.ext");
+		assert.equal(file.base("file.ext.txt"), "file.ext");
 	});
 	it("Should return the same string when there is no any extension", () => {
-		assert.equal(file.getBase("file"), "file");
+		assert.equal(file.base("file"), "file");
 	});
 	it("Should return an empty string when there are no a base", () => {
-		assert.equal(file.getBase(".txt"), "");
+		assert.equal(file.base(".txt"), "");
 	});
 	it("Should return an empty string when the filename is empty", () => {
-		assert.equal(file.getBase(""), "");
+		assert.equal(file.base(""), "");
 	});
 });
 
-describe("file.getExt()", () => {
+describe("file.ext()", () => {
 	it("Should return an extension", () => {
-		assert.equal(file.getExt("file.txt"), "txt");
+		assert.equal(file.ext("file.txt"), "txt");
 	});
 	it("Should return the last extension without the dot when there are multiple dots in the filename", () => {
-		assert.equal(file.getExt("file.ext.txt"), "txt");
+		assert.equal(file.ext("file.ext.txt"), "txt");
 	});
 	it("Should return an empty string when there is no any extension", () => {
-		assert.equal(file.getExt("file"), "");
+		assert.equal(file.ext("file"), "");
 	});
 	it("Should return an extension when where is no a base", () => {
-		assert.equal(file.getExt(".txt"), "txt");
+		assert.equal(file.ext(".txt"), "txt");
 	});
 	it("Should return an empty string when the filename is empty", () => {
-		assert.equal(file.getExt(""), "");
+		assert.equal(file.ext(""), "");
 	});
 });
