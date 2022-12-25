@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.12.0](../../compare/1.11.0..1.12.0) - 2022-12-25
+### Added
+- Functions: `object.deepMerge()`, `util.isPrimitive()`
+
+### Changed
+- Function names: `file.getBase()` -> `file.base()`, `file.getExt()` -> `file.ext()`
+- Test names are more descriptive
+
 ## [1.11.0](../../compare/1.10.0..1.11.0) - 2022-12-18
 ### Added
 - `array` module with functions: `diff()` and `uniq()`
