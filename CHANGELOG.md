@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.13.0](../../compare/1.12.0..1.13.0) - 2022-12-29
+### Added
+- `sleep()` function.
+
 ## [1.12.0](../../compare/1.11.0..1.12.0) - 2022-12-25
 ### Added
 - Functions: `object.deepMerge()`, `util.isPrimitive()`

@@ -34,3 +34,17 @@ export function isPrimitive(value: any): value is boolean | number | bigint | st
 	const valueType = typeof value;
 	return TYPE_PRIMITIVE.includes(valueType);
 }
+
+/**
+ * Returns a promise that will resolve in {@link ms} milliseconds.
+ * @param ms Amount of milliseconds after which the promise will be resolved.
+ * @returns Promise that will resolve in {@link ms} milliseconds.
+ * @example
+ * ```ts
+ * await sleep(10000);
+ * console.log("10 seconds have passed!");
+ * ```
+ */
+export function sleep(ms: number): Promise<void> {
+	return new Promise(resolve => globalThis.setTimeout(resolve, ms));
+}
