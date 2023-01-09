@@ -15,3 +15,9 @@ export function getHighestZIndex(window: Window, element: Element): number {
 	}
 	return z;
 }
+
+// TODO: Implementation, documentation, tests
+// TODO: In array of selectors, make nth-child to specify what child is exactly searched
+export function selector(element: Element): string {
+	return "";
+}
