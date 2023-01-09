@@ -2,7 +2,8 @@ import * as string from "./string";
 
 const DEFAULT_SELECTOR_OPTIONS: SelectorOptions = {
 	exclude: ["class", "id", "style"],
-	spaces: true
+	spaces: true,
+	quotes: true
 };
 
 /**
@@ -44,7 +45,8 @@ export function selector(element: Element, options: Partial<SelectorOptions> = D
 		const classSelector = curElement.classList.length ? ("." + [...curElement.classList].join(".")) : "";
 		const attrSelector = curElement.getAttributeNames().filter(attr => !opts.exclude.includes(attr)).map(attr => {
 			const value = curElement.getAttribute(attr);
-			return value ? `[${attr}="${string.escape(value)}"]` : `[${attr}]`;
+			const needQuotes = opts.quotes || (value && value.search(/^[a-zA-Z_][a-zA-Z0-9\-_]+$/) < 0);
+			return value ? `[${attr}=${needQuotes ? "\"" + string.escape(value) + "\"" : string.escape(value)}]` : `[${attr}]`;
 		}).join("");
 		const nthSelector = curElement.parentElement == null ? "" : `:nth-child(${Array.from(curElement.parentElement.children).indexOf(curElement) + 1})`;
 		result.unshift(typeSelector + idSelector + classSelector + attrSelector + nthSelector);
@@ -72,5 +74,16 @@ type SelectorOptions = {
 	 * ```
 	 */
 	spaces: boolean;
-	// TODO: quotes, onlyID, nth, root
+
+	/**
+	 * Enclose all attribute values in double quotes. When `false`, omits where possible.
+	 * @defaultValue `true`.
+	 * @example
+	 * ```ts
+	 * selector($0, {quotes: true});  // "html > body:nth-child(2) > div[title=\"Title\"]"
+	 * selector($0, {quotes: false}); // "html > body:nth-child(2) > div[title=Title]"
+	 * ```
+	 */
+	quotes: boolean;
+	// TODO: onlyID, nth, root, type
 }
