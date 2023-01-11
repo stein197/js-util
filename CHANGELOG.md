@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.14.0](../../compare/1.13.0..1.14.0) - 2023-01-11
+### Added
+- `selector()` function to `html` module.
+
 ## [1.13.0](../../compare/1.12.0..1.13.0) - 2022-12-29
 ### Added
 - `sleep()` function.
