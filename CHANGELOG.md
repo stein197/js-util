@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.15.0](../../compare/1.14.0..1.15.0) - 2023-01-11
+### Added
+- `intersects()` function to `html` modile.
+
 ## [1.14.0](../../compare/1.13.0..1.14.0) - 2023-01-11
 ### Added
 - `selector()` function to `html` module.
