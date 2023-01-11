@@ -18,7 +18,6 @@ export function getHighestZIndex(window: Window, element: Element): number {
 	return z;
 }
 
-// TODO: tests
 /**
  * Makes CSS selector of the specified element. Creates exact unambiguous CSS path to the element.
  * @param element Elements of which selector to create.
