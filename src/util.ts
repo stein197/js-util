@@ -53,28 +53,24 @@ export function sleep(ms: number): Promise<void> {
  * Checks if two rects intersect
  * @param rect1 First rect to check.
  * @param rect2 Second rect to check.
- * @param borders If set to `true` then fields with the same valeus would be considered as intersecting. `true` by
- *                default.
  * @returns `true` if rects intersect each other.
  * @example
  * ```ts
  * let rect1 = {x: 0, y: 0, width: 10, height: 10};
- * let rect2 = {x: 10, y: 0, width: 10, height: 10};
- * intersects(rect1, rect2, true);  // true, because rect1.x + rect1.width === rect2.x
- * intersects(rect1, rect2, false); // false
+ * let rect2 = {x: 5, y: 5, width: 10, height: 10};
+ * intersects(rect1, rect2); // true
  * ```
  */
-export function intersects(rect1: Rect, rect2: Rect, borders: boolean = true): boolean {
-	let xIntersects: boolean;
-	let yIntersects: boolean;
-	if (borders) {
-		xIntersects = rect1.x <= rect2.x && rect2.x <= rect1.x + rect1.width || rect1.x <= rect2.x + rect2.width && rect2.x + rect2.width <= rect1.x + rect1.width;
-		yIntersects = rect1.y <= rect2.y && rect2.y <= rect1.y + rect1.height || rect1.y <= rect2.y + rect2.height && rect2.y + rect2.height <= rect1.y + rect1.height;
-	} else {
-		xIntersects = rect1.x < rect2.x && rect2.x < rect1.x + rect1.width || rect1.x < rect2.x + rect2.width && rect2.x + rect2.width < rect1.x + rect1.width;
-		yIntersects = rect1.y < rect2.y && rect2.y < rect1.y + rect1.height || rect1.y < rect2.y + rect2.height && rect2.y + rect2.height < rect1.y + rect1.height;
-	}
-	return xIntersects && yIntersects;
+export function intersects(rect1: Rect, rect2: Rect): boolean {
+	const maxWidth = rect1.width + rect2.width;
+	const maxHeight = rect1.height + rect2.height;
+	const minX = Math.min(rect1.x, rect1.x + rect1.width, rect2.x, rect2.x + rect2.width);
+	const maxX = Math.max(rect1.x, rect1.x + rect1.width, rect2.x, rect2.x + rect2.width);
+	const minY = Math.min(rect1.y, rect1.y + rect1.height, rect2.y, rect2.y + rect2.height);
+	const maxY = Math.max(rect1.y, rect1.y + rect1.height, rect2.y, rect2.y + rect2.height);
+	const realWidth = maxX - minX;
+	const realHeight = maxY - minY;
+	return realWidth <= maxWidth && realHeight <= maxHeight;
 }
 
 type Rect = {

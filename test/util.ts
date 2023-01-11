@@ -50,71 +50,53 @@ describe("util.isPrimitive()", () => {
 });
 
 describe("util.intersects()", () => {
-	it("Should return true when one rect intersect another by top side", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 2, y: -6, width: 6, height: 10}), true);
+	const rect1 = {x: 0, y: 0, width: 10, height: 10};
+	it("Should return true when rects intersect vertically", () => {
+		const rect2 = {x: 2, y: 2, width: 6, height: 10}
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
-	it("Should return true when one rect intersect another by right side", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 5, y: 2, width: 10, height: 6}), true);
+	it("Should return true when rects intersect horizontally", () => {
+		const rect2 = {x: 2, y: 2, width: 10, height: 6};
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
-	it("Should return true when one rect intersect another by bottom side", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 2, y: 5, width: 6, height: 10}), true);
+	it("Should return true when rects only touch sides horizontally", () => {
+		const rect2 = {x: 10, y: 0, width: 10, height: 10};
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
-	it("Should return true when one rect intersect another by left side", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: -5, y: 2, width: 10, height: 6}), true);
+	it("Should return true when rects only touch sides vertically", () => {
+		const rect2 = {x: 0, y: 10, width: 10, height: 10};
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
-	it("Should return true when only borders touch each other by top side and \"borders\" is true", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: -10, width: 10, height: 10}, true), true);
-	});
-	it("Should return true when only borders touch each other by right side and \"borders\" is true", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 10, y: 0, width: 10, height: 10}, true), true);
-	});
-	it("Should return true when only borders touch each other by bottom side and \"borders\" is true", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: 10, width: 10, height: 10}, true), true);
-	});
-	it("Should return true when only borders touch each other by left side and \"borders\" is true", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: -10, y: 0, width: 10, height: 10}, true), true);
-	});
-	it("Should return false when only borders touch each other by top side and \"borders\" is false", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: -10, y: 0, width: 10, height: 10}, false), false);
-	});
-	it("Should return false when only borders touch each other by right side and \"borders\" is false", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 10, y: 0, width: 10, height: 10}, false), false);
-	});
-	it("Should return false when only borders touch each other by bottom side and \"borders\" is false", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: 10, width: 10, height: 10}, false), false);
-	});
-	it("Should return false when only borders touch each other by left side and \"borders\" is false", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: -10, width: 10, height: 10}, false), false);
+	it("Should return true when rects only touch corners", () => {
+		const rect2 = {x: 10, y: 10, width: 10, height: 10};
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
 	it("Should return true when one rect is inside another", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 2, y: 2, width: 6, height: 6}), true);
-		assert.equal(util.intersects({x: 2, y: 2, width: 6, height: 6}, {x: 0, y: 0, width: 10, height: 10}), true);
+		const rect2 = {x: 2, y: 2, width: 6, height: 6};
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
-	it("Should return true when only corners intersect and \"borders\" is true", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 10, y: 10, width: 10, height: 10}, true), true);
+	it("Should return true when both rects are equal", () => {
+		assert.equal(util.intersects(rect1, rect1), true);
 	});
-	it("Should return false when only corners intersect and \"borders\" is false", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 10, y: 10, width: 10, height: 10}, false), false);
+	it("Should return false when rects do not intersect horizontally", () => {
+		const rect2 = {x: 20, y: 0, width: 10, height: 10};
+		assert.equal(util.intersects(rect1, rect2), false);
+		assert.equal(util.intersects(rect2, rect1), false);
 	});
-	it("Should return true when both rect are equal and \"borders\" is true", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: 0, width: 10, height: 10}, true), true);
-	});
-	it("Should return true when both rect are equal and \"borders\" is false", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: 0, width: 10, height: 10}, false), true);
-	});
-	it("Should return false when rects do not intersect each other and the second one is above the first one", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: -20, width: 10, height: 10}, true), true);
-	});
-	it("Should return false when rects do not intersect each other and the second one is on the right from the first one", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 20, y: 0, width: 10, height: 10}, true), true);
-	});
-	it("Should return false when rects do not intersect each other and the second one is below the first one", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 0, y: 20, width: 10, height: 10}, true), true);
-	});
-	it("Should return false when rects do not intersect each other and the second one is on the left from the first one", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: -20, y: 0, width: 10, height: 10}, true), true);
+	it("Should return false when rects do not intersect vertically", () => {
+		const rect2 = {x: 0, y: 20, width: 10, height: 10};
+		assert.equal(util.intersects(rect1, rect2), false);
+		assert.equal(util.intersects(rect2, rect1), false);
 	});
 	it("Should return true when one of the rects is zero-valued and it's inside another one", () => {
-		assert.equal(util.intersects({x: 0, y: 0, width: 10, height: 10}, {x: 5, y: 5, width: 0, height: 0}), true);
+		const rect2 = {x: 5, y: 5, width: 0, height: 0};
+		assert.equal(util.intersects(rect1, rect2), true);
+		assert.equal(util.intersects(rect2, rect1), true);
 	});
 });
