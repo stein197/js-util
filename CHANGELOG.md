@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.16.0](../../compare/1.15.0..1.16.0) - 2023-01-12
+### Added
+- `char` module with functions: `isLetter`, `isNumber`, `isSpace`, `isPunct`, `isAlnum`
+
 ## [1.15.0](../../compare/1.14.0..1.15.0) - 2023-01-11
 ### Added
 - `intersects()` function to `html` modile.
