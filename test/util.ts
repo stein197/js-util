@@ -100,3 +100,45 @@ describe("util.intersects()", () => {
 		assert.equal(util.intersects(rect2, rect1), true);
 	});
 });
+
+describe("util.random()", () => {
+	it("Should always return expected number when bounds are the same", () => {
+		assert.equal(util.random(5, 5), 5);
+	});
+	it("Can return number between specified bounds when bounds are positive", () => {
+		while (util.random(2, 5) < 2 || 5 < util.random(2, 5));
+		assert.ok(true);
+	});
+	it("Can return number between specified bounds when bounds are negative", () => {
+		while (util.random(-5, -2) < -5 || -2 < util.random(-5, -2));
+		assert.ok(true);
+	});
+	it("Can return number between specified bounds when min is negative and max is positive", () => {
+		while (util.random(-5, 5) < -5 || 5 < util.random(-5, 5));
+		assert.ok(true);
+	});
+	it("Can return lower bound when bounds are positive", () => {
+		while (util.random(2, 5) !== 2);
+		assert.ok(true);
+	});
+	it("Can return lower bound when bounds are negative", () => {
+		while (util.random(-5, -2) !== -5);
+		assert.ok(true);
+	});
+	it("Can return lower bound when min is negative and max is positive", () => {
+		while (util.random(-5, 5) !== -5);
+		assert.ok(true);
+	});
+	it("Can return upper bound when bounds are positive", () => {
+		while (util.random(2, 5) !== 5);
+		assert.ok(true);
+	});
+	it("Can return upper bound when bounds are negative", () => {
+		while (util.random(-5, -2) !== -2);
+		assert.ok(true);
+	});
+	it("Can return upper bound when min is negative and max is positive", () => {
+		while (util.random(-5, 5) !== 5);
+		assert.ok(true);
+	});
+});

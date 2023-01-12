@@ -73,6 +73,16 @@ export function intersects(rect1: Rect, rect2: Rect): boolean {
 	return realWidth <= maxWidth && realHeight <= maxHeight;
 }
 
+/**
+ * Generates random number between specified values (including them).
+ * @param min Min value.
+ * @param max Max value.
+ * @returns Random value between specified bounds.
+ */
+export function random(min: number, max: number): number {
+	return Math.round(min + Math.random() * (max - min));
+}
+
 type Rect = {
 	x: number;
 	y: number;
