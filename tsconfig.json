@@ -12,7 +12,9 @@
 		"allowUnusedLabels": false,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
-		"importsNotUsedAsValues": "error"
+		"importsNotUsedAsValues": "error",
+		"sourceMap": true,
+		"inlineSources": true
 	},
 	"exclude": [],
 	"include": [
