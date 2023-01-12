@@ -1,7 +1,7 @@
 const REGEX_LETTER = /^\p{L}$/u;
 const REGEX_NUMBER = /^\p{N}$/u;
-const REGEX_SPACE = /^\p{Z}$/u;
-const REGEX_PUNCT = /^\p{P}$/u;
+const REGEX_SPACE = /^\s$/u;
+const REGEX_PUNCT = /^[!"#\$%&'\(\)\*\+,-.\/:;<=>\?@\[\]\^_\{\|\}~]$/u;
 
 /**
  * Checks if the character is letter.
