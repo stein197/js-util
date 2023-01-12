@@ -3,16 +3,16 @@ import * as mocha from "mocha";
 import * as char from "../src/char";
 
 // TODO
-mocha.describe("isLetter()", () => {});
+mocha.describe("char.isLetter()", () => {});
 
 // TODO
-mocha.describe("isNumber()", () => {});
+mocha.describe("char.isNumber()", () => {});
 
 // TODO
-mocha.describe("isSpace()", () => {});
+mocha.describe("char.isSpace()", () => {});
 
 // TODO
-mocha.describe("isPunct()", () => {});
+mocha.describe("char.isPunct()", () => {});
 
 // TODO
-mocha.describe("isAlnum()", () => {});
+mocha.describe("char.isAlnum()", () => {});
