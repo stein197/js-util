@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.18.0](../../compare/1.17.0..1.18.0) - 2023-01-16
+### Added
+- `object.deepMerge()` accepts `array` parameter
+
 ## [1.17.0](../../compare/1.16.0..1.17.0) - 2023-01-12
 ### Added
 - `random()` function to `util` module

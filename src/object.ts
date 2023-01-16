@@ -2,16 +2,34 @@ import * as array from "./array";
 import * as util from "./util";
 
 /**
- * Merges two objects deeply. If there are same keys in both objects then the latter will replace the first one.
+ * Merges two objects deeply. If there are same keys in both objects then the latter will replace the first one. Nested
+ * objects will be cloned.
  * @param a First object to merge.
  * @param b Second object to merge.
+ * @param arrays How to merge arrays. The options are:
+ *               - "merge" - Merge arrays the same way as objects (merge by key). It's the default value.
+ *               - "append" - Appends the values from the second array to the first array. Basically, the same as
+ *               `[...a, ...b]`, but it also deeply clones elements.
+ *               - "unique" - The same as the previous one but removes duplicates.
  * @example
  * ```ts
  * deepMerge({a: 1}, {b: {c: 3}}); // {a: 1, b: {c: 3}}
  * deepMerge({a: 1, b: {c: 3}}, {b: {c: {d: 4}}}); // {a: 1, b: {c: {d: 4}}}
+ * deepMerge([{a: 1}], [{a: 1}, {b: 2}], "unique"); // [{a: 1}, {b: 2}]
  * ```
  */
-export function deepMerge<T extends object, U extends object>(a: T, b: U): T & U {
+export function deepMerge<T extends object, U extends object>(a: T, b: U, arrays: "merge" | "append" | "unique" = "merge"): T & U {
+	const isArray = Array.isArray(a) && Array.isArray(b);
+	if (isArray && arrays === "append")
+		return [
+			...clone(a),
+			...clone(b)
+		] as T & U;
+	if (isArray && arrays === "unique")
+		return array.uniq([
+			...clone(a),
+			...clone(b)
+		], true) as T & U;
 	const result = Array.isArray(a) && Array.isArray(b) ? [] : {};
 	const keyArray = array.uniq([...Object.keys(a), ...Object.keys(b)]);
 	for (const key of keyArray) {
@@ -24,7 +42,7 @@ export function deepMerge<T extends object, U extends object>(a: T, b: U): T & U
 		} else if (!aKeyExists || util.isPrimitive(aValue) || util.isPrimitive(bValue)) {
 			result[key] = clone(bValue);
 		} else {
-			result[key] = deepMerge(aValue, bValue);
+			result[key] = deepMerge(aValue, bValue, arrays);
 		}
 	}
 	return result as T & U;

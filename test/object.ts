@@ -42,6 +42,15 @@ describe("object.deepMerge()", () => {
 	it("Should correctly merge object and array", () => {
 		assert.deepStrictEqual(object.deepMerge(["a", "b", "c"], {a: 1, b: 2, c: 3}), {0: "a", 1: "b", 2: "c", a: 1, b: 2, c: 3});
 	});
+	it("Should merge arrays by keys when \"arrays\" is \"merge\"", () => {
+		assert.deepStrictEqual(object.deepMerge([{a: 1}], [{b: 2}], "merge"), [{a: 1, b: 2}]);
+	});
+	it("Should append elements of the second array when \"arrays\" is \"append\"", () => {
+		assert.deepStrictEqual(object.deepMerge([{a: 1}], [{b: 2}], "append"), [{a: 1}, {b: 2}]);
+	});
+	it("Should filter out unique elements in array when \"arrays\" is \"uniqie\"", () => {
+		assert.deepStrictEqual(object.deepMerge([{a: 1}, {b: 2}], [{b: 2}, {c: 3}], "unique"), [{a: 1}, {b: 2}, {c: 3}]);
+	});
 });
 
 describe("object.deepSeal()", () => {
