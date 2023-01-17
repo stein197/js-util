@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.20.0](../../compare/1.19.0..1.20.0) - 2023-01-17
+### Added
+- `json.valid()` function
+
 ## [1.19.0](../../compare/1.18.0..1.19.0) - 2023-01-17
 ### Added
 - `json` module with functions: `isArray()`, `isObject()` and `isEmpty()`
