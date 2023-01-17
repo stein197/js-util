@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.19.0](../../compare/1.18.0..1.19.0) - 2023-01-17
+### Added
+- `json` module with functions: `isArray()`, `isObject()` and `isEmpty()`
+
 ## [1.18.0](../../compare/1.17.0..1.18.0) - 2023-01-16
 ### Added
 - `object.deepMerge()` accepts `array` parameter

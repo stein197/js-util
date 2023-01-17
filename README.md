@@ -21,6 +21,7 @@ const moduleName = require("@stein197/util/moduleName");
 - `PromiseState`
 - `file`
 - `html`
+- `json`
 - `object`
 - `roman`
 - `semver`
