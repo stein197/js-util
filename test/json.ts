@@ -25,3 +25,15 @@ describe("json.isEmpty()", () => {
 	it("Not empty array == false", () => assert.equal(json.isEmpty(["a"]), false));
 	it("Not empty object == false", () => assert.equal(json.isEmpty({a: 1}), false));
 });
+
+describe("json.valid()", () => {
+	it("Should return true for null", () => assert.equal(json.valid(null), true));
+	it("Should return true for boolean", () => assert.equal(json.valid(true), true));
+	it("Should return true for number", () => assert.equal(json.valid(12), true));
+	it("Should return true for string", () => assert.equal(json.valid("string"), true));
+	it("Should return true for plain array", () => assert.equal(json.valid(["a", "b", "c"]), true));
+	it("Should return true for plain object", () => assert.equal(json.valid({a: 1, b: 2, c: 3}), true));
+	it("Should return true for complex true JSON", () => assert.equal(json.valid([{a: 1}, {b: 2}, {c: 3}]), true));
+	it("Should return false when the argument is instance of another class", () => assert.equal(json.valid(new Map()), false));
+	it("Should return false when the argument contains complex object values", () => assert.equal(json.valid([new Map()]), false));
+});
