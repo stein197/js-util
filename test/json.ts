@@ -2,17 +2,17 @@ import "mocha";
 import * as assert from "assert";
 import * as json from "../src/json";
 
-describe("isArray()", () => {
+describe("json.isArray()", () => {
 	it("Empty array == true", () => assert.equal(json.isArray([]), true));
 	it("Empty object == false", () => assert.equal(json.isArray({}), false));
 });
 
-describe("isObject()", () => {
+describe("json.isObject()", () => {
 	it("Empty array == false", () => assert.equal(json.isObject([]), false));
 	it("Empty object == true", () => assert.equal(json.isObject({}), true));
 });
 
-describe("isEmpty()", () => {
+describe("json.isEmpty()", () => {
 	it("null is empty", () => assert.equal(json.isEmpty(null), true));
 	it("true is not empty", () => assert.equal(json.isEmpty(true), false));
 	it("false is not empty", () => assert.equal(json.isEmpty(false), false));
