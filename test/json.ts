@@ -36,4 +36,5 @@ describe("json.valid()", () => {
 	it("Should return true for complex true JSON", () => assert.equal(json.valid([{a: 1}, {b: 2}, {c: 3}]), true));
 	it("Should return false when the argument is instance of another class", () => assert.equal(json.valid(new Map()), false));
 	it("Should return false when the argument contains complex object values", () => assert.equal(json.valid([new Map()]), false));
+	it("Should return false when objects contain symbol keys", () => assert.equal(json.valid({a: {[Symbol()]: 1}}), false));
 });
