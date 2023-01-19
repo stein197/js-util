@@ -67,3 +67,6 @@ describe("string.format()", () => {
 		assert.equal(string.format("a {0} c {1}", "b", "d"), "a b c d");
 	});
 });
+
+// TODO
+describe("string.match()", () => {});
