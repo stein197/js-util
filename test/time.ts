@@ -5,6 +5,8 @@ import * as time from "../src/time";
 describe("time.ms()", () => {
 	it("Should return correct result", () => {
 		assert.equal(time.ms("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 39593228009);
+		assert.equal(time.ms("5min 30sec"), 330000);
+		assert.equal(time.ms("2d 30ms"), 172800030);
 	});
 	it("Should return correct result when the number and unit are separated by space", () => {
 		assert.equal(time.ms("1 s"), 1000);
@@ -20,6 +22,12 @@ describe("time.ms()", () => {
 	});
 	it("Should return -1 when the string is empty", () => {
 		assert.equal(time.ms(""), -1);
+	});
+	it("Should return -1 when the string contains repeated time units", () => {
+		assert.equal(time.ms("1s1s"), -1);
+	});
+	it("Should return -1 when the order of units isn't top-to-bottom", () => {
+		assert.equal(time.ms("1s2m"), -1);
 	});
 	describe("Names", () => {
 		it("ms", () => {

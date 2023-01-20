@@ -44,13 +44,16 @@ const MS_NAMES = {
 	years: MS_YEAR
 };
 
-const MS_REGEX_ARRAY = (Object.keys(MS_NAMES)).sort((a, b) => b.length - a.length).map(name => new RegExp(`(\\d+)\\s*(${name})`));
+// const MS_REGEX_ARRAY = (Object.keys(MS_NAMES)).sort((a, b) => b.length - a.length).map(name => new RegExp(`(\\d+)\\s*(${name})`));
+const REGEX_MS = new RegExp(`(\\d+)(${(Object.keys(MS_NAMES)).join("|")})(?=\\b|\\d)`, "g");
+const REGEX_SPACE = /\s+/g;
 
 /**
  * Parses the given string into milliseconds. Refer to {@link MS_NAMES} to see all available names. Note that months and
  * years equal to 30 and 365 days respectively despite that these two values are variable throughout time.
  * @param time String to parse.
- * @returns Time in milliseconds or -1 if the string cannot be parsed.
+ * @returns Time in milliseconds or -1 if the string cannot be parsed, the same unit occurs more than once or unit
+ *          values are unordered.
  * @example
  * ```ts
  * ms("1w 10mins"); // 605400000
@@ -58,15 +61,31 @@ const MS_REGEX_ARRAY = (Object.keys(MS_NAMES)).sort((a, b) => b.length - a.lengt
  * ```
  */
 export function ms(time: string): number {
-	let tmpTime = time.toLowerCase().trim();
+	time = time.toLowerCase().replace(REGEX_SPACE, "");
+	let prevUnit = -1;
 	let result = 0;
-	for (let i = 0, regex = MS_REGEX_ARRAY[i]; i < MS_REGEX_ARRAY.length && tmpTime; i++, regex = MS_REGEX_ARRAY[i]) {
-		const match = tmpTime.match(regex);
-		if (!match)
-			continue;
+	let matchAllLength = 0;
+	for (const match of time.matchAll(REGEX_MS)) {
 		const [fullMatch, value, name] = match;
-		result += MS_NAMES[name] * +value;
-		tmpTime = tmpTime.replace(fullMatch, "").trim();
+		const msUnit = MS_NAMES[name];
+		matchAllLength += fullMatch.length;
+		if (prevUnit >= 0 && prevUnit <= msUnit)
+			return -1;
+		prevUnit = msUnit;
+		result += msUnit * +value;
 	}
-	return !time || tmpTime ? -1 : result;
+	return !time || matchAllLength !== time.length ? -1 : result;
+	// for (let i = 0, regex = MS_REGEX_ARRAY[i]; i < MS_REGEX_ARRAY.length && tmpTime; i++, regex = MS_REGEX_ARRAY[i]) {
+	// 	const match = tmpTime.match(regex);
+	// 	if (!match)
+	// 		continue;
+	// 	const [fullMatch, value, name] = match;
+	// 	const msUnit = MS_NAMES[name];
+	// 	if (units.length && units[units.length - 1] < msUnit)
+	// 		return -1;
+	// 	units.push(msUnit);
+	// 	result += msUnit * +value;
+	// 	tmpTime = tmpTime.replace(fullMatch, "").trim();
+	// }
+	// return !time || tmpTime ? -1 : result;
 }
