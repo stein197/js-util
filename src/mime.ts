@@ -1,6 +1,17 @@
 const REGEX_MIME = /^(\*|[a-z0-9_-]+)\/(\*|[a-z0-9_-]+)$/
 
-// TODO: Documentation, tests
+/**
+ * Checks if mime matches passed type.
+ * @param type Base type against which to compare the mime.
+ * @param mime Mime to check.
+ * @returns `true` if mime matches the type.
+ * @example
+ * ```ts
+ * is("text/plain", "text/plain");   // true
+ * is("text/*", "text/plain");       // true
+ * is("text/*", "application/json"); // false
+ * ```
+ */
 export function is(type: string, mime: string): boolean {
 	const typeMatch = match(type);
 	const mimeMatch = match(mime);
