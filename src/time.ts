@@ -75,17 +75,4 @@ export function ms(time: string): number {
 		result += msUnit * +value;
 	}
 	return !time || matchAllLength !== time.length ? -1 : result;
-	// for (let i = 0, regex = MS_REGEX_ARRAY[i]; i < MS_REGEX_ARRAY.length && tmpTime; i++, regex = MS_REGEX_ARRAY[i]) {
-	// 	const match = tmpTime.match(regex);
-	// 	if (!match)
-	// 		continue;
-	// 	const [fullMatch, value, name] = match;
-	// 	const msUnit = MS_NAMES[name];
-	// 	if (units.length && units[units.length - 1] < msUnit)
-	// 		return -1;
-	// 	units.push(msUnit);
-	// 	result += msUnit * +value;
-	// 	tmpTime = tmpTime.replace(fullMatch, "").trim();
-	// }
-	// return !time || tmpTime ? -1 : result;
 }

@@ -23,7 +23,7 @@ describe("time.ms()", () => {
 	it("Should return -1 when the string is empty", () => {
 		assert.equal(time.ms(""), -1);
 	});
-	it("Should return -1 when the string contains repeated time units", () => {
+	it("Should return -1 when the string contains repeating time units", () => {
 		assert.equal(time.ms("1s1s"), -1);
 	});
 	it("Should return -1 when the order of units isn't top-to-bottom", () => {
