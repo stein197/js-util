@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.21.0](../../compare/1.20.0..1.21.0) - 2023-02-06
+### Added
+- `mime` module with function `is()`
+
+### Fixed
+- `time.ms()` is more strict about string it can accept
+
 ## [1.20.0](../../compare/1.19.0..1.20.0) - 2023-01-17
 ### Added
 - `json.valid()` function
