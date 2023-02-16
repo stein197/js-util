@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.22.0](../../compare/1.21.0..1.22.0) - 2023-02-16
+### Added
+- `string.toBoolean()` function
+
 ## [1.21.0](../../compare/1.20.0..1.21.0) - 2023-02-06
 ### Added
 - `mime` module with function `is()`
