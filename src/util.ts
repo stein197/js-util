@@ -79,7 +79,18 @@ export function intersects(rect1: Rect, rect2: Rect): boolean {
  * @param max Max value.
  * @returns Random value between specified bounds.
  */
-export function random(min: number, max: number): number {
+export function random(min: number, max: number): number;
+
+/**
+ * Generates random number between 0 and the specified value (including it).
+ * @param max Max value.
+ * @returns Random value between 0 and the specified one.
+ */
+export function random(max: number): number;
+
+export function random(a: number, b?: number): number {
+	const min = b == null ? 0 : a;
+	const max = b == null ? a : b;
 	return Math.round(min + Math.random() * (max - min));
 }
 

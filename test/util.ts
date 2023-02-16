@@ -141,4 +141,8 @@ describe("util.random()", () => {
 		while (util.random(-5, 5) !== 5);
 		assert.ok(true);
 	});
+	it("Should return correct result when specifying only upper bound", () => {
+		while (util.random(5) < 0 || 5 < util.random(5));
+		assert.ok(true);
+	});
 });

@@ -1,4 +1,5 @@
 import * as object from "./object";
+import * as util from "./util";
 
 /**
  * Returns a difference between arrays.
@@ -32,4 +33,18 @@ export function diff<T>(array: T[], subtrahend: T[], deep: boolean = false): T[]
  */
 export function uniq<T>(array: T[], deep: boolean = false): T[] {
 	return array.filter((v, i, a) => deep ? a.findIndex(item => object.strictlyEqual(item, v)) === i : a.indexOf(v) === i);
+}
+
+/**
+ * Returns the random element of an array.
+ * @param array An array from which to return an element.
+ * @returns Random element or `undefined` if array is empty.
+ * @example
+ * ```ts
+ * random(["a", "b", "c"]); // "b"
+ * random([]);              // undefined
+ * ```
+ */
+export function random<T>(array: T[]): T | undefined {
+	return array.length ? array[util.random(array.length - 1)] : undefined;
 }

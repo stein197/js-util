@@ -40,3 +40,24 @@ describe("array.uniq()", () => {
 		assert.deepStrictEqual(array.uniq([{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}], true), [{a: 1}, {b: 2}, {c: 3}]);
 	});
 });
+
+describe("array.random()", () => {
+	it("Should return undefined when the array is empty", () => {
+		assert.equal(array.random([]), undefined);
+	});
+	it("Should always return the only element when the array has only one", () => {
+		assert.equal(array.random(["a"]), "a");
+	});
+	it("Can return the first element", () => {
+		while (array.random(["a", "b", "c", "d", "e", "f"]) !== "a");
+		assert.ok(true);
+	});
+	it("Can return the last element", () => {
+		while (array.random(["a", "b", "c", "d", "e", "f"]) !== "f");
+		assert.ok(true);
+	});
+	it("Can return an element in the middle", () => {
+		while (array.random(["a", "b", "c", "d", "e", "f"]) !== "c");
+		assert.ok(true);
+	});
+});
