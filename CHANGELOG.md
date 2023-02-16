@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.23.0](../../compare/1.22.0..1.23.0) - 2023-02-16
+### Added
+- `array.random()` function
+
+### Changed
+- Overloaded `util.random()`. The function can also accept only upper bound
+
 ## [1.22.0](../../compare/1.21.0..1.22.0) - 2023-02-16
 ### Added
 - `string.toBoolean()` function
