@@ -3,6 +3,13 @@ const REGEX_FORMAT_DOUBLE_BRACE = /\{\{|\}\}/g;
 const CHARS_ESCAPE: string[] = [
 	"\"", "'", "\\"
 ];
+const BOOLEAN_COUNTERPARTS = {
+	1: "0",
+	true: "false",
+	yes: "no",
+	on: "off",
+	y: "n"
+}
 
 /**
  * Adds backslashes before `"`, `'` and `\` characters. The opposite of {@link unescape}
@@ -52,4 +59,26 @@ export function unescape(s: string, char: string = "\\"): string {
  */
 export function format(s: string, ...args: any[]): string {
 	return s.replace(REGEX_FORMAT_DOUBLE_BRACE, match => match === "{{" ? "{" : "}").replace(REGEX_FORMAT_PLACEHOLDER, (...[, index]) => args[index] == null ? "" : args[index]);
+}
+
+/**
+ * Converts boolean-like string into real booleans or null if the convertation cannot be done. Case-insensitive.
+ * Possible strings are "1", "true", "yes", "on", "y" and their contraries.
+ * @param value String to convert to a boolean.
+ * @returns Corresponding boolean or null of the convertation cannot be done.
+ * @example
+ * ```ts
+ * toBoolean("true");   // true
+ * toBoolean("off");    // false
+ * toBoolean("string"); // null
+ * ```
+ */
+export function toBoolean(value: string): boolean | null {
+	value = value.toLowerCase();
+	if (value in BOOLEAN_COUNTERPARTS)
+		return true;
+	for (const k in BOOLEAN_COUNTERPARTS)
+		if (value === BOOLEAN_COUNTERPARTS[k])
+			return false;
+	return null;
 }

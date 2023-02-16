@@ -67,3 +67,18 @@ describe("string.format()", () => {
 		assert.equal(string.format("a {0} c {1}", "b", "d"), "a b c d");
 	});
 });
+
+describe("string.toBoolean()", () => {
+	it("Should return true when string is \"1\"", () => assert.equal(string.toBoolean("1"), true));
+	it("Should return true when string is \"tRue\"", () => assert.equal(string.toBoolean("true"), true));
+	it("Should return true when string is \"yeS\"", () => assert.equal(string.toBoolean("yes"), true));
+	it("Should return true when string is \"on\"", () => assert.equal(string.toBoolean("on"), true));
+	it("Should return true when string is \"y\"", () => assert.equal(string.toBoolean("y"), true));
+	it("Should return false when string is \"0\"", () => assert.equal(string.toBoolean("0"), false));
+	it("Should return false when string is \"faLse\"", () => assert.equal(string.toBoolean("false"), false));
+	it("Should return false when string is \"no\"", () => assert.equal(string.toBoolean("no"), false));
+	it("Should return false when string is \"off\"", () => assert.equal(string.toBoolean("off"), false));
+	it("Should return false when string is \"n\"", () => assert.equal(string.toBoolean("n"), false));
+	it("Should return null when string is empty", () => assert.equal(string.toBoolean(""), null));
+	it("Should return null when string is arbitrary", () => assert.equal(string.toBoolean("string"), null));
+});
