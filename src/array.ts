@@ -48,3 +48,16 @@ export function uniq<T>(array: T[], deep: boolean = false): T[] {
 export function random<T>(array: T[]): T | undefined {
 	return array.length ? array[util.random(array.length - 1)] : undefined;
 }
+
+/**
+ * Shuffles the passed array
+ * @param array Array to shuffle.
+ * @returns The same array, but shuffled.
+ * @example
+ * ```ts
+ * shuffle(["a", "b", "c"]); // ["c", "a", "b"]
+ * ```
+ */
+export function shuffle<T>(array: T[]): T[] {
+	return array.sort(() => Math.random() >= .5 ? 1 : -1);
+}

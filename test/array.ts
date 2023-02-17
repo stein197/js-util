@@ -61,3 +61,17 @@ describe("array.random()", () => {
 		assert.ok(true);
 	});
 });
+
+describe("array.shuffle()", () => {
+	it("Should return shuffled array", () => {
+		const shuffledArray = array.shuffle("abcdef".split(""));
+		const isSameLength = shuffledArray.length === 6
+		const hasAllElements = "abcdef".split("").every(char => shuffledArray.includes(char));
+		const isShuffled = "abcdef".split("").some((char, index) => char !== shuffledArray[index]);
+		assert.ok(isSameLength && hasAllElements && isShuffled);
+	});
+	it("Should return the same reference to the array", () => {
+		const tmpArray = [];
+		assert.equal(array.shuffle(tmpArray), tmpArray);
+	});
+});
