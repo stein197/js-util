@@ -75,3 +75,27 @@ describe("array.shuffle()", () => {
 		assert.equal(array.shuffle(tmpArray), tmpArray);
 	});
 });
+
+describe("array.chunk()", () => {
+	it("Should return empty array when the array is empty", () => {
+		assert.deepStrictEqual(array.chunk([], 1), []);
+	});
+	it("Should return correct result when the array's length and the length are multiples", () => {
+		assert.deepStrictEqual(array.chunk(["a", "b", "c", "d", "e", "f"], 2), [["a", "b"], ["c", "d"], ["e", "f"]]);
+	});
+	it("Should return correct result when the array's length and the length aren't multiple", () => {
+		assert.deepStrictEqual(array.chunk(["a", "b", "c", "d", "e", "f"], 5), [["a", "b", "c", "d", "e"], ["f"]]);
+	});
+	it("Should return correct result when the length is 1", () => {
+		assert.deepStrictEqual(array.chunk(["a", "b", "c", "d", "e", "f"], 1), [["a"], ["b"], ["c"], ["d"], ["e"], ["f"]]);
+	});
+	it("Should return an array with single item when the length equal to the array's length", () => {
+		assert.deepStrictEqual(array.chunk(["a", "b", "c", "d", "e", "f"], 6), [["a", "b", "c", "d", "e", "f"]]);
+	});
+	it("Should return an array with single item when the length is greater than the array's length", () => {
+		assert.deepStrictEqual(array.chunk(["a", "b", "c", "d", "e", "f"], 10), [["a", "b", "c", "d", "e", "f"]]);
+	});
+	it("Should throw an error when the length is less than 1", () => {
+		assert.throws(() => array.chunk([], 0), {message: "Length value must be greater than 0. Specified value: 0"})
+	});
+});

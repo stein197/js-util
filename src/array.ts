@@ -61,3 +61,25 @@ export function random<T>(array: T[]): T | undefined {
 export function shuffle<T>(array: T[]): T[] {
 	return array.sort(() => Math.random() >= .5 ? 1 : -1);
 }
+
+/**
+ * Chunks the array into pieces of specified {@link length}.
+ * @param array Array to chunk.
+ * @param length Length of a piece. Minimal value is 1.
+ * @throws {Error} If {@link length} is less than 1.
+ * @example
+ * ```ts
+ * chunk(["a", "b", "c", "d", "e"], 2); // [["a", "b"], ["c", "d"], ["e"]]
+ * ```
+ */
+export function chunk<T>(array: T[], length: number): T[][] {
+	if (length < 1)
+		throw new Error(`Length value must be greater than 0. Specified value: ${length}`);
+	const chunksCount = Math.ceil(array.length / length);
+	const result = new Array<T[]>(chunksCount);
+	for (let i = 0; i < result.length; i++) {
+		const startIndex = length * i;
+		result[i] = array.slice(startIndex, startIndex + length);
+	}
+	return result;
+}
