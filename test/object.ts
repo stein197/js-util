@@ -130,6 +130,21 @@ describe("object.equal()", () => {
 		it("Full with part complex object == 1", () => assert.equal(object.equal(complexObject, partComplexObject), 1));
 	});
 
+	describe("Dates", () => {
+		it("Should return false when dates are unequal", () => assert.equal(object.equal(new Date(0), new Date(1)), false));
+		it("Should return true when dates are equal", () => assert.equal(object.equal(new Date(100), new Date(100)), true));
+	});
+
+	describe("Bigints", () => {
+		it("Should return false when bigints are unequal", () => assert.equal(object.equal(0n, 1n), false));
+		it("Should return true when bigintsare equal", () => assert.equal(object.equal(1n, 1n), true));
+	});
+
+	describe("Regexes", () => {
+		it("Should return false when regexes are unequal", () => assert.equal(object.equal(/a/, /b/), false));
+		it("Should return true when regexes are equal", () => assert.equal(object.equal(/a/, /a/), true));
+	});
+
 	describe("Mixed types with the same values", () => {
 		it("equal(1, \"1\") == false", () => assert.equal(object.equal(1, "1"), false));
 		it("equal(\"\", null) == false", () => assert.equal(object.equal("", null), false));

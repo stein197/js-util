@@ -82,6 +82,10 @@ export function deepPreventExtensions(object: any): void {
 export function equal(a: any, b: any): -1 | 1 | boolean {
 	if (a === b)
 		return true;
+	if (a instanceof Date && b instanceof Date)
+		return a.getTime() === b.getTime();
+	if (a instanceof RegExp && b instanceof RegExp)
+		return a.toString() === b.toString();
 	if (a != null && b != null && typeof a === "object" && typeof b === "object") {
 		const aEntries = Object.entries(a);
 		const bEntries = Object.entries(b);
