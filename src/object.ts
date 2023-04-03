@@ -147,12 +147,12 @@ export function clone<T>(arg: T): T {
  * @param obj 
  * @example
  * ```ts
- * plain({});                  // true
- * plain(Object.create(null)); // true
- * plain(new class {});        // false
+ * isPlain({});                  // true
+ * isPlain(Object.create(null)); // true
+ * isPlain(new class {});        // false
  * ```
  */
-export function plain(obj: any): boolean {
+export function isPlain(obj: any): boolean {
 	const proto = Object.getPrototypeOf(obj);
 	return proto == null || proto.constructor === Object;
 }

@@ -16,7 +16,7 @@ export function isArray(arg: any): arg is type.json.JsonArray {
  * @return `true` if the argument is an object literal.
  */
 export function isObject(arg: any): arg is type.json.JsonObject {
-	return object.plain(arg) && !isArray(arg);
+	return object.isPlain(arg) && !isArray(arg);
 }
 
 /**
@@ -42,7 +42,7 @@ export function valid(arg: any): arg is type.json.Json {
 	if (argType === "boolean" || argType === "number" || argType === "string")
 		return true;
 	const isArray = Array.isArray(arg);
-	const isObject = object.plain(arg);
+	const isObject = object.isPlain(arg);
 	const hasSymbols = Object.getOwnPropertySymbols(arg).length > 0;
 	if (!isArray && !isObject || hasSymbols)
 		return false;
