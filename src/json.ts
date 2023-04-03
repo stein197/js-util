@@ -1,11 +1,11 @@
-import type {Json, JsonArray, JsonObject} from "@stein197/ts-util";
+import type * as type from "@stein197/type";
 
 /**
  * Checks if passed argument is an array.
  * @param arg Object to check.
  * @return `true` if the argument is an array.
  */
-export function isArray(arg: any): arg is JsonArray {
+export function isArray(arg: any): arg is type.json.JsonArray {
 	return Array.isArray(arg);
 }
 
@@ -14,7 +14,7 @@ export function isArray(arg: any): arg is JsonArray {
  * @param arg Object to check.
  * @return `true` if the argument is an object literal.
  */
-export function isObject(arg: any): arg is JsonObject {
+export function isObject(arg: any): arg is type.json.JsonObject {
 	return typeof arg === "object" && !isArray(arg);
 }
 
@@ -24,7 +24,7 @@ export function isObject(arg: any): arg is JsonObject {
  * @param arg Object to check.
  * @returns `true` if the argument is empty
  */
-export function isEmpty(arg: Json): boolean {
+export function isEmpty(arg: type.json.Json): boolean {
 	const argType = typeof arg;
 	return arg == null || (argType === "string" || argType === "object") && !Object.values(arg).length;
 }
@@ -34,7 +34,7 @@ export function isEmpty(arg: Json): boolean {
  * @param arg Argument to check.
  * @returns `true` if the object is valid plain JSON structure.
  */
-export function valid(arg: any): arg is Json {
+export function valid(arg: any): arg is type.json.Json {
 	if (arg == null)
 		return true;
 	const argType = typeof arg;

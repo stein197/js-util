@@ -23,7 +23,6 @@ const moduleName = require("@stein197/util/moduleName");
 - `html`
 - `json`
 - `object`
-- `roman`
 - `semver`
 - `string`
 - `time`

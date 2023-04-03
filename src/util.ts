@@ -1,4 +1,4 @@
-import type {tuple} from "@stein197/ts-util";
+import type * as type from "@stein197/type";
 
 const TYPE_PRIMITIVE: string[] = [
 	"boolean",
@@ -21,7 +21,7 @@ const TYPE_PRIMITIVE: string[] = [
  * curried("string"); // "a: true, b: 1, c: string"
  * ```
  */
-export function curry<T extends (...args: any[]) => any, Args extends tuple.Optional<Parameters<T>> = tuple.Optional<Parameters<T>>>(f: T, ...init: Args): (...args: tuple.TrimStart<Parameters<T>, Args["length"]>) => ReturnType<T> {
+export function curry<T extends (...args: any[]) => any, Args extends type.tuple.Optional<Parameters<T>> = type.tuple.Optional<Parameters<T>>>(f: T, ...init: Args): (...args: type.tuple.TrimStart<Parameters<T>, Args["length"]>) => ReturnType<T> {
 	return (...args) => f(...init, ...args);
 }
 

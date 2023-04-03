@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.24.0](../../compare/1.23.0..1.24.0) - 2023-04-03
+### Added
+- `array.shuffle()`, `array.chunk()` and `array.sparse()` functions
+- Support for dates, bigints and regexes for `object.equal()` function
+
+### Removed
+- `roman` module was moved to [stein197/js-roman](https://github.com/stein197/js-roman) repository
+
 ## [1.23.0](../../compare/1.22.0..1.23.0) - 2023-02-16
 ### Added
 - `array.random()` function
