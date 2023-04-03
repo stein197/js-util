@@ -140,6 +140,23 @@ export function clone<T>(arg: T): T {
 	return result;
 }
 
+/**
+ * Checks of the argument is a plain object. An object is plain when it was created with:
+ * - `{}` literal
+ * - `Object.create(null)` call
+ * @param obj 
+ * @example
+ * ```ts
+ * plain({});                  // true
+ * plain(Object.create(null)); // true
+ * plain(new class {});        // false
+ * ```
+ */
+export function plain(obj: any): boolean {
+	const proto = Object.getPrototypeOf(obj);
+	return proto == null || proto.constructor === Object;
+}
+
 function applyRecursive(f: (o: any) => void, object: any): void {
 	if (object == null || typeof object !== "object")
 		return;

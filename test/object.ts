@@ -225,6 +225,18 @@ describe("object.clone()", () => {
 	});
 });
 
+describe("object.plain()", () => {
+	it("Should return true when the object was created with {} literal", () => {
+		assert.equal(object.plain({}), true);
+	});
+	it("Should return true when the object was created with Object.create(null) call", () => {
+		assert.equal(object.plain(Object.create(null)), true);
+	});
+	it("Should return false when the object is an instance of a derived class", () => {
+		assert.equal(object.plain(new class {}), false);
+	});
+});
+
 function stub() {
 	return {
 		a: 1,
