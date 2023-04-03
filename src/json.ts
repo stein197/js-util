@@ -1,4 +1,5 @@
 import type * as type from "@stein197/type";
+import * as object from "./object";
 
 /**
  * Checks if passed argument is an array.
@@ -15,7 +16,7 @@ export function isArray(arg: any): arg is type.json.JsonArray {
  * @return `true` if the argument is an object literal.
  */
 export function isObject(arg: any): arg is type.json.JsonObject {
-	return typeof arg === "object" && !isArray(arg);
+	return object.plain(arg) && !isArray(arg);
 }
 
 /**
@@ -40,9 +41,8 @@ export function valid(arg: any): arg is type.json.Json {
 	const argType = typeof arg;
 	if (argType === "boolean" || argType === "number" || argType === "string")
 		return true;
-	const argProto = Object.getPrototypeOf(arg);
 	const isArray = Array.isArray(arg);
-	const isObject = !argProto || argProto === Object.prototype;
+	const isObject = object.plain(arg);
 	const hasSymbols = Object.getOwnPropertySymbols(arg).length > 0;
 	if (!isArray && !isObject || hasSymbols)
 		return false;
