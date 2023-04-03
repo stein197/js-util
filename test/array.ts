@@ -99,3 +99,15 @@ describe("array.chunk()", () => {
 		assert.throws(() => array.chunk([], 0), {message: "Length value must be greater than 0. Specified value: 0"})
 	});
 });
+
+describe("array.sparse()", () => {
+	it("Should return false when the array is empty", () => {
+		assert.equal(array.sparse([]), false);
+	});
+	it("Should return false when the array is not sparse", () => {
+		assert.equal(array.sparse(["a", "b", "c"]), false);
+	});
+	it("Should return true when the array is sparse", () => {
+		assert.equal(array.sparse(["a", , "c"]), true);
+	});
+});
