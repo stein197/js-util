@@ -94,9 +94,51 @@ export function random(a: number, b?: number): number {
 	return Math.round(min + Math.random() * (max - min));
 }
 
+/**
+ * Tracks the calls of the passed function.
+ * @param f Function to track.
+ * @returns Object that contains tracked function and info property.
+ * @example
+ * ```ts
+ * const f = (a, b) => a + b;
+ * const tracker = track(f);
+ * tracker.f(1, 2);
+ * tracker.f(3, 4);
+ * tracker.calls(); // [[[1, 2], 3], [[3, 4], 7]]
+ * ```
+ */
+export function track<T extends any[], U>(f: (...args: T) => U): Tracker<T, U> {
+	const calls: [T, U][] = [];
+	return {
+		get calls() {
+			return calls;
+		},
+		f(...args) {
+			const result = f.call(this, ...args);
+			calls.push([args, result]);
+			return result;
+		}
+	}
+}
+
 type Rect = {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
+}
+
+type Tracker<T extends any[], U> = {
+
+	/**
+	 * Holds all tracked data with arguments and returned results.
+	 */
+	readonly calls: [T, U][];
+
+	/**
+	 * Tracked function.
+	 * @param args Function arguments.
+	 * @returns Result.
+	 */
+	readonly f: (...args: T) => U;
 }

@@ -146,3 +146,54 @@ describe("util.random()", () => {
 		assert.ok(true);
 	});
 });
+
+describe("track()", () => {
+	describe("calls", () => {
+		it("Should return empty array right after initialization", () => {
+			const t = util.track(() => {});
+			assert.deepStrictEqual(t.calls, []);
+		});
+		it("Should return correct array after calling the function", () => {
+			const f = (a, b) => a + b;
+			const t = util.track(f);
+			t.f(1, 2);
+			t.f(3, 4);
+			assert.deepStrictEqual(t.calls, [
+				[[1, 2], 3],
+				[[3, 4], 7]
+			]);
+		});
+	});
+	describe("f()", () => {
+		it("Should behave the same way as the original one", () => {
+			const f = (a, b) => a + b;
+			const t = util.track(f);
+			assert.equal(t.f(1, 2), 3);
+		});
+		it("\"this\" should be correct when tracking a function as an object property", () => {
+			const o = {a: 12, b: function() {return this;}};
+			const t = util.track(o.b);
+			o.b = t.f;
+			assert.equal(o.b(), o);
+		});
+		it("\"this\" should be correct when tracking a function as a class method", () => {
+			class A {
+				b() {
+					return this;
+				}
+			}
+			const t = util.track(A.prototype.b);
+			A.prototype.b = t.f;
+			const o = new A;
+			assert.equal(o.b(), o);
+		});
+		it("\"this\" should be correct when the function was bound", () => {
+			function a() {
+				return this;
+			}
+			const b = a.bind("string");
+			const t = util.track(b);
+			assert.equal(t.f(), "string");
+		});
+	});
+});
