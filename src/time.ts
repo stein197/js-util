@@ -44,7 +44,6 @@ const MS_NAMES = {
 	years: MS_YEAR
 };
 
-// const MS_REGEX_ARRAY = (Object.keys(MS_NAMES)).sort((a, b) => b.length - a.length).map(name => new RegExp(`(\\d+)\\s*(${name})`));
 const REGEX_MS = new RegExp(`(\\d+)(${(Object.keys(MS_NAMES)).join("|")})(?=\\b|\\d)`, "g");
 const REGEX_SPACE = /\s+/g;
 
