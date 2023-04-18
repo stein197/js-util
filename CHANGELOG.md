@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.25.0](../../compare/1.24.0..1.25.0) - 2023-04-18
+### Added
+- `object.isPlain()` and `util.track()` functions
+
 ## [1.24.0](../../compare/1.23.0..1.24.0) - 2023-04-03
 ### Added
 - `array.shuffle()`, `array.chunk()` and `array.sparse()` functions
