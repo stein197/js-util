@@ -90,11 +90,11 @@ export function chunk<T>(array: T[], length: number): T[][] {
  * @returns `true` if the array is sparse.
  * @example
  * ```ts
- * sparse(["a", "b", "c"]); // false
- * sparse(["a", , "c"]);    // true
+ * isSparse(["a", "b", "c"]); // false
+ * isSparse(["a", , "c"]);    // true
  * ```
  */
-export function sparse(array: any[]): boolean {
+export function isSparse(array: any[]): boolean {
 	for (let i = 0; i < array.length; i++)
 		if (!(i in array))
 			return true;

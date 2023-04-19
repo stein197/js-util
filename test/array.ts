@@ -100,14 +100,14 @@ describe("array.chunk()", () => {
 	});
 });
 
-describe("array.sparse()", () => {
+describe("array.isSparse()", () => {
 	it("Should return false when the array is empty", () => {
-		assert.equal(array.sparse([]), false);
+		assert.equal(array.isSparse([]), false);
 	});
 	it("Should return false when the array is not sparse", () => {
-		assert.equal(array.sparse(["a", "b", "c"]), false);
+		assert.equal(array.isSparse(["a", "b", "c"]), false);
 	});
 	it("Should return true when the array is sparse", () => {
-		assert.equal(array.sparse(["a", , "c"]), true);
+		assert.equal(array.isSparse(["a", , "c"]), true);
 	});
 });
