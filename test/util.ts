@@ -188,8 +188,8 @@ describe("track()", () => {
 			assert.equal(o.b(), o);
 		});
 		it("\"this\" should be correct when the function was bound", () => {
-			function a() {
-				return this as any;
+			function a(this: any) {
+				return this;
 			}
 			const b = a.bind("string");
 			const t = util.track(b);
