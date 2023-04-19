@@ -26,12 +26,12 @@ export function deepMerge<T extends object, U extends object>(a: T, b: U, arrays
 			...clone(b)
 		] as T & U;
 	if (isArray && arrays === "unique")
-		return array.uniq([
+		return array.unique([
 			...clone(a),
 			...clone(b)
 		], true) as T & U;
 	const result = Array.isArray(a) && Array.isArray(b) ? [] : {};
-	const keyArray = array.uniq([...Object.keys(a), ...Object.keys(b)]);
+	const keyArray = array.unique([...Object.keys(a), ...Object.keys(b)]);
 	for (const key of keyArray) {
 		const aKeyExists = key in a;
 		const bKeyExists = key in b;

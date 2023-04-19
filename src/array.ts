@@ -27,11 +27,11 @@ export function diff<T>(array: T[], subtrahend: T[], deep: boolean = false): T[]
  * @returns An array with elements that do not occur more than once.
  * @example
  * ```ts
- * uniq(["a", "b", "a"]);          // ["a", "b"]
- * uniq([{a: 1}, {b: 2}, {a: 1}]); // [{a: 1}, {b: 2}]
+ * unique(["a", "b", "a"]);          // ["a", "b"]
+ * unique([{a: 1}, {b: 2}, {a: 1}]); // [{a: 1}, {b: 2}]
  * ```
  */
-export function uniq<T>(array: T[], deep: boolean = false): T[] {
+export function unique<T>(array: T[], deep: boolean = false): T[] {
 	return array.filter((v, i, a) => deep ? a.findIndex(item => object.strictlyEqual(item, v)) === i : a.indexOf(v) === i);
 }
 

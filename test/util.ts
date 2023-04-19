@@ -189,7 +189,7 @@ describe("track()", () => {
 		});
 		it("\"this\" should be correct when the function was bound", () => {
 			function a() {
-				return this;
+				return this as any;
 			}
 			const b = a.bind("string");
 			const t = util.track(b);

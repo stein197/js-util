@@ -26,18 +26,18 @@ describe("array.diff()", () => {
 	});
 });
 
-describe("array.uniq()", () => {
+describe("array.unique()", () => {
 	it("Should return correct result", () => {
-		assert.deepStrictEqual(array.uniq(["a", "b", "c", "b", "a"]), ["a", "b", "c"]);
+		assert.deepStrictEqual(array.unique(["a", "b", "c", "b", "a"]), ["a", "b", "c"]);
 	});
 	it("Should return an empty array when the array is empty", () => {
-		assert.deepStrictEqual(array.uniq([]), []);
+		assert.deepStrictEqual(array.unique([]), []);
 	});
 	it("Should not subtract anything when elements are objects and \"deep\" is false", () => {
-		assert.deepStrictEqual(array.uniq([{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}]), [{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}]);
+		assert.deepStrictEqual(array.unique([{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}]), [{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}]);
 	});
 	it("Should subtract elements when elements are objects and \"deep\" is true", () => {
-		assert.deepStrictEqual(array.uniq([{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}], true), [{a: 1}, {b: 2}, {c: 3}]);
+		assert.deepStrictEqual(array.unique([{a: 1}, {b: 2}, {c: 3}, {b: 2}, {a: 1}], true), [{a: 1}, {b: 2}, {c: 3}]);
 	});
 });
 
