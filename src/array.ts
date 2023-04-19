@@ -105,6 +105,11 @@ export function isSparse(array: any[]): boolean {
  * Returns the first element of the array or undefined if the array is empty.
  * @param array Array from which to return.
  * @returns The first element of the array or undefined if the array is empty.
+ * @example
+ * ```ts
+ * first(["a", "b", "c"]); // "a"
+ * first([]);              // undefined
+ * ```
  */
 export function first<T>(array: T[]): T | undefined {
 	return array.length ? array[0] : undefined;
@@ -114,6 +119,11 @@ export function first<T>(array: T[]): T | undefined {
  * Returns the last element of the array or undefined if the array is empty.
  * @param array Array from which to return.
  * @returns The last element of the array or undefined if the array is empty.
+ * @example
+ * ```ts
+ * last(["a", "b", "c"]); // "c"
+ * last([]);              // undefined
+ * ```
  */
 export function last<T>(array: T[]): T | undefined {
 	return array.length ? array[array.length - 1] : undefined;
