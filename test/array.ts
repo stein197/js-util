@@ -111,3 +111,21 @@ describe("array.isSparse()", () => {
 		assert.equal(array.isSparse(["a", , "c"]), true);
 	});
 });
+
+describe("array.first()", () => {
+	it("Should return expected element when the array is not empty", () => {
+		assert.equal(array.first(["a", "b", "c"]), "a");
+	});
+	it("Should return undefined when the array is empty", () => {
+		assert.equal(array.first([]), undefined);
+	});
+});
+
+describe("array.last()", () => {
+	it("Should return expected element when the array is not empty", () => {
+		assert.equal(array.last(["a", "b", "c"]), "c");
+	});
+	it("Should return undefined when the array is empty", () => {
+		assert.equal(array.last([]), undefined);
+	});
+});
