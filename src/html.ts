@@ -137,6 +137,8 @@ export function encode(data: string): string {}
 // TODO
 export function decode(data: string): string {}
 
-function handleTableCell(row: number, col: number, cell: HTMLTableCellElement): any {}
+function handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
+	return cell.childElementCount === 1 && (cell.firstChild instanceof HTMLInputElement || cell.firstChild instanceof HTMLSelectElement || cell.firstChild instanceof HTMLButtonElement || cell.firstChild instanceof HTMLTextAreaElement) ? getInputValue(cell.firstChild) : cell.textContent;
+}
 
 type TableCellHandler = (row: number, col: number, cell: HTMLTableCellElement) => any;
