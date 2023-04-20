@@ -82,3 +82,19 @@ export function toBoolean(value: string): boolean | null {
 			return false;
 	return null;
 }
+
+
+// TODO
+export function ensureStart(string: string, prefix: string): string {}
+
+// TODO
+export function ensureEnd(string: string, postfix: string): string {}
+
+// TODO
+export function truncate(string: string, length: number, suffix?: string): string {}
+
+// TODO
+export function isEmpty(string: string): boolean {}
+
+// TODO
+export function isBlank(string: string): boolean {}
