@@ -150,7 +150,7 @@ export function truncate(string: string, length: number, suffix?: string): strin
  * ```
  */
 export function isEmpty(string: string): boolean {
-	return !!string.length;
+	return !string.length;
 }
 
 /**

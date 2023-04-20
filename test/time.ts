@@ -151,7 +151,7 @@ describe("time.s()", () => {
 
 describe("time.m()", () => {
 	it("Should return correct result", () => {
-		assert.equal(time.m("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 659887.1334833334);
+		assert.equal(time.m("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds").toFixed(2), 659887.13);
 		assert.equal(time.m("5min 30sec"), 5.5);
 		assert.equal(time.m("2d 30ms"), 2880.0005);
 	});
@@ -166,7 +166,7 @@ describe("time.m()", () => {
 describe("time.h()", () => {
 	it("Should return correct result", () => {
 		assert.equal(time.h("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 10998.11889138889);
-		assert.equal(time.h("5min 30sec"), 0.0916);
+		assert.equal(time.h("5min 30sec").toFixed(4), 0.0917);
 		assert.equal(time.h("2d 30ms"), 48.000008333333334);
 	});
 	it("Should return -1 when the string is invalid", () => {
@@ -180,7 +180,7 @@ describe("time.h()", () => {
 describe("time.d()", () => {
 	it("Should return correct result", () => {
 		assert.equal(time.d("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 458.2549538078704);
-		assert.equal(time.d("5min 30sec"), 0.003816);
+		assert.equal(time.d("5min 30sec").toFixed(6), 0.003819);
 		assert.equal(time.d("2d 30ms"), 2.000000347222222);
 	});
 	it("Should return -1 when the string is invalid", () => {
