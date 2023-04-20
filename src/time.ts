@@ -75,3 +75,20 @@ export function ms(time: string): number {
 	}
 	return !time || matchAllLength !== time.length ? -1 : result;
 }
+
+/**
+ * Parses the given string into seconds. Refer to {@link MS_NAMES} to see all available names. Note that months and
+ * years equal to 30 and 365 days respectively despite that these two values are variable throughout time.
+ * @param time String to parse.
+ * @returns Time in seconds or -1 if the string cannot be parsed, the same unit occurs more than once or unit
+ *          values are unordered.
+ * @example
+ * ```ts
+ * s("1w 10mins"); // 605400
+ * s(""); // -1
+ * ```
+ */
+export function s(time: string): number {
+	const result = ms(time);
+	return result < 0 ? result : result / MS_SECOND;
+}
