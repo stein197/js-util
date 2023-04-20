@@ -146,9 +146,50 @@ describe("string.ensureEnd()", () => {
 	});
 });
 
-// TODO
 describe("string.truncate()", () => {
-	
+	it("Truncating empty string always returns empty one", () => {
+		assert.equal(string.truncate("", 1), "");
+		assert.equal(string.truncate("", 0), "");
+		assert.equal(string.truncate("", -1), "");
+		assert.equal(string.truncate("", 1, ""), "");
+		assert.equal(string.truncate("", 0, ""), "");
+		assert.equal(string.truncate("", -1, ""), "");
+		assert.equal(string.truncate("", 1, "..."), "");
+		assert.equal(string.truncate("", 0, "..."), "");
+		assert.equal(string.truncate("", -1, "..."), "");
+	});
+	it("Truncating single character always returns either character itself or an empty one", () => {
+		assert.equal(string.truncate("a", 1), "a");
+		assert.equal(string.truncate("a", 0), "");
+		assert.equal(string.truncate("a", -1), "a");
+		assert.equal(string.truncate("a", 1, ""), "a");
+		assert.equal(string.truncate("a", 0, ""), "");
+		assert.equal(string.truncate("a", -1, ""), "a");
+		assert.equal(string.truncate("a", 1, "b"), "a");
+		assert.equal(string.truncate("a", 0, "b"), "");
+		assert.equal(string.truncate("a", -1, "b"), "a");
+		assert.equal(string.truncate("a", 1, "..."), "a");
+		assert.equal(string.truncate("a", 0, "..."), "");
+		assert.equal(string.truncate("a", -1, "..."), "a");
+	});
+	it("Default", () => {
+		assert.equal(string.truncate("abcdef", 3), "abc");
+	});
+	it("Truncating the string to it's length returns the string itself", () => {
+		assert.equal(string.truncate("abcdef", 6), "abcdef");
+	});
+	it("Truncating the string to it's length with prefix", () => {
+		assert.equal(string.truncate("abcdef", 6, "..."), "abc...");
+	});
+	it("Truncating the string to large length returns the string itself", () => {
+		assert.equal(string.truncate("abcdef", 100), "abcdef");
+	});
+	it("Truncating the string to large length with prefix returns the string itself", () => {
+		assert.equal(string.truncate("abcdef", 100, "..."), "abcdef");
+	});
+	it("Truncating the string to a total length with prefix returns the string itself", () => {
+		assert.equal(string.truncate("abcdef", 9, "..."), "abcdef");
+	});
 });
 
 describe("string.isEmpty()", () => {

@@ -83,7 +83,18 @@ export function toBoolean(value: string): boolean | null {
 	return null;
 }
 
-// TODO
+/**
+ * If the string starts with specified prefix then returns string itself, otherwise pads the string until it starts with
+ * the prefix.
+ * @param string String to ensure.
+ * @param prefix String to ensure this string starts with.
+ * @returns String that starts with specified prefix.
+ * @example
+ * ```ts
+ * ensureStart("https://domain.com", "https://"); // "https://domain.com"
+ * ensureStart("//domain.com", "https://");       // "https://domain.com"
+ * ```
+ */
 export function ensureStart(string: string, prefix: string): string {
 	if (prefix.length > string.length)
 		return ensureEnd(prefix, string);
@@ -96,7 +107,18 @@ export function ensureStart(string: string, prefix: string): string {
 	return prefix.substring(1, i) + string;
 }
 
-// TODO
+/**
+ * If the string ends with specified suffix then returns string itself, otherwise pads the string until it ends with the
+ * suffix.
+ * @param string String to ensure
+ * @param suffix String to ensure this string ends with.
+ * @returns String that ends with specified prefix.
+ * @example
+ * ```ts
+ * ensureEnd("/path?query", "?query"); // "/path?query"
+ * ensureEnd("/path?", "?query");      // "/path?query"
+ * ```
+ */
 export function ensureEnd(string: string, suffix: string): string {
 	const suffixlen = suffix.length;
 	if (suffixlen > string.length)
@@ -110,8 +132,24 @@ export function ensureEnd(string: string, suffix: string): string {
 	return string + suffix.substring(i);
 }
 
-// TODO
-export function truncate(string: string, length: number, suffix?: string): string {}
+/**
+ * Truncates string to a specified length with optional suffix.
+ * @param string String to truncate.
+ * @param length Length to which to truncate the string.
+ * @param suffix Optional string that will be added at the end.
+ * @returns Truncated string.
+ * @example
+ * ```ts
+ * truncate("Hello, World!", 10); // "Hello, Wor"
+ * truncate("Hello, World!", 13, "..."); // "Hello, Wor..."
+ * ```
+ */
+export function truncate(string: string, length: number, suffix?: string): string {
+	if (!suffix)
+		return string.substring(0, length);
+	const newLength = length - suffix.length;
+	return 0 < newLength && newLength < string.length ? string.substring(0, newLength) + suffix : string.substring(0, length);
+}
 
 /**
  * Checks if string is empty (if its length is 0).
