@@ -82,3 +82,39 @@ describe("string.toBoolean()", () => {
 	it("Should return null when string is empty", () => assert.equal(string.toBoolean(""), null));
 	it("Should return null when string is arbitrary", () => assert.equal(string.toBoolean("string"), null));
 });
+
+// TODO
+describe("string.ensureStart()", () => {
+	
+});
+
+// TODO
+describe("string.ensureEnd()", () => {
+	
+});
+
+// TODO
+describe("string.truncate()", () => {
+	
+});
+
+describe("string.isEmpty()", () => {
+	it("Should return true when the string is empty", () => {
+		assert.equal(string.isEmpty(""), true);
+	});
+	it("Should return false when the string is isn't empty", () => {
+		assert.equal(string.isEmpty("string"), false);
+	});
+});
+
+describe("string.isBlank()", () => {
+	it("Should return true when the string is empty", () => {
+		assert.equal(string.isBlank(""), true);
+	});
+	it("Should return true when the string is blank", () => {
+		assert.equal(string.isBlank(" \t\n"), true);
+	});
+	it("Should return false when the string isn't blank", () => {
+		assert.equal(string.isBlank("string"), false);
+	});
+});
