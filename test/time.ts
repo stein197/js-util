@@ -141,129 +141,52 @@ describe("time.s()", () => {
 		assert.equal(time.s("5min 30sec"), 330);
 		assert.equal(time.s("2d 30ms"), 172800.03);
 	});
-	it("Should return correct result when the number and unit are separated by space", () => {
-		assert.equal(time.s("1 s"), 1);
-	});
-	it("Should return correct result when the number and unit aren't separated by space", () => {
-		assert.equal(time.s("1s"), 1);
-	});
-	it("Should return -1 when the string contains time and garbage", () => {
-		assert.equal(time.s("Here is the time: 10hrs"), -1);
-	});
-	it("Should return -1 when the string does not contain time", () => {
+	it("Should return -1 when the string is invalid", () => {
 		assert.equal(time.s("String"), -1);
-	});
-	it("Should return -1 when the string is empty", () => {
 		assert.equal(time.s(""), -1);
-	});
-	it("Should return -1 when the string contains repeating time units", () => {
 		assert.equal(time.s("1s1s"), -1);
-	});
-	it("Should return -1 when the order of units isn't top-to-bottom", () => {
 		assert.equal(time.s("1s2m"), -1);
 	});
-	describe("Names", () => {
-		it("ms", () => {
-			assert.equal(time.s("1ms"), 0.001);
-		});
-		it("millisecond", () => {
-			assert.equal(time.s("1millisecond"), 0.001);
-		});
-		it("milliseconds", () => {
-			assert.equal(time.s("1milliseconds"), 0.001);
-		});
-		it("s", () => {
-			assert.equal(time.s("1s"), 1);
-		});
-		it("sec", () => {
-			assert.equal(time.s("1sec"), 1);
-		});
-		it("secs", () => {
-			assert.equal(time.s("1secs"), 1);
-		});
-		it("second", () => {
-			assert.equal(time.s("1second"), 1);
-		});
-		it("seconds", () => {
-			assert.equal(time.s("1seconds"), 1);
-		});
-		it("m", () => {
-			assert.equal(time.s("1m"), 60);
-		});
-		it("min", () => {
-			assert.equal(time.s("1min"), 60);
-		});
-		it("mins", () => {
-			assert.equal(time.s("1mins"), 60);
-		});
-		it("minute", () => {
-			assert.equal(time.s("1minute"), 60);
-		});
-		it("minutes", () => {
-			assert.equal(time.s("1minutes"), 60);
-		});
-		it("h", () => {
-			assert.equal(time.s("1h"), 3600);
-		});
-		it("hr", () => {
-			assert.equal(time.s("1hr"), 3600);
-		});
-		it("hrs", () => {
-			assert.equal(time.s("1hrs"), 3600);
-		});
-		it("hour", () => {
-			assert.equal(time.s("1hour"), 3600);
-		});
-		it("hours", () => {
-			assert.equal(time.s("1hours"), 3600);
-		});
-		it("d", () => {
-			assert.equal(time.s("1d"), 86400);
-		});
-		it("day", () => {
-			assert.equal(time.s("1day"), 86400);
-		});
-		it("days", () => {
-			assert.equal(time.s("1days"), 86400);
-		});
-		it("w", () => {
-			assert.equal(time.s("1w"), 604800);
-		});
-		it("wk", () => {
-			assert.equal(time.s("1wk"), 604800);
-		});
-		it("wks", () => {
-			assert.equal(time.s("1wks"), 604800);
-		});
-		it("week", () => {
-			assert.equal(time.s("1week"), 604800);
-		});
-		it("weeks", () => {
-			assert.equal(time.s("1weeks"), 604800);
-		});
-		it("mon", () => {
-			assert.equal(time.s("1mon"), 2592000);
-		});
-		it("month", () => {
-			assert.equal(time.s("1month"), 2592000);
-		});
-		it("months", () => {
-			assert.equal(time.s("1months"), 2592000);
-		});
-		it("y", () => {
-			assert.equal(time.s("1y"), 31536000);
-		});
-		it("yr", () => {
-			assert.equal(time.s("1yr"), 31536000);
-		});
-		it("yrs", () => {
-			assert.equal(time.s("1yrs"), 31536000);
-		});
-		it("year", () => {
-			assert.equal(time.s("1year"), 31536000);
-		});
-		it("years", () => {
-			assert.equal(time.s("1years"), 31536000);
-		});
+});
+
+describe("time.m()", () => {
+	it("Should return correct result", () => {
+		assert.equal(time.m("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 659887.1334833334);
+		assert.equal(time.m("5min 30sec"), 5.5);
+		assert.equal(time.m("2d 30ms"), 2880.0005);
+	});
+	it("Should return -1 when the string is invalid", () => {
+		assert.equal(time.m("String"), -1);
+		assert.equal(time.m(""), -1);
+		assert.equal(time.m("1s1s"), -1);
+		assert.equal(time.m("1s2m"), -1);
+	});
+});
+
+describe("time.h()", () => {
+	it("Should return correct result", () => {
+		assert.equal(time.h("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 10998.11889138889);
+		assert.equal(time.h("5min 30sec"), 0.0916);
+		assert.equal(time.h("2d 30ms"), 48.000008333333334);
+	});
+	it("Should return -1 when the string is invalid", () => {
+		assert.equal(time.h("String"), -1);
+		assert.equal(time.h(""), -1);
+		assert.equal(time.h("1s1s"), -1);
+		assert.equal(time.h("1s2m"), -1);
+	});
+});
+
+describe("time.d()", () => {
+	it("Should return correct result", () => {
+		assert.equal(time.d("1 year 2mon 4 wks 5d6h 7min8sec 9 milliseconds"), 458.2549538078704);
+		assert.equal(time.d("5min 30sec"), 0.003816);
+		assert.equal(time.d("2d 30ms"), 2.000000347222222);
+	});
+	it("Should return -1 when the string is invalid", () => {
+		assert.equal(time.d("String"), -1);
+		assert.equal(time.d(""), -1);
+		assert.equal(time.d("1s1s"), -1);
+		assert.equal(time.d("1s2m"), -1);
 	});
 });

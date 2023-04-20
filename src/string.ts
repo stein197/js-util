@@ -83,7 +83,6 @@ export function toBoolean(value: string): boolean | null {
 	return null;
 }
 
-
 // TODO
 export function ensureStart(string: string, prefix: string): string {}
 

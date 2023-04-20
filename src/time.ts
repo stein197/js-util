@@ -56,7 +56,7 @@ const REGEX_SPACE = /\s+/g;
  * @example
  * ```ts
  * ms("1w 10mins"); // 605400000
- * ms(""); // -1
+ * ms("");          // -1
  * ```
  */
 export function ms(time: string): number {
@@ -85,24 +85,57 @@ export function ms(time: string): number {
  * @example
  * ```ts
  * s("1w 10mins"); // 605400
- * s(""); // -1
+ * s("");          // -1
  * ```
  */
 export function s(time: string): number {
 	return getUnitAmount(time, MS_SECOND);
 }
 
-// TODO
+/**
+ * Parses the given string into minutes. Refer to {@link MS_NAMES} to see all available names. Note that months and
+ * years equal to 30 and 365 days respectively despite that these two values are variable throughout time.
+ * @param time String to parse.
+ * @returns Time in minutes or -1 if the string cannot be parsed, the same unit occurs more than once or unit
+ *          values are unordered.
+ * @example
+ * ```ts
+ * m("10mins"); // 10
+ * m("");       // -1
+ * ```
+ */
 export function m(time: string): number {
 	return getUnitAmount(time, MS_MINUTE);
 }
 
-// TODO
+/**
+ * Parses the given string into hours. Refer to {@link MS_NAMES} to see all available names. Note that months and
+ * years equal to 30 and 365 days respectively despite that these two values are variable throughout time.
+ * @param time String to parse.
+ * @returns Time in hours or -1 if the string cannot be parsed, the same unit occurs more than once or unit
+ *          values are unordered.
+ * @example
+ * ```ts
+ * h("1h 30m"); // 1.5
+ * h("");       // -1
+ * ```
+ */
 export function h(time: string): number {
 	return getUnitAmount(time, MS_HOUR);
 }
 
-// TODO
+/**
+ * Parses the given string into days. Refer to {@link MS_NAMES} to see all available names. Note that months and
+ * years equal to 30 and 365 days respectively despite that these two values are variable throughout time.
+ * @param time String to parse.
+ * @returns Time in days or -1 if the string cannot be parsed, the same unit occurs more than once or unit
+ *          values are unordered.
+ * @example
+ * ```ts
+ * d("1d 12h"); // 1.5
+ * d("");       // -1
+ * ```
+ */
 export function d(time: string): number {
 	return getUnitAmount(time, MS_DAY);
 }
