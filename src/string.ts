@@ -96,15 +96,10 @@ export function toBoolean(value: string): boolean | null {
  * ```
  */
 export function ensureStart(string: string, prefix: string): string {
-	if (prefix.length > string.length)
-		return ensureEnd(prefix, string);
-	let left = string.substring(0, prefix.length - 1);
-	let i = 0;
-	while (!prefix.endsWith(left) && i < prefix.length) {
-		i++;
-		left = left.substring(1, -1);
-	}
-	return prefix.substring(1, i) + string;
+	let result = string;
+	for (let i = 1; i <= prefix.length && !result.startsWith(prefix); i++)
+		result = prefix.slice(0, i) + string;
+	return result;
 }
 
 /**
@@ -120,16 +115,10 @@ export function ensureStart(string: string, prefix: string): string {
  * ```
  */
 export function ensureEnd(string: string, suffix: string): string {
-	const suffixlen = suffix.length;
-	if (suffixlen > string.length)
-		return ensureStart(suffix, string);
-	let right = string.substring(-suffixlen);
-	let i = suffixlen;
-	while (!suffix.startsWith(right) && i >= 1) {
-		i--;
-		right = right.substring(1);
-	}
-	return string + suffix.substring(i);
+	let result = string;
+	for (let i = 1; i <= suffix.length && !result.endsWith(suffix); i++)
+		result = string + suffix.slice(-i);
+	return result;
 }
 
 /**

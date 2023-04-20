@@ -117,8 +117,8 @@ describe("string.ensureStart()", () => {
 
 describe("string.ensureEnd()", () => {
 	it("Ensuring empty string returns suffix", () => {
-		assert.equal(string.ensureEnd("empty", "/"), "/");
-		assert.equal(string.ensureEnd("empty", "path/"), "path/");
+		assert.equal(string.ensureEnd("", "/"), "/");
+		assert.equal(string.ensureEnd("", "path/"), "path/");
 	});
 	it("Ensuring with empty string returns the string", () => {
 		assert.equal(string.ensureEnd("a", ""), "a");
