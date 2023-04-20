@@ -42,3 +42,28 @@ describe("html.selector()", () => {
 describe("html.getInputValue()", () => {
 	
 });
+
+// TODO
+describe("html.getTableRow()", () => {
+	
+});
+
+// TODO
+describe("html.getTableCol()", () => {
+	
+});
+
+// TODO
+describe("html.getTable()", () => {
+	
+});
+
+// TODO
+describe("html.encode()", () => {
+	
+});
+
+// TODO
+describe("html.decode()", () => {
+	
+});
