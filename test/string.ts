@@ -83,14 +83,67 @@ describe("string.toBoolean()", () => {
 	it("Should return null when string is arbitrary", () => assert.equal(string.toBoolean("string"), null));
 });
 
-// TODO
 describe("string.ensureStart()", () => {
-	
+	it("Ensuring empty string returns prefix", () => {
+		assert.equal(string.ensureStart("", "/"), "/");
+		assert.equal(string.ensureStart("", "path/"), "path/");
+	});
+	it("Ensuring with empty string returns the string", () => {
+		assert.equal(string.ensureStart("a", ""), "a");
+		assert.equal(string.ensureStart("abc", ""), "abc");
+	});
+	it("Ensuring with single char", () => {
+		assert.equal(string.ensureStart("a", "/"), "/a");
+		assert.equal(string.ensureStart("/a", "/"), "/a");
+		assert.equal(string.ensureStart("abc", "/"), "/abc");
+		assert.equal(string.ensureStart("/abc", "/"), "/abc");
+	});
+	it("Ensuring with string", () => {
+		assert.equal(string.ensureStart("def", "abc"), "abcdef");
+		assert.equal(string.ensureStart("cdef", "abc"), "abcdef");
+		assert.equal(string.ensureStart("abcdef", "abc"), "abcdef");
+	});
+	it("Ensuring with prefix larger than the string returns prefix", () => {
+		assert.equal(string.ensureStart("c", "bc"), "bc");
+		assert.equal(string.ensureStart("def", "abcdef"), "abcdef");
+	});
+	it("Ensuring with prefix larger than the string and partially matches the string", () => {
+		assert.equal(string.ensureStart("defghi", "abcdefg"), "abcdefghi");
+	});
+	it("Ensuring with prefix larger than the string and does not match the string", () => {
+		assert.equal(string.ensureStart("abc", "defghi"), "defghiabc");
+	});
 });
 
-// TODO
 describe("string.ensureEnd()", () => {
-	
+	it("Ensuring empty string returns suffix", () => {
+		assert.equal(string.ensureEnd("empty", "/"), "/");
+		assert.equal(string.ensureEnd("empty", "path/"), "path/");
+	});
+	it("Ensuring with empty string returns the string", () => {
+		assert.equal(string.ensureEnd("a", ""), "a");
+		assert.equal(string.ensureEnd("abc", ""), "abc");
+	});
+	it("Ensuring with single char", () => {
+		assert.equal(string.ensureEnd("a", "/"), "a/");
+		assert.equal(string.ensureEnd("a/", "/"), "a/");
+		assert.equal(string.ensureEnd("abc", "/"), "abc/");
+		assert.equal(string.ensureEnd("abc/", "/"), "abc/");
+	});
+	it("Ensuring with string", () => {
+		assert.equal(string.ensureEnd("abc", "def"), "abcdef");
+		assert.equal(string.ensureEnd("abcdef", "def"), "abcdef");
+	});
+	it("Ensuring with suffix larger than the string returns suffix", () => {
+		assert.equal(string.ensureEnd("a", "abc"), "abc");
+		assert.equal(string.ensureEnd("abc", "abcdef"), "abcdef");
+	});
+	it("Ensuring with suffix larger than the string and partially matches the string", () => {
+		assert.equal(string.ensureEnd("abcdef", "cdefghi"), "abcdefghi");
+	});
+	it("Ensuring with suffix larger than the string and does not match the string", () => {
+		assert.equal(string.ensureEnd("abc", "defghi"), "abcdefghi");
+	});
 });
 
 // TODO
