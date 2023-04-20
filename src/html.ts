@@ -109,13 +109,13 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 }
 
 // TODO
-export function getTableRow(table: HTMLTableElement | HTMLTableSectionElement, index: number, hander: TableCellHander = handleTableCell) {}
+export function getTableRow(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell) {}
 
 // TODO
-export function getTableCol(table: HTMLTableElement | HTMLTableSectionElement, index: number, hander: TableCellHander = handleTableCell) {}
+export function getTableCol(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell) {}
 
 // TODO
-export function getTable(table: HTMLTableElement | HTMLTableSectionElement, hander: TableCellHander = handleTableCell) {}
+export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell) {}
 
 // TODO
 export function encode(data: string): string {}
@@ -125,4 +125,4 @@ export function decode(data: string): string {}
 
 function handleTableCell(row: number, col: number, cell: HTMLTableCellElement): any {}
 
-type TableCellHander = (row: number, col: number, cell: HTMLTableCellElement) => any;
+type TableCellHandler = (row: number, col: number, cell: HTMLTableCellElement) => any;
