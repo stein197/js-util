@@ -45,3 +45,48 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
 	}
 	return result.join(" > ");
 }
+
+/**
+ * Returns input's value casted to a corresponding type. If the element is a `<select />` element and it has `multiple`
+ * attribute set, then an array of selected value will be returned. If the element is an `<input />` element, then the
+ * returned value will be as follows:
+ * | `type` attribute                | Returned type     |
+ * |---------------------------------|-------------------|
+ * | `checkbox` `radio`              | `boolean \| null` |
+ * | `color` `number` `range`        | `number`          |
+ * | `date` `datetime-local` `month` | `Date \| null`    |
+ * | `file`                          | `File[]`          |
+ * | `image`                         | `Image \| null`   |
+ * In other cases string is returned.
+ * @param input Input of which value is casted.
+ * @returns Casted input value.
+ */
+export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTMLButtonElement | HTMLTextAreaElement): any {
+	if (input instanceof HTMLSelectElement)
+		return input.multiple ? [...input.selectedOptions].map(opt => opt.value) : input.value;
+	if (input instanceof HTMLInputElement)
+		switch (input.type) {
+			case "checkbox":
+			case "radio":
+				return input.indeterminate ? null : input.checked;
+			case "color":
+				return +input.value.replace(/[^\d]+/, "");
+			case "date":
+			case "datetime-local":
+			case "month":
+				return input.value ? new Date(input.value) : null;
+			case "file":
+				return input.files ? [...input.files] : [];
+			case "image": {
+				if (!input.value)
+					return null;
+				const img = new Image();
+				img.src = input.value;
+				return img;
+			}
+			case "number":
+			case "range":
+				return input.value ? +input.value : NaN;
+		}
+	return input.value;
+}

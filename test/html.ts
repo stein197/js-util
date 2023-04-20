@@ -37,3 +37,8 @@ describe("html.selector()", () => {
 		assert.equal(html.selector(element), "html > body:nth-child(2) > main#id-main.class-main:nth-child(1) > div[title=\"\\\"Quoted title\\\"\"]:nth-child(2)");
 	});
 });
+
+// TODO
+describe("html.getInputValue()", () => {
+	
+});
