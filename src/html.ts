@@ -107,3 +107,18 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 		}
 	return input.value;
 }
+
+// TODO
+export function getTableRow(table: HTMLTableElement, index: number) {}
+
+// TODO
+export function getTableCol(table: HTMLTableElement, index: number) {}
+
+// TODO
+export function getTable(table: HTMLTableElement) {}
+
+// TODO
+export function encode(data: string): string {}
+
+// TODO
+export function decode(data: string): string {}
