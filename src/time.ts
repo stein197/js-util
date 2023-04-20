@@ -89,6 +89,25 @@ export function ms(time: string): number {
  * ```
  */
 export function s(time: string): number {
+	return getUnitAmount(time, MS_SECOND);
+}
+
+// TODO
+export function m(time: string): number {
+	return getUnitAmount(time, MS_MINUTE);
+}
+
+// TODO
+export function h(time: string): number {
+	return getUnitAmount(time, MS_HOUR);
+}
+
+// TODO
+export function d(time: string): number {
+	return getUnitAmount(time, MS_DAY);
+}
+
+function getUnitAmount(time: string, unit: number): number {
 	const result = ms(time);
-	return result < 0 ? result : result / MS_SECOND;
+	return result < 0 ? result : result / unit;
 }
