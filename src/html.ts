@@ -123,7 +123,13 @@ export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | H
 }
 
 // TODO
-export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell): any[][] {}
+export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell): any[][] {
+	return ((table instanceof HTMLTableElement ? [
+		...(table.tHead ? [...table.tHead.children] : []),
+		...[...table.tBodies].map(tBody => [...tBody.children]).flat(Infinity),
+		...(table.tFoot ? [...table.tFoot.children] : [])
+	] : [...table.children]) as HTMLTableRowElement[]).map((row, rowIndex) => ([...row.children] as HTMLTableCellElement[]).map((col, colIndex) => handler(rowIndex, colIndex, col)));
+}
 
 // TODO
 export function encode(data: string): string {}
