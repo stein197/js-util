@@ -109,16 +109,20 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 }
 
 // TODO
-export function getTableRow(table: HTMLTableElement, index: number) {}
+export function getTableRow(table: HTMLTableElement | HTMLTableSectionElement, index: number, hander: TableCellHander = handleTableCell) {}
 
 // TODO
-export function getTableCol(table: HTMLTableElement, index: number) {}
+export function getTableCol(table: HTMLTableElement | HTMLTableSectionElement, index: number, hander: TableCellHander = handleTableCell) {}
 
 // TODO
-export function getTable(table: HTMLTableElement) {}
+export function getTable(table: HTMLTableElement | HTMLTableSectionElement, hander: TableCellHander = handleTableCell) {}
 
 // TODO
 export function encode(data: string): string {}
 
 // TODO
 export function decode(data: string): string {}
+
+function handleTableCell(row: number, col: number, cell: HTMLTableCellElement): any {}
+
+type TableCellHander = (row: number, col: number, cell: HTMLTableCellElement) => any;
