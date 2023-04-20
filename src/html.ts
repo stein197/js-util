@@ -48,8 +48,8 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
 
 /**
  * Returns input's value casted to a corresponding type. If the element is a `<select />` element and it has `multiple`
- * attribute set, then an array of selected value will be returned. If the element is an `<input />` element, then the
- * returned value will be as follows:
+ * attribute set, then an array of selected values will be returned. If the element is an `<input />` element, then the
+ * returned value will be casted as follows:
  * | `type` attribute                | Returned type     |
  * |---------------------------------|-------------------|
  * | `checkbox` `radio`              | `boolean \| null` |
@@ -60,10 +60,27 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
  * In other cases string is returned.
  * @param input Input of which value is casted.
  * @returns Casted input value.
+ * @example
+ * ```tsx
+ * getInputValue(
+ * 	<select>
+ * 		<option value="a" selected>a</option>
+ * 	</select>
+ * ); // "a"
+ * getInputValue(
+ * 	<select multiple>
+ * 		<option value="a" selected>a</option>
+ * 		<option value="b" selected>b</option>
+ * 	</select>
+ * ); // ["a"]
+ * getInputValue(<input type="number" value="10" />); // 10
+ * getInputValue(<input type="checkbox" checked />);  // true
+ * getInputValue(<textarea value="String" />);        // "String"
+ * ```
  */
 export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTMLButtonElement | HTMLTextAreaElement): any {
 	if (input instanceof HTMLSelectElement)
-		return input.multiple ? [...input.selectedOptions].map(opt => opt.value) : input.value;
+		return input.multiple ? [...input.selectedOptions].map(opt => opt.value) : input.selectedIndex < 0 ? null : input.value;
 	if (input instanceof HTMLInputElement)
 		switch (input.type) {
 			case "checkbox":
