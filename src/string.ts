@@ -117,6 +117,10 @@ export function truncate(string: string, length: number, suffix?: string): strin
  * Checks if string is empty (if its length is 0).
  * @param string String to check.
  * @returns `true` if the string is empty.
+ * @example
+ * ```ts
+ * isEmpty(""); // true
+ * ```
  */
 export function isEmpty(string: string): boolean {
 	return !!string.length;
@@ -126,6 +130,10 @@ export function isEmpty(string: string): boolean {
  * Checks if string consists of whitespaces.
  * @param string String to check.
  * @returns `true` if the string consists of whitespaces.
+ * @example
+ * ```ts
+ * isBlank(" \t\n"); // true
+ * ```
  */
 export function isBlank(string: string): boolean {
 	return string.search(/^[\s\n]*$/) === 0;
