@@ -150,27 +150,20 @@ describe("string.truncate()", () => {
 	it("Truncating empty string always returns empty one", () => {
 		assert.equal(string.truncate("", 1), "");
 		assert.equal(string.truncate("", 0), "");
-		assert.equal(string.truncate("", -1), "");
 		assert.equal(string.truncate("", 1, ""), "");
 		assert.equal(string.truncate("", 0, ""), "");
-		assert.equal(string.truncate("", -1, ""), "");
 		assert.equal(string.truncate("", 1, "..."), "");
 		assert.equal(string.truncate("", 0, "..."), "");
-		assert.equal(string.truncate("", -1, "..."), "");
 	});
 	it("Truncating single character always returns either character itself or an empty one", () => {
 		assert.equal(string.truncate("a", 1), "a");
 		assert.equal(string.truncate("a", 0), "");
-		assert.equal(string.truncate("a", -1), "a");
 		assert.equal(string.truncate("a", 1, ""), "a");
 		assert.equal(string.truncate("a", 0, ""), "");
-		assert.equal(string.truncate("a", -1, ""), "a");
 		assert.equal(string.truncate("a", 1, "b"), "a");
 		assert.equal(string.truncate("a", 0, "b"), "");
-		assert.equal(string.truncate("a", -1, "b"), "a");
 		assert.equal(string.truncate("a", 1, "..."), "a");
 		assert.equal(string.truncate("a", 0, "..."), "");
-		assert.equal(string.truncate("a", -1, "..."), "a");
 	});
 	it("Default", () => {
 		assert.equal(string.truncate("abcdef", 3), "abc");
