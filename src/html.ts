@@ -109,13 +109,21 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 }
 
 // TODO
-export function getTableRow(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell) {}
+export function getTableRow<T extends any[] = any[]>(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell): T | null {
+	return getTable(table, handler)[index] as T ?? null;
+}
 
 // TODO
-export function getTableCol(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell) {}
+export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell): T | null {
+	const t = getTable(table, handler);
+	const result = new Array(t.length) as T;
+	for (let i = 0, row = t[i]; i < t.length; i++, row = t[i])
+		result[i] = row[index];
+	return result.length || result.every(item => item == null) ? null : result;
+}
 
 // TODO
-export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell) {}
+export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell): any[][] {}
 
 // TODO
 export function encode(data: string): string {}
