@@ -110,17 +110,45 @@ describe("html.getInputValue()", () => {
 
 // TODO
 describe("html.getTableRow()", () => {
-	
+	it.skip("Should return empty array when table is empty", () => {});
+	it.skip("Should return correct result when <table /> is passed", () => {});
+	it.skip("Should return correct result when <thead /> is passed", () => {});
+	it.skip("Should return correct result when <tbody /> is passed", () => {});
+	it.skip("Should return correct result when <tfoot /> is passed", () => {});
+	it.skip("Should correctly cast numbers to number type", () => {});
+	it.skip("Should correctly cast types when a table cell contains only single input", () => {});
+	it.skip("Should return correct result when handler is overriden", () => {});
+	it.skip("Should pass correct arguments to handler", () => {});
+	it.skip("Should return first row when the index is 0", () => {});
+	it.skip("Should return last row the index is last", () => {});
 });
 
 // TODO
 describe("html.getTableCol()", () => {
-	
+	it.skip("Should return empty array when table is empty", () => {});
+	it.skip("Should return correct result when <table /> is passed", () => {});
+	it.skip("Should return correct result when <thead /> is passed", () => {});
+	it.skip("Should return correct result when <tbody /> is passed", () => {});
+	it.skip("Should return correct result when <tfoot /> is passed", () => {});
+	it.skip("Should correctly cast numbers to number type", () => {});
+	it.skip("Should correctly cast types when a table cell contains only single input", () => {});
+	it.skip("Should return correct result when handler is overriden", () => {});
+	it.skip("Should pass correct arguments to handler", () => {});
+	it.skip("Should return first column when the index is 0", () => {});
+	it.skip("Should return last column when the index is last", () => {});
 });
 
 // TODO
 describe("html.getTable()", () => {
-	
+	it.skip("Should return empty array when table is empty", () => {});
+	it.skip("Should return correct result when <table /> is passed", () => {});
+	it.skip("Should return correct result when <thead /> is passed", () => {});
+	it.skip("Should return correct result when <tbody /> is passed", () => {});
+	it.skip("Should return correct result when <tfoot /> is passed", () => {});
+	it.skip("Should correctly cast numbers to number type", () => {});
+	it.skip("Should correctly cast types when a table cell contains only single input", () => {});
+	it.skip("Should return correct result when handler is overriden", () => {});
+	it.skip("Should pass correct arguments to handler", () => {});
 });
 
 // TODO
