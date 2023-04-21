@@ -40,7 +40,23 @@ describe("html.selector()", () => {
 
 // TODO
 describe("html.getInputValue()", () => {
-	
+	describe("<input />", () => {
+		describe("type=\"checkbox\"", () => {});
+		describe("type=\"radio\"", () => {});
+		describe("type=\"color\"", () => {});
+		describe("type=\"date\"", () => {});
+		describe("type=\"datetime\"", () => {});
+		describe("type=\"month\"", () => {});
+		describe("type=\"file\"", () => {});
+		describe("type=\"image\"", () => {});
+		describe("type=\"number\"", () => {});
+		describe("type=\"range\"", () => {});
+		describe("type=\"text\"", () => {});
+		describe("type=\"\"", () => {});
+	});
+	describe("<select />", () => {});
+	describe("<button />", () => {});
+	describe("<textarea />", () => {});
 });
 
 // TODO
