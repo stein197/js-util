@@ -41,22 +41,71 @@ describe("html.selector()", () => {
 // TODO
 describe("html.getInputValue()", () => {
 	describe("<input />", () => {
-		describe("type=\"checkbox\"", () => {});
-		describe("type=\"radio\"", () => {});
-		describe("type=\"color\"", () => {});
-		describe("type=\"date\"", () => {});
-		describe("type=\"datetime\"", () => {});
-		describe("type=\"month\"", () => {});
-		describe("type=\"file\"", () => {});
-		describe("type=\"image\"", () => {});
-		describe("type=\"number\"", () => {});
-		describe("type=\"range\"", () => {});
-		describe("type=\"text\"", () => {});
-		describe("type=\"\"", () => {});
+		describe("type=\"checkbox\"", () => {
+			it.skip("Should return true when checkbox is checked", () => {});
+			it.skip("Should return false when checkbox is unchecked", () => {});
+			it.skip("Should return undefined when checkbox's state is indeterminate", () => {});
+		});
+		describe("type=\"radio\"", () => {
+			it.skip("Should return true when radio is checked", () => {});
+			it.skip("Should return false when radio is unchecked", () => {});	
+		});
+		describe("type=\"color\"", () => {
+			it.skip("Should return 0 by default", () => {});
+			it.skip("Should return correct number", () => {});
+		});
+		describe("type=\"date\"", () => {
+			it.skip("Should return undefined when input value is empty", () => {});
+			it.skip("Should return date object", () => {});
+			it.skip("Should return undefined when input value is invalid", () => {});
+		});
+		describe("type=\"datetime\"", () => {
+			it.skip("Should return undefined when input value is empty", () => {});
+			it.skip("Should return date object", () => {});
+			it.skip("Should return undefined when input value is invalid", () => {});
+		});
+		describe("type=\"month\"", () => {
+			it.skip("Should return undefined when input value is empty", () => {});
+			it.skip("Should return date object", () => {});
+			it.skip("Should return undefined when input value is invalid", () => {});
+		});
+		describe("type=\"file\"", () => {
+			it.skip("Should return null when input value is empty and \"multiple\" is false", () => {});
+			it.skip("Should return file object when input has value and \"multiple\" is false", () => {});
+			it.skip("Should return array of files when input has value and \"multiple\" is true", () => {});
+			it.skip("Should return empty array when input doesn't have value and \"multiple\" is true", () => {});
+		});
+		describe("type=\"image\"", () => {
+			it.skip("Should return null when input value is empty", () => {});
+			it.skip("Should return image object when input value isn't empty", () => {});
+		});
+		describe("type=\"number\"", () => {
+			it.skip("Should return NaN when value is empty", () => {});
+			it.skip("Should return NaN when value cannot be casted to a number", () => {});
+			it.skip("Should return number when input value is valid", () => {});
+		});
+		describe("type=\"range\"", () => {
+			it.skip("Should return number", () => {});
+		});
+		describe("type=\"text\"", () => {
+			it.skip("Should return string", () => {});
+		});
+		describe("type=\"\"", () => {
+			it.skip("Should return string", () => {});
+		});
 	});
-	describe("<select />", () => {});
-	describe("<button />", () => {});
-	describe("<textarea />", () => {});
+	describe("<select />", () => {
+		it.skip("Should return null when none is selected and \"multiple\" is false", () => {});
+		it.skip("Should return empty array when none is selected and \"multiple\" is true", () => {});
+		it.skip("Should return string when an item is selected and \"multiple\" is false", () => {});
+		it.skip("Should return an array of string when items are selected and \"multiple\" is true", () => {});
+	});
+	describe("<button />", () => {
+		it.skip("Should return string", () => {});
+	});
+	describe("<textarea />", () => {
+		it.skip("Should return string", () => {});
+	});
 });
 
 // TODO
