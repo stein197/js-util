@@ -38,36 +38,107 @@ describe("html.selector()", () => {
 	});
 });
 
-// TODO
 describe("html.getInputValue()", () => {
+	const window = new jsdom.JSDOM().window as unknown as Window;
+	const body = window.document.body;
+
+	function setInnerHTML(data: string) {
+		body.innerHTML = data;
+	}
+
+	function getInput(): HTMLInputElement {
+		return body.querySelector("input")!;
+	}
+
+	function getSelect(): HTMLSelectElement {
+		return body.querySelector("select")!;
+	}
+
+	function getButton(): HTMLButtonElement {
+		return body.querySelector("button")!;
+	}
+
+	function getTextArea(): HTMLTextAreaElement {
+		return body.querySelector("textarea")!;
+	}
+
 	describe("<input />", () => {
 		describe("type=\"checkbox\"", () => {
-			it.skip("Should return true when checkbox is checked", () => {});
-			it.skip("Should return false when checkbox is unchecked", () => {});
-			it.skip("Should return undefined when checkbox's state is indeterminate", () => {});
+			it("Should return true when checkbox is checked", () => {
+				setInnerHTML("<input type=\"checkbox\" checked />");
+				assert.equal(html.getInputValue(getInput()), true);
+			});
+			it("Should return false when checkbox is unchecked", () => {
+				setInnerHTML("<input type=\"checkbox\" />");
+				assert.equal(html.getInputValue(getInput()), false);
+			});
+			it("Should return undefined when checkbox's state is indeterminate", () => {
+				setInnerHTML("<input type=\"checkbox\" />");
+				getInput().indeterminate = true;
+				assert.equal(html.getInputValue(getInput()), null);
+			});
 		});
 		describe("type=\"radio\"", () => {
-			it.skip("Should return true when radio is checked", () => {});
-			it.skip("Should return false when radio is unchecked", () => {});	
+			it("Should return true when radio is checked", () => {
+				setInnerHTML("<input type=\"radio\" checked />");
+				assert.equal(html.getInputValue(getInput()), true);
+			});
+			it("Should return false when radio is unchecked", () => {
+				setInnerHTML("<input type=\"checkbox\" />");
+				assert.equal(html.getInputValue(getInput()), false);
+			});	
 		});
 		describe("type=\"color\"", () => {
-			it.skip("Should return 0 by default", () => {});
-			it.skip("Should return correct number", () => {});
+			it("Should return 0 by default", () => {
+				setInnerHTML("<input type=\"color\" />");
+				assert.equal(html.getInputValue(getInput()), 0);
+			});
+			it("Should return correct number", () => {
+				setInnerHTML("<input type=\"color\" value=\"#FF00FF\" />");
+				assert.equal(html.getInputValue(getInput()), 0xFF00FF);
+			});
 		});
 		describe("type=\"date\"", () => {
-			it.skip("Should return undefined when input value is empty", () => {});
-			it.skip("Should return date object", () => {});
-			it.skip("Should return undefined when input value is invalid", () => {});
+			it("Should return null when input value is empty", () => {
+				setInnerHTML("<input type=\"date\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
+			it("Should return date object", () => {
+				setInnerHTML("<input type=\"date\" value=\"2012-12-21\" />");
+				assert.equal(html.getInputValue(getInput()).getTime(), new Date("2012-12-21").getTime());
+			});
+			it("Should return null when input value is invalid", () => {
+				setInnerHTML("<input type=\"date\" value=\"string\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
 		});
-		describe("type=\"datetime\"", () => {
-			it.skip("Should return undefined when input value is empty", () => {});
-			it.skip("Should return date object", () => {});
-			it.skip("Should return undefined when input value is invalid", () => {});
+		describe("type=\"datetime-local\"", () => {
+			it("Should return null when input value is empty", () => {
+				setInnerHTML("<input type=\"datetime-local\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
+			it("Should return date object", () => {
+				setInnerHTML("<input type=\"datetime-local\" value=\"2012-12-21T12:00\" />");
+				assert.equal(html.getInputValue(getInput()).getTime(), new Date("2012-12-21T12:00").getTime());
+			});
+			it("Should return null when input value is invalid", () => {
+				setInnerHTML("<input type=\"datetime-local\" value=\"string\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
 		});
 		describe("type=\"month\"", () => {
-			it.skip("Should return undefined when input value is empty", () => {});
-			it.skip("Should return date object", () => {});
-			it.skip("Should return undefined when input value is invalid", () => {});
+			it("Should return null when input value is empty", () => {
+				setInnerHTML("<input type=\"month\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
+			it("Should return date object", () => {
+				setInnerHTML("<input type=\"month\" value=\"2021-12\" />");
+				assert.equal(html.getInputValue(getInput()).getTime(), new Date("2021-12").getTime());
+			});
+			it("Should return null when input value is invalid", () => {
+				setInnerHTML("<input type=\"month\" value=\"string\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
 		});
 		describe("type=\"file\"", () => {
 			it.skip("Should return null when input value is empty and \"multiple\" is false", () => {});
@@ -80,37 +151,93 @@ describe("html.getInputValue()", () => {
 			it.skip("Should return image object when input value isn't empty", () => {});
 		});
 		describe("type=\"number\"", () => {
-			it.skip("Should return NaN when value is empty", () => {});
-			it.skip("Should return NaN when value cannot be casted to a number", () => {});
-			it.skip("Should return number when input value is valid", () => {});
+			it("Should return NaN when value is empty", () => {
+				setInnerHTML("<input type=\"number\" />");
+				assert.equal(html.getInputValue(getInput()), NaN);
+			});
+			it("Should return NaN when value cannot be casted to a number", () => {
+				setInnerHTML("<input type=\"number\" value=\"string\" />");
+				assert.equal(html.getInputValue(getInput()), NaN);
+			});
+			it("Should return number when input value is valid", () => {
+				setInnerHTML("<input type=\"number\" value=\"10\" />");
+				assert.equal(html.getInputValue(getInput()), 10);
+			});
 		});
 		describe("type=\"range\"", () => {
-			it.skip("Should return number", () => {});
+			it("Should return a halfway number when value is not set", () => {
+				setInnerHTML("<input type=\"range\" min=\"0\" max=\"10\" />");
+				assert.equal(html.getInputValue(getInput()), 5);
+			});
+			it("Should return correct number when value is set", () => {
+				setInnerHTML("<input type=\"range\" min=\"0\" max=\"10\" value=\"10\" />");
+				assert.equal(html.getInputValue(getInput()), 10);
+			});
 		});
 		describe("type=\"text\"", () => {
-			it.skip("Should return string", () => {});
+			it("Should return empty string when value is not set", () => {
+				setInnerHTML("<input type=\"text\" />");
+				assert.equal(html.getInputValue(getInput()), "");
+			});
+			it("Should return string", () => {
+				setInnerHTML("<input type=\"text\" value=\"string\" />");
+				assert.equal(html.getInputValue(getInput()), "string");
+			});
 		});
 		describe("type=\"\"", () => {
-			it.skip("Should return string", () => {});
+			it("Should return empty string when value is not set", () => {
+				setInnerHTML("<input />");
+				assert.equal(html.getInputValue(getInput()), "");
+			});
+			it("Should return string", () => {
+				setInnerHTML("<input value=\"string\" />");
+				assert.equal(html.getInputValue(getInput()), "string");
+			});
 		});
 	});
 	describe("<select />", () => {
-		it.skip("Should return null when none is selected and \"multiple\" is false", () => {});
-		it.skip("Should return empty array when none is selected and \"multiple\" is true", () => {});
-		it.skip("Should return string when an item is selected and \"multiple\" is false", () => {});
-		it.skip("Should return an array of string when items are selected and \"multiple\" is true", () => {});
+		it("Should return null when none is selected and \"multiple\" is false", () => {
+			setInnerHTML("<select><option value=\"a\"></option><option value=\"b\"></option><option value=\"c\"></option></select>");
+			assert.equal(html.getInputValue(getSelect()), null);
+		});
+		it("Should return empty array when none is selected and \"multiple\" is true", () => {
+			setInnerHTML("<select multiple><option value=\"a\"></option><option value=\"b\"></option><option value=\"c\"></option></select>");
+			assert.deepStrictEqual(html.getInputValue(getSelect()), []);
+		});
+		it("Should return string when an item is selected and \"multiple\" is false", () => {
+			setInnerHTML("<select><option value=\"a\" selected></option><option value=\"b\"></option><option value=\"c\"></option></select>");
+			assert.equal(html.getInputValue(getSelect()), "a");
+		});
+		it("Should return an array of string when items are selected and \"multiple\" is true", () => {
+			setInnerHTML("<select multiple><option value=\"a\" selected></option><option value=\"b\"></option><option value=\"c\" selected></option></select>");
+			assert.deepStrictEqual(html.getInputValue(getSelect()), ["a", "c"]);
+		});
 	});
 	describe("<button />", () => {
-		it.skip("Should return string", () => {});
+		it("Should return empty string when the value is not set", () => {
+			setInnerHTML("<button></button>");
+			assert.deepStrictEqual(html.getInputValue(getButton()), "");
+		});
+		it("Should return string", () => {
+			setInnerHTML("<button value=\"string\"></button>");
+			assert.deepStrictEqual(html.getInputValue(getButton()), "string");
+		});
 	});
 	describe("<textarea />", () => {
-		it.skip("Should return string", () => {});
+		it("Should return empty string when the value is not set", () => {
+			setInnerHTML("<textarea></textarea>");
+			assert.deepStrictEqual(html.getInputValue(getTextArea()), "");
+		});
+		it("Should return string", () => {
+			setInnerHTML("<textarea value=\"string\"></textarea>");
+			assert.deepStrictEqual(html.getInputValue(getTextArea()), "string");
+		});
 	});
 });
 
 // TODO
 describe("html.getTableRow()", () => {
-	it.skip("Should return empty array when table is empty", () => {});
+	it.skip("Should return empty array when table or table section is empty", () => {});
 	it.skip("Should return correct result when <table /> is passed", () => {});
 	it.skip("Should return correct result when <thead /> is passed", () => {});
 	it.skip("Should return correct result when <tbody /> is passed", () => {});
@@ -125,7 +252,7 @@ describe("html.getTableRow()", () => {
 
 // TODO
 describe("html.getTableCol()", () => {
-	it.skip("Should return empty array when table is empty", () => {});
+	it.skip("Should return empty array when table or table section is empty", () => {});
 	it.skip("Should return correct result when <table /> is passed", () => {});
 	it.skip("Should return correct result when <thead /> is passed", () => {});
 	it.skip("Should return correct result when <tbody /> is passed", () => {});
@@ -140,7 +267,7 @@ describe("html.getTableCol()", () => {
 
 // TODO
 describe("html.getTable()", () => {
-	it.skip("Should return empty array when table is empty", () => {});
+	it.skip("Should return empty array when table or table section is empty", () => {});
 	it.skip("Should return correct result when <table /> is passed", () => {});
 	it.skip("Should return correct result when <thead /> is passed", () => {});
 	it.skip("Should return correct result when <tbody /> is passed", () => {});
