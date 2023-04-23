@@ -79,9 +79,9 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
  * ```
  */
 export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTMLButtonElement | HTMLTextAreaElement): any {
-	if (input instanceof HTMLSelectElement)
+	if (is(input, "select"))
 		return input.multiple ? [...input.selectedOptions].map(opt => opt.value) : input.selectedIndex < 0 ? null : input.value;
-	if (input instanceof HTMLInputElement)
+	if (is(input, "input"))
 		switch (input.type) {
 			case "checkbox":
 			case "radio":
@@ -124,7 +124,7 @@ export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | H
 
 // TODO
 export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell): any[][] {
-	return ((table instanceof HTMLTableElement ? [
+	return ((is(table, "table") ? [
 		...(table.tHead ? [...table.tHead.children] : []),
 		...[...table.tBodies].map(tBody => [...tBody.children]).flat(Infinity),
 		...(table.tFoot ? [...table.tFoot.children] : [])
@@ -138,7 +138,11 @@ export function encode(data: string): string {}
 export function decode(data: string): string {}
 
 function handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
-	return cell.childElementCount === 1 && (cell.firstChild instanceof HTMLInputElement || cell.firstChild instanceof HTMLSelectElement || cell.firstChild instanceof HTMLButtonElement || cell.firstChild instanceof HTMLTextAreaElement) ? getInputValue(cell.firstChild) : cell.textContent;
+	return cell.childElementCount === 1 && (is(cell.firstChild, "input") || is(cell.firstChild, "select") || is(cell.firstChild, "button") || is(cell.firstChild, "textarea")) ? getInputValue(cell.firstChild) : cell.textContent;
+}
+
+function is<T extends keyof HTMLElementTagNameMap>(element: Node | null, tag: T): element is HTMLElementTagNameMap[T] {
+	return element != null && "tagName" in element && (element.tagName as string).toLowerCase() === tag;
 }
 
 type TableCellHandler = (row: number, col: number, cell: HTMLTableCellElement) => any;
