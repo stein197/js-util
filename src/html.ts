@@ -131,12 +131,6 @@ export function getTable(table: HTMLTableElement | HTMLTableSectionElement, hand
 	] : [...table.children]) as HTMLTableRowElement[]).map((row, rowIndex) => ([...row.children] as HTMLTableCellElement[]).map((col, colIndex) => handler(rowIndex, colIndex, col)));
 }
 
-// TODO
-export function encode(data: string): string {}
-
-// TODO
-export function decode(data: string): string {}
-
 function handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
 	return cell.childElementCount === 1 && (is(cell.firstChild, "input") || is(cell.firstChild, "select") || is(cell.firstChild, "button") || is(cell.firstChild, "textarea")) ? getInputValue(cell.firstChild) : cell.textContent;
 }
