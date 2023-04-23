@@ -196,9 +196,9 @@ describe("html.getInputValue()", () => {
 		});
 	});
 	describe("<select />", () => {
-		it("Should return null when none is selected and \"multiple\" is false", () => {
+		it("Should return first option when none is selected and \"multiple\" is false", () => {
 			setInnerHTML("<select><option value=\"a\"></option><option value=\"b\"></option><option value=\"c\"></option></select>");
-			assert.equal(html.getInputValue(getSelect()), null);
+			assert.equal(html.getInputValue(getSelect()), "a");
 		});
 		it("Should return empty array when none is selected and \"multiple\" is true", () => {
 			setInnerHTML("<select multiple><option value=\"a\"></option><option value=\"b\"></option><option value=\"c\"></option></select>");
@@ -229,7 +229,7 @@ describe("html.getInputValue()", () => {
 			assert.deepStrictEqual(html.getInputValue(getTextArea()), "");
 		});
 		it("Should return string", () => {
-			setInnerHTML("<textarea value=\"string\"></textarea>");
+			setInnerHTML("<textarea>string</textarea>");
 			assert.deepStrictEqual(html.getInputValue(getTextArea()), "string");
 		});
 	});
@@ -276,14 +276,4 @@ describe("html.getTable()", () => {
 	it.skip("Should correctly cast types when a table cell contains only single input", () => {});
 	it.skip("Should return correct result when handler is overriden", () => {});
 	it.skip("Should pass correct arguments to handler", () => {});
-});
-
-// TODO
-describe("html.encode()", () => {
-	
-});
-
-// TODO
-describe("html.decode()", () => {
-	
 });
