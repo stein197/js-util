@@ -87,7 +87,7 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 			case "radio":
 				return input.indeterminate ? null : input.checked;
 			case "color":
-				return +input.value.replace(/[^\d]+/, "");
+				return Number.parseInt("0x" + input.value.replace(/[^\da-f]+/i, ""));
 			case "date":
 			case "datetime-local":
 			case "month":
@@ -103,7 +103,7 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 			}
 			case "number":
 			case "range":
-				return input.value ? +input.value : NaN;
+				return input.value ? input.valueAsNumber : NaN;
 		}
 	return input.value;
 }
