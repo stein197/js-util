@@ -93,7 +93,7 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 			case "month":
 				return input.value ? new Date(input.value) : null;
 			case "file":
-				return input.files ? [...input.files] : [];
+				return input.multiple ? input.files ? [...input.files] : [] : input.files ? input.files[0] : null;
 			case "image": {
 				if (!input.value)
 					return null;
