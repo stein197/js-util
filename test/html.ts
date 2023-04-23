@@ -265,15 +265,87 @@ describe("html.getTableCol()", () => {
 	it.skip("Should return last column when the index is last", () => {});
 });
 
-// TODO
 describe("html.getTable()", () => {
-	it.skip("Should return empty array when table or table section is empty", () => {});
-	it.skip("Should return correct result when <table /> is passed", () => {});
-	it.skip("Should return correct result when <thead /> is passed", () => {});
-	it.skip("Should return correct result when <tbody /> is passed", () => {});
-	it.skip("Should return correct result when <tfoot /> is passed", () => {});
-	it.skip("Should correctly cast numbers to number type", () => {});
-	it.skip("Should correctly cast types when a table cell contains only single input", () => {});
-	it.skip("Should return correct result when handler is overriden", () => {});
-	it.skip("Should pass correct arguments to handler", () => {});
+	const window = new jsdom.JSDOM().window as unknown as Window;
+	const body = window.document.body;
+
+	it("Should return empty array when table or table section is empty", () => {
+		body.innerHTML = "<table></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("table")!), []);
+		body.innerHTML = "<table><thead><tr><td>String</td></tr></thead><tbody></tbody></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("tbody")!), []);
+	});
+	it("Should return correct result when <table /> is passed", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("table")!), [
+			["#", "Name", "Count"],
+			[1, "A", 10],
+			[2, "B", 20],
+			["", "", 30]
+		]);
+	});
+	it("Should return correct result when <thead /> is passed", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("thead")!), [
+			["#", "Name", "Count"]
+		]);
+	});
+	it("Should return correct result when <tbody /> is passed", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("tbody")!), [
+			[1, "A", 10]
+		]);
+	});
+	it("Should return correct result when <tfoot /> is passed", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("tfoot")!), [
+			["", "", 30]
+		]);
+	});
+	it("Should correctly cast numbers to number type", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("table")!), [
+			["#", "Name", "Count"],
+			[1, "A", 10],
+			[2, "B", 20],
+			["", "", 30]
+		]);
+	});
+	it("Should correctly cast types when a table cell contains only single input", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td><input type=\"number\" value=\"10\" /></td></tr></tbody><tbody><tr><td>2</td><td>B</td><td><input type=\"number\" value=\"20\" /></td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("table")!), [
+			["#", "Name", "Count"],
+			[1, "A", 10],
+			[2, "B", 20],
+			["", "", 30]
+		]);
+	});
+	it("Should return correct result when handler is overriden", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		assert.deepStrictEqual(html.getTable(body.querySelector("table")!, (row, col, cell) => cell.textContent), [
+			["#", "Name", "Count"],
+			["1", "A", "10"],
+			["2", "B", "20"],
+			["", "", "30"]
+		]);
+	});
+	it("Should pass correct arguments to handler", () => {
+		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
+		const tracker = util.track<[number, number, HTMLTableCellElement], void>(() => {});
+		html.getTable(body.querySelector("table")!, tracker.f);
+		assert.deepStrictEqual(tracker.calls.map(call => [call[0][0], call[0][1]]), [
+			[0, 0],
+			[0, 1],
+			[0, 2],
+			[1, 0],
+			[1, 1],
+			[1, 2],
+			[2, 0],
+			[2, 1],
+			[2, 2],
+			[3, 0],
+			[3, 1],
+			[3, 2],
+		]);
+	});
 });
