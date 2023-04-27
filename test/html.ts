@@ -296,10 +296,10 @@ describe("html.getTableRow()", () => {
 		const tracker = util.track<[number, HTMLTableCellElement], void>(() => {});
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
 		html.getTableRow(body.querySelector("table")!, 1, tracker.f);
-		assert.deepStrictEqual(tracker.calls.map(call => call[0][0]), [
-			0,
-			1,
-			2
+		assert.deepStrictEqual(tracker.calls, [
+			[[0, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[0]], undefined],
+			[[1, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[1]], undefined],
+			[[2, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[2]], undefined]
 		]);
 	});
 });
