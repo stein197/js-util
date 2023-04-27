@@ -80,9 +80,9 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
  * ```
  */
 export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTMLButtonElement | HTMLTextAreaElement): any {
-	if (is(input, "select"))
+	if (__is(input, "select"))
 		return input.multiple ? [...input.selectedOptions].map(opt => opt.value) : input.selectedIndex < 0 ? null : input.value;
-	if (is(input, "input"))
+	if (__is(input, "input"))
 		switch (input.type) {
 			case "checkbox":
 			case "radio":
@@ -119,7 +119,7 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
  * Gets HTML table element (table, thead, tbody or tfoot) and returns an array that represents the contents of the
  * selected table row. By default it will try to cast some elements and values to corresponding types, such as casting
  * "10" to 10 and inputs according to {@link getInputValue} function. It's possible to override that behavior by
- * providing custom function that takes three arguments - row index, column index and HTMLTableCellElement itself.
+ * providing custom function that takes two arguments - row index and HTMLTableCellElement itself.
  * The value function returns will be pasted in the final array.
  * @param table Table to parse.
  * @param index Row index.
@@ -148,18 +148,19 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
  * Overriding the handler
  * ```tsx
  * // Get previously defined t table
- * getTableRow(t, 0, (row, col, cell) => cell.textContent); // ["String", "10", ""]
+ * getTableRow(t, 0, (row, cell) => cell.textContent); // ["String", "10", ""]
  * ```
  */
-export function getTableRow<T extends any[] = any[]>(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell): T | null {
-	return getTable(table, handler)[index] as T ?? null;
+export function getTableRow<T extends any[] = any[]>(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler?: (row: number, cell: HTMLTableCellElement) => void): T | null {
+	const t = __getRawTable(table);
+	return t[index] ? t[index].map((cell, colIndex) => handler ? handler(colIndex, cell) : __handleTableCell(index, colIndex, cell)) as T : null;
 }
 
 /**
  * Gets HTML table element (table, thead, tbody or tfoot) and returns an array that represents the contents of the
  * selected table column. By default it will try to cast some elements and values to corresponding types, such as
  * casting "10" to 10 and inputs according to {@link getInputValue} function. It's possible to override that behavior by
- * providing custom function that takes three arguments - row index, column index and HTMLTableCellElement itself.
+ * providing custom function that takes two arguments - column index and HTMLTableCellElement itself.
  * The value function returns will be pasted in the final array.
  * @param table Table to parse.
  * @param index Column index.
@@ -188,15 +189,15 @@ export function getTableRow<T extends any[] = any[]>(table: HTMLTableElement | H
  * Overriding the handler
  * ```tsx
  * // Get previously defined t table
- * getTableCol(t, 0, (row, col, cell) => cell.textContent); // ["String"]
+ * getTableCol(t, 0, (col, cell) => cell.textContent); // ["String"]
  * ```
  */
-export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler: TableCellHandler = handleTableCell): T | null {
-	const t = getTable(table, handler);
-	const result = new Array(t.length) as T;
-	for (let i = 0, row = t[i]; i < t.length; i++, row = t[i])
-		result[i] = row[index];
-	return result.length || result.every(item => item == null) ? null : result;
+export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | HTMLTableSectionElement, index: number, handler?: (col: number, cell: HTMLTableCellElement) => void): T | null {
+	const t = __getRawTable(table);
+	const result: any[] = new Array(t.length);
+	for (let i = 0; i < result.length; i++)
+		result[i] = handler ? handler(i, t[i][index]) : __handleTableCell(i, index, t[i][index]);
+	return !result.length || result.every(val => val == null) ? null : result as T;
 }
 
 /**
@@ -233,23 +234,25 @@ export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | H
  * getTable(t, (row, col, cell) => cell.textContent); // [["String", "10", ""]]
  * ```
  */
-export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: TableCellHandler = handleTableCell): any[][] {
-	return ((is(table, "table") ? [
+export function getTable(table: HTMLTableElement | HTMLTableSectionElement, handler: (row: number, col: number, cell: HTMLTableCellElement) => any = __handleTableCell): any[][] {
+	return __getRawTable(table).map((row, rowIndex) => row.map((cell, colIndex) => handler(rowIndex, colIndex, cell)));
+}
+
+function __getRawTable(table: HTMLTableElement | HTMLTableSectionElement): HTMLTableCellElement[][] {
+	return ((__is(table, "table") ? [
 		...(table.tHead ? [...table.tHead.children] : []),
 		...[...table.tBodies].map(tBody => [...tBody.children]).flat(Infinity),
 		...(table.tFoot ? [...table.tFoot.children] : [])
-	] : [...table.children]) as HTMLTableRowElement[]).map((row, rowIndex) => ([...row.children] as HTMLTableCellElement[]).map((col, colIndex) => handler(rowIndex, colIndex, col)));
+	] : [...table.children]) as HTMLTableRowElement[]).map(row => ([...row.children] as HTMLTableCellElement[]));
 }
 
-function handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
-	if (cell.childElementCount === 1 && (is(cell.firstChild, "input") || is(cell.firstChild, "select") || is(cell.firstChild, "button") || is(cell.firstChild, "textarea")))
+function __handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
+	if (cell.childElementCount === 1 && (__is(cell.firstChild, "input") || __is(cell.firstChild, "select") || __is(cell.firstChild, "button") || __is(cell.firstChild, "textarea")))
 		return getInputValue(cell.firstChild);
 	const numVal = Number.parseFloat(cell.textContent!);
 	return isNaN(numVal) ? cell.textContent : numVal;
 }
 
-function is<T extends keyof HTMLElementTagNameMap>(element: Node | null, tag: T): element is HTMLElementTagNameMap[T] {
+function __is<T extends keyof HTMLElementTagNameMap>(element: Node | null, tag: T): element is HTMLElementTagNameMap[T] {
 	return element != null && "tagName" in element && (element.tagName as string).toLowerCase() === tag;
 }
-
-type TableCellHandler = (row: number, col: number, cell: HTMLTableCellElement) => any;

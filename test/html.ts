@@ -290,16 +290,16 @@ describe("html.getTableRow()", () => {
 	});
 	it("Should return correct result when handler is overriden", () => {
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
-		assert.deepStrictEqual(html.getTableRow(body.querySelector("table")!, 1, (...[, , cell]) => cell.textContent), ["1", "A", "10"]);
+		assert.deepStrictEqual(html.getTableRow(body.querySelector("table")!, 1, (...[, cell]) => cell.textContent), ["1", "A", "10"]);
 	});
 	it("Should pass correct arguments to handler", () => {
-		const tracker = util.track<[number, number, HTMLTableCellElement], void>(() => {});
+		const tracker = util.track<[number, HTMLTableCellElement], void>(() => {});
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
 		html.getTableRow(body.querySelector("table")!, 1, tracker.f);
-		assert.deepStrictEqual(tracker.calls.map(call => [call[0][0], call[0][1]]), [
-			[1, 0],
-			[1, 1],
-			[1, 2]
+		assert.deepStrictEqual(tracker.calls.map(call => call[0][0]), [
+			0,
+			1,
+			2
 		]);
 	});
 });
