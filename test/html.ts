@@ -151,9 +151,22 @@ describe("html.getInputValue()", () => {
 			it.skip("Should return image object when input value isn't empty", () => {});
 		});
 		describe("type=\"url\"", () => {
-			it.skip("Should return null when the value is an invalid URL", () => {});
-			it.skip("Should return null when the value is empty", () => {});
-			it.skip("Should return URL object when the value is correct", () => {});
+			it("Should return null when the value is an invalid URL", () => {
+				setInnerHTML("<input type=\"url\" value=\"invalid url\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
+			it("Should return null when the value is empty", () => {
+				setInnerHTML("<input type=\"url\" value=\"\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
+			it("Should return null when there is no value", () => {
+				setInnerHTML("<input type=\"url\" />");
+				assert.equal(html.getInputValue(getInput()), null);
+			});
+			it("Should return URL object when the value is correct", () => {
+				setInnerHTML("<input type=\"url\" value=\"https://domain.com\" />");
+				assert.deepStrictEqual(html.getInputValue(getInput()), new URL("https://domain.com"));
+			});
 		});
 		describe("type=\"number\"", () => {
 			it("Should return NaN when value is empty", () => {
