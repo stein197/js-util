@@ -150,6 +150,11 @@ describe("html.getInputValue()", () => {
 			it.skip("Should return null when input value is empty", () => {});
 			it.skip("Should return image object when input value isn't empty", () => {});
 		});
+		describe("type=\"url\"", () => {
+			it.skip("Should return null when the value is an invalid URL", () => {});
+			it.skip("Should return null when the value is empty", () => {});
+			it.skip("Should return URL object when the value is correct", () => {});
+		});
 		describe("type=\"number\"", () => {
 			it("Should return NaN when value is empty", () => {
 				setInnerHTML("<input type=\"number\" />");
