@@ -322,7 +322,7 @@ describe("html.getTable()", () => {
 	});
 	it("Should return correct result when handler is overriden", () => {
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
-		assert.deepStrictEqual(html.getTable(body.querySelector("table")!, (row, col, cell) => cell.textContent), [
+		assert.deepStrictEqual(html.getTable(body.querySelector("table")!, (...[, , cell]) => cell.textContent), [
 			["#", "Name", "Count"],
 			["1", "A", "10"],
 			["2", "B", "20"],
