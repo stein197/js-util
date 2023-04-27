@@ -235,7 +235,10 @@ export function getTable(table: HTMLTableElement | HTMLTableSectionElement, hand
 }
 
 function handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
-	return cell.childElementCount === 1 && (is(cell.firstChild, "input") || is(cell.firstChild, "select") || is(cell.firstChild, "button") || is(cell.firstChild, "textarea")) ? getInputValue(cell.firstChild) : cell.textContent;
+	if (cell.childElementCount === 1 && (is(cell.firstChild, "input") || is(cell.firstChild, "select") || is(cell.firstChild, "button") || is(cell.firstChild, "textarea")))
+		return getInputValue(cell.firstChild);
+	const numVal = Number.parseFloat(cell.textContent!);
+	return isNaN(numVal) ? cell.textContent : numVal;
 }
 
 function is<T extends keyof HTMLElementTagNameMap>(element: Node | null, tag: T): element is HTMLElementTagNameMap[T] {
