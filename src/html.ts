@@ -55,7 +55,7 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
  * | `checkbox` `radio`              | `boolean \| null` | `null` when the value is indeterminate |
  * | `color` `number` `range`        | `number`          |                                        |
  * | `date` `datetime-local` `month` | `Date \| null`    | `null` when the value is incorrect     |
- * | `file`                          | `File[]`          |                                        |
+ * | `file`                          | `File[] | File`   | Array when it's multiple               |
  * | `image`                         | `Image \| null`   | `null` when the value is absent        |
  * | `url`                           | `URL \| null`     | `null` when the value is incorrect     |
  * In other cases string is returned.
@@ -219,7 +219,7 @@ export function getTableCol<T extends any[] = any[]>(table: HTMLTableElement | H
  * 				<td>10</td>
  * 				<td>
  * 					<input type="number" value="20" />
- *	 			</td>
+ * 				</td>
  * 			</tr>
  * 		</tbody>
  * 	</table>
