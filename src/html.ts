@@ -50,13 +50,14 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
  * Returns input's value casted to a corresponding type. If the element is a `<select />` element and it has `multiple`
  * attribute set, then an array of selected values will be returned. If the element is an `<input />` element, then the
  * returned value will be casted as follows:
- * | `type` attribute                | Returned type     |
- * |---------------------------------|-------------------|
- * | `checkbox` `radio`              | `boolean \| null` |
- * | `color` `number` `range`        | `number`          |
- * | `date` `datetime-local` `month` | `Date \| null`    |
- * | `file`                          | `File[]`          |
- * | `image`                         | `Image \| null`   |
+ * | `type` attribute                | Returned type     | Note                                   |
+ * |---------------------------------|-------------------|----------------------------------------|
+ * | `checkbox` `radio`              | `boolean \| null` | `null` when the value is indeterminate |
+ * | `color` `number` `range`        | `number`          |                                        |
+ * | `date` `datetime-local` `month` | `Date \| null`    | `null` when the value is incorrect     |
+ * | `file`                          | `File[]`          |                                        |
+ * | `image`                         | `Image \| null`   | `null` when the value is absent        |
+ * | `url`                           | `URL \| null`     | `null` when the value is incorrect     |
  * In other cases string is returned.
  * @param input Input of which value is casted.
  * @returns Casted input value.
@@ -101,6 +102,12 @@ export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTML
 				img.src = input.value;
 				return img;
 			}
+			case "url":
+				try {
+					return new URL(input.value);
+				} catch {
+					return null;
+				}
 			case "number":
 			case "range":
 				return input.value ? input.valueAsNumber : NaN;
