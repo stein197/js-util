@@ -2,7 +2,7 @@ import type * as type from "@stein197/type";
 import * as object from "./object";
 
 /**
- * Checks if passed argument is an array.
+ * Checks if the passed argument is an array.
  * @param arg Object to check.
  * @return `true` if the argument is an array.
  */
@@ -11,7 +11,7 @@ export function isArray(arg: any): arg is type.json.JsonArray {
 }
 
 /**
- * Checks if passed argument is object and NOT an array.
+ * Checks if the passed argument is an object and NOT an array.
  * @param arg Object to check.
  * @return `true` if the argument is an object literal.
  */
@@ -20,8 +20,10 @@ export function isObject(arg: any): arg is type.json.JsonObject {
 }
 
 /**
- * Checks if passed argument is empty. Argument considered as empty in following cases: empty string (""), empty object
- * ({}) and empty array ([]).
+ * Checks if the passed argument is empty. Argument considered as empty in following cases:
+ * - Empty string ("")
+ * - Empty object ({})
+ * - Empty array ([])
  * @param arg Object to check.
  * @returns `true` if the argument is empty
  */
@@ -31,7 +33,7 @@ export function isEmpty(arg: type.json.Json): boolean {
 }
 
 /**
- * Checks if the argument is plain JSON structure.
+ * Checks if the argument is a plain JSON structure.
  * @param arg Argument to check.
  * @returns `true` if the object is valid plain JSON structure.
  */
