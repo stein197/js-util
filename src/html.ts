@@ -254,5 +254,5 @@ function __handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]
 }
 
 function __is<T extends keyof HTMLElementTagNameMap>(element: Node | null, tag: T): element is HTMLElementTagNameMap[T] {
-	return element != null && "tagName" in element && (element.tagName as string).toLowerCase() === tag;
+	return element != null && "tagName" in element && (element as Element).tagName.toLowerCase() === tag;
 }
