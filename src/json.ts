@@ -36,15 +36,13 @@ export function isEmpty(arg: type.json.Json): boolean {
  * @returns `true` if the object is valid plain JSON structure.
  */
 export function valid(arg: any): arg is type.json.Json {
-	if (arg == null)
-		return true;
 	const argType = typeof arg;
-	if (argType === "boolean" || argType === "number" || argType === "string")
+	if (argType === "boolean" || argType === "number" || argType === "string" || arg == null)
 		return true;
-	const isArray = Array.isArray(arg);
-	const isObject = object.isPlain(arg);
+	const isArr = isArray(arg);
+	const isObj = isObject(arg);
 	const hasSymbols = Object.getOwnPropertySymbols(arg).length > 0;
-	if (!isArray && !isObject || hasSymbols)
+	if (!isArr && !isObj || hasSymbols)
 		return false;
 	for (const key in arg)
 		if (!valid(arg[key]))
