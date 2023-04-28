@@ -90,18 +90,12 @@ export function equal(a: any, b: any): -1 | 1 | boolean {
 		return false;
 	const aEntries = Object.entries(a);
 	const bEntries = Object.entries(b);
-	let minorEntries: [string, any][];
-	let majorObject: any;
-	if (aEntries.length < bEntries.length) {
-		minorEntries = aEntries;
-		majorObject = b;
-	} else {
-		minorEntries = bEntries;
-		majorObject = a;
-	}
-	const returnValue = aEntries.length === bEntries.length ? true : (aEntries.length < bEntries.length ? -1 : 1);
+	const aLessThanB = aEntries.length < bEntries.length;
+	const minorEntries = aLessThanB ? aEntries : bEntries;
+	const majorObject = aLessThanB ? b : a;
+	const sign = aEntries.length === bEntries.length || (aEntries.length < bEntries.length ? -1 : 1);
 	const result = minorEntries.map(entry => entry[0] in majorObject ? equal(majorObject[entry[0] as any], entry[1]) : false).reduce((acc, v) => acc === true || acc === v ? v : false, true);
-	return aEntries.length === bEntries.length ? result : (result ? returnValue : false);
+	return aEntries.length === bEntries.length ? result : (result ? sign : false);
 }
 
 /**
