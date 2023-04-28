@@ -86,23 +86,22 @@ export function equal(a: any, b: any): -1 | 1 | boolean {
 		return a.getTime() === b.getTime();
 	if (a instanceof RegExp && b instanceof RegExp)
 		return a.toString() === b.toString();
-	if (a != null && b != null && typeof a === "object" && typeof b === "object") {
-		const aEntries = Object.entries(a);
-		const bEntries = Object.entries(b);
-		let minorEntries: [string, any][];
-		let majorObject: any;
-		if (aEntries.length < bEntries.length) {
-			minorEntries = aEntries;
-			majorObject = b;
-		} else {
-			minorEntries = bEntries;
-			majorObject = a;
-		}
-		const returnValue = aEntries.length === bEntries.length ? true : (aEntries.length < bEntries.length ? -1 : 1);
-		const result = minorEntries.map(entry => entry[0] in majorObject ? equal(majorObject[entry[0] as any], entry[1]) : false).reduce((acc, v) => acc === true || acc === v ? v : false, true);
-		return aEntries.length === bEntries.length ? result : (result ? returnValue : false);
+	if (a == null || b == null || typeof a !== "object" || typeof b !== "object")
+		return false;
+	const aEntries = Object.entries(a);
+	const bEntries = Object.entries(b);
+	let minorEntries: [string, any][];
+	let majorObject: any;
+	if (aEntries.length < bEntries.length) {
+		minorEntries = aEntries;
+		majorObject = b;
+	} else {
+		minorEntries = bEntries;
+		majorObject = a;
 	}
-	return false;
+	const returnValue = aEntries.length === bEntries.length ? true : (aEntries.length < bEntries.length ? -1 : 1);
+	const result = minorEntries.map(entry => entry[0] in majorObject ? equal(majorObject[entry[0] as any], entry[1]) : false).reduce((acc, v) => acc === true || acc === v ? v : false, true);
+	return aEntries.length === bEntries.length ? result : (result ? returnValue : false);
 }
 
 /**
