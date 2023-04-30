@@ -112,7 +112,7 @@ export function isSparse(array: any[]): boolean {
  * ```
  */
 export function first<T>(array: T[]): T | undefined {
-	return array.length ? array[0] : undefined;
+	return array[0];
 }
 
 /**
@@ -126,7 +126,7 @@ export function first<T>(array: T[]): T | undefined {
  * ```
  */
 export function last<T>(array: T[]): T | undefined {
-	return array.length ? array[array.length - 1] : undefined;
+	return array[array.length - 1];
 }
 
 /**
