@@ -22,6 +22,7 @@ const moduleName = require("@stein197/util/moduleName");
 - `file`
 - `html`
 - `json`
+- `mime`
 - `object`
 - `semver`
 - `string`

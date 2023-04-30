@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [1.26.0](../../compare/1.25.0..1.26.0) - XXXX-XX-XX
+### Added
+New functions:
+- `array.first()`
+- `array.last()`
+- `time.s()`
+- `time.m()`
+- `time.h()`
+- `time.d()`
+- `html.getInputValue()`
+- `html.getTable()`
+- `html.getTableRow()`
+- `html.getTableCol()`
+- `string.ensureStart()`
+- `string.ensureEnd()`
+- `string.truncate()`
+- `string.isEmpty()`
+- `string.isBlank()`
+
+### Changed
+- Renamed: `array.sparse() -> array.isSparse()`, `array.uniq() -> array.unique()`
+
 ## [1.25.0](../../compare/1.24.0..1.25.0) - 2023-04-18
 ### Added
 - `object.isPlain()` and `util.track()` functions
