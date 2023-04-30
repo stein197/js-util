@@ -128,3 +128,38 @@ export function first<T>(array: T[]): T | undefined {
 export function last<T>(array: T[]): T | undefined {
 	return array.length ? array[array.length - 1] : undefined;
 }
+
+/**
+ * Returns a value by the specified index. Basically, the same as {@link Array.at}. Accepts positive and negative
+ * indices.
+ * @param array The array whose element is to be returned.
+ * @param index The index.
+ * @returns Value by the index or `undefined` if there is no such an index.
+ * @example
+ * ```ts
+ * get(["a", "b", "c"], -1); // "c"
+ * ```
+ */
+export function get<T>(array: T[], index: number): T | undefined {
+	return array[__getRealIndex(array.length, index)];
+}
+
+/**
+ * Sets a value by the specified index. Accepts positive and negative indices.
+ * @param array The array.
+ * @param index The index.
+ * @param value Value to set.
+ * @example
+ * ```ts
+ * const a = ["a", "b", "c"];
+ * set(a, -1, "C");
+ * a; // ["a", "b", "C"]
+ * ```
+ */
+export function set<T>(array: T[], index: number, value: T): void {
+	array[__getRealIndex(array.length, index)] = value;
+}
+
+function __getRealIndex(length: number, index: number): number {
+	return index >= 0 ? index : length + index;
+}

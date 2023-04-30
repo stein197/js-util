@@ -129,3 +129,60 @@ describe("array.last()", () => {
 		assert.equal(array.last([]), undefined);
 	});
 });
+
+describe("array.get()", () => {
+	it("Should return correct result", () => {
+		assert.equal(array.get(["a", "b", "c"], 1), "b");
+	});
+	it("Should return the first element when the index is 0", () => {
+		assert.equal(array.get(["a", "b", "c"], 0), "a");
+	});
+	it("Should return the last element when the index is array.length - 1", () => {
+		assert.equal(array.get(["a", "b", "c"], 2), "c");
+	});
+	it("Should return the first element when the index is -array.length;", () => {
+		assert.equal(array.get(["a", "b", "c"], -3), "a");
+	});
+	it("Should return the last element when the index is -1", () => {
+		assert.equal(array.get(["a", "b", "c"], -1), "c");
+	});
+	it("Should return undefined when there is no an element denoted by the passed indexedDB", () => {
+		assert.equal(array.get(["a", "b", "c"], 4), undefined);
+	});
+	it("Should always return undefined when the array is empty", () => {
+		assert.equal(array.get([], 0), undefined);
+	});
+});
+
+describe("array.set()", () => {
+	it("Should correctly change an element", () => {
+		const a = ["a", "b", "c"];
+		array.set(a, 1, "B");
+		assert.equal(a[1], "B");
+	});
+	it("Should correctly change the first element when the index is 0", () => {
+		const a = ["a", "b", "c"];
+		array.set(a, 0, "A");
+		assert.equal(a[0], "A");
+	});
+	it("Should correctly change the last element when the index is array.length - 1", () => {
+		const a = ["a", "b", "c"];
+		array.set(a, a.length - 1, "C");
+		assert.equal(a[a.length - 1], "C");
+	});
+	it("Should correctly change the first element when the index is -array.length", () => {
+		const a = ["a", "b", "c"];
+		array.set(a, -a.length, "A");
+		assert.equal(a[0], "A");
+	});
+	it("Should correctly change the last element when the index is -1", () => {
+		const a = ["a", "b", "c"];
+		array.set(a, -1, "C");
+		assert.equal(a[2], "C");
+	});
+	it("Should correctly set a new value when there is no an element with passed index", () => {
+		const a = ["a", "b", "c"];
+		array.set(a, 3, "d");
+		assert.equal(a[3], "d");
+	});
+});
