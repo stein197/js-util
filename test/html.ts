@@ -253,7 +253,6 @@ describe("html.getInputValue()", () => {
 	});
 });
 
-// TODO
 describe("html.getTableRow()", () => {
 	const window = new jsdom.JSDOM().window as unknown as Window;
 	const body = window.document.body;
@@ -304,7 +303,6 @@ describe("html.getTableRow()", () => {
 	});
 });
 
-// TODO
 describe("html.getTableCol()", () => {
 	const window = new jsdom.JSDOM().window as unknown as Window;
 	const body = window.document.body;
