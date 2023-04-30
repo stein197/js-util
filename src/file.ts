@@ -1,5 +1,3 @@
-const REGEX_EXT = /\.([^\.]+)$/;
-
 /**
  * Returns the base filename without file extension.
  * @param fileName The name from which to extract the base name.
@@ -13,7 +11,7 @@ const REGEX_EXT = /\.([^\.]+)$/;
  * ```
  */
 export function base(fileName: string): string {
-	return fileName.replace(REGEX_EXT, "");
+	return __split(fileName)[0];
 }
 
 /**
@@ -29,6 +27,12 @@ export function base(fileName: string): string {
  * ```
  */
 export function ext(fileName: string): string {
-	const match = fileName.match(REGEX_EXT);
-	return match ? match[1] : "";
+	return __split(fileName)[1];
+}
+
+function __split(fileName: string): [base: string, ext: string] {
+	const parts = fileName.split(".");
+	const ext = parts.length > 1 ? parts.pop()! : "";
+	const base = parts.join(".");
+	return [base, ext];
 }
