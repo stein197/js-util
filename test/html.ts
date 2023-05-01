@@ -1,6 +1,7 @@
 import "mocha";
-import * as assert from "assert";
+import * as assert from "node:assert";
 import * as jsdom from "jsdom";
+import * as sandbox from "@stein197/test-sandbox";
 import * as html from "../src/html";
 import * as util from "../src/util";
 
@@ -140,11 +141,30 @@ describe("html.getInputValue()", () => {
 				assert.equal(html.getInputValue(getInput()), null);
 			});
 		});
-		describe("type=\"file\"", () => {
-			it.skip("Should return null when input value is empty and \"multiple\" is false", () => {});
-			it.skip("Should return file object when input has value and \"multiple\" is false", () => {});
-			it.skip("Should return array of files when input has value and \"multiple\" is true", () => {});
-			it.skip("Should return empty array when input doesn't have value and \"multiple\" is true", () => {});
+		sandbox.go(globalThis, sb => {
+			describe("type=\"file\"", () => {
+				it("Should return null when input value is empty and \"multiple\" is false", () => {
+					sb.dom.window.document.body.innerHTML = "<input type=\"file\" />";
+					assert.equal(html.getInputValue(sb.dom.window.document.body.querySelector("input")!), null);
+				});
+				it("Should return file object when input has value and \"multiple\" is false", async () => {
+					sb.dom.window.document.body.innerHTML = "<input type=\"file\" />";
+					await sb.upload(sb => sb.find("input", true)!, "tsconfig.json").run();
+					assert.equal(html.getInputValue(sb.dom.window.document.body.querySelector("input")!) instanceof File, true);
+					assert.equal(html.getInputValue(sb.dom.window.document.body.querySelector("input")!).name, "tsconfig.json");
+				});
+				it("Should return array of files when input has value and \"multiple\" is true", () => {
+					sb.dom.window.document.body.innerHTML = "<input type=\"file\" multiple=\"true\" />";
+					assert.deepStrictEqual(html.getInputValue(sb.dom.window.document.body.querySelector("input")!), []);
+				});
+				it("Should return empty array when input doesn't have value and \"multiple\" is true", async () => {
+					sb.dom.window.document.body.innerHTML = "<input type=\"file\" multiple=\"true\" />";
+					await sb.upload(sb => sb.find("input", true)!, "tsconfig.json", "package.json").run();
+					assert.equal(html.getInputValue(sb.dom.window.document.body.querySelector("input")!) instanceof Array, true);
+					assert.equal(html.getInputValue(sb.dom.window.document.body.querySelector("input")!).length, 2);
+					assert.deepStrictEqual(html.getInputValue(sb.dom.window.document.body.querySelector("input")!).map(file => file.name), ["tsconfig.json", "package.json"]);
+				});
+			});
 		});
 		describe("type=\"image\"", () => {
 			it.skip("Should return null when input value is empty", () => {});
