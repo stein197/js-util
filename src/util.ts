@@ -112,7 +112,7 @@ export function random(a: number, b?: number): number {
  */
 export function track<T extends any[], U>(f: (...args: T) => U): Tracker<T, U> {
 	const data: [T, U][] = [];
-	return Object.assign(function (...args: T): U {
+	return Object.assign(function (this: any, ...args: T): U {
 		const result = f.call(this, ...args);
 		data.push([args, result]);
 		return result;
