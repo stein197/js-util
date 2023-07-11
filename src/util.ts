@@ -121,6 +121,38 @@ export function track<T extends any[], U>(f: (...args: T) => U): Tracker<T, U> {
 	}));
 }
 
+/**
+ * Takes a function and returns a memoized version of it.
+ * @param f Function to memoize.
+ * @returns Memoized function.
+ * @example
+ * ```ts
+ * const f = (a, b) => a + b;
+ * const fMemo = memoize(f);
+ * fMemo(1, 2); // 3; calculated
+ * fMemo(1, 2); // 3; taken from the cache
+ * fMemo(2, 3); // 5; calculated
+ * fMemo(2, 3); // 5; taken from the cache
+ * ```
+ */
+export function memoize<T extends (...args: any[]) => any>(f: T): T {
+	const cache = new Map();
+	return function (this: any, ...args) {
+		const lastArg = args.pop();
+		let curCache = cache;
+		for (const arg of args) {
+			if (!curCache.has(arg))
+				curCache.set(arg, new Map);
+			curCache = cache.get(arg);
+		}
+		if (!curCache.has(lastArg)) {
+			const result = f.call(this, ...args);
+			curCache.set(lastArg, result);
+		}
+		return curCache.get(lastArg);
+	} as T;
+}
+
 type Rect = {
 	x: number;
 	y: number;

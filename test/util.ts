@@ -147,7 +147,7 @@ describe("util.random()", () => {
 	});
 });
 
-describe("track()", () => {
+describe("util.track()", () => {
 	it("Should behave the same way as the original one", () => {
 		const f = (a, b) => a + b;
 		const t = util.track(f);
@@ -194,4 +194,14 @@ describe("track()", () => {
 			]);
 		});
 	});
+});
+
+// TODO
+describe("util.memoize()", () => {
+	it.skip("Should memoize function when the function has no arguments");
+	it.skip("Should memoize function when the function has one argument");
+	it.skip("Should memoize function when the function has more than one argument");
+	it.skip("Should memoize function when the function takes more arguments on subsequent calls");
+	it.skip("Should memoize function when the function takes less arguments on subsequent calls");
+	it.skip("Should memoize function when it takes complex objects as arguments");
 });
