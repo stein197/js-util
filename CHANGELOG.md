@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [2.0.0](../../compare/2.0.0..1.26.0) - 2023-07-11
+### Changed
+- `util.track()` function signature. Now it returns plain function with `data` property instead of `calls`
+
 ## [1.26.0](../../compare/1.25.0..1.26.0) - 2023-04-30
 ### Added
 - New functions:
