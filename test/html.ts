@@ -314,8 +314,8 @@ describe("html.getTableRow()", () => {
 	it("Should pass correct arguments to handler", () => {
 		const tracker = util.track<[number, HTMLTableCellElement], void>(() => {});
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
-		html.getTableRow(body.querySelector("table")!, 1, tracker.f);
-		assert.deepStrictEqual(tracker.calls, [
+		html.getTableRow(body.querySelector("table")!, 1, tracker);
+		assert.deepStrictEqual(tracker.data, [
 			[[0, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[0]], undefined],
 			[[1, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[1]], undefined],
 			[[2, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[2]], undefined]
@@ -364,8 +364,8 @@ describe("html.getTableCol()", () => {
 	it("Should pass correct arguments to handler", () => {
 		const tracker = util.track<[number, HTMLTableCellElement], void>(() => {});
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
-		html.getTableCol(body.querySelector("table")!, 1, tracker.f);
-		assert.deepStrictEqual(tracker.calls, [
+		html.getTableCol(body.querySelector("table")!, 1, tracker);
+		assert.deepStrictEqual(tracker.data, [
 			[[0, body.querySelectorAll("thead")[0].querySelector("tr")!.children[1]], undefined],
 			[[1, body.querySelectorAll("tbody")[0].querySelector("tr")!.children[1]], undefined],
 			[[2, body.querySelectorAll("tbody")[1].querySelector("tr")!.children[1]], undefined],
@@ -441,8 +441,8 @@ describe("html.getTable()", () => {
 	it("Should pass correct arguments to handler", () => {
 		body.innerHTML = "<table><thead><tr><td>#</td><td>Name</td><td>Count</td></tr></thead><tbody><tr><td>1</td><td>A</td><td>10</td></tr></tbody><tbody><tr><td>2</td><td>B</td><td>20</td></tr></tbody><tfoot><tr><td></td><td></td><td>30</td></tr></tfoot></table>";
 		const tracker = util.track<[number, number, HTMLTableCellElement], void>(() => {});
-		html.getTable(body.querySelector("table")!, tracker.f);
-		assert.deepStrictEqual(tracker.calls.map(call => [call[0][0], call[0][1]]), [
+		html.getTable(body.querySelector("table")!, tracker);
+		assert.deepStrictEqual(tracker.data.map(call => [call[0][0], call[0][1]]), [
 			[0, 0],
 			[0, 1],
 			[0, 2],
