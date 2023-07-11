@@ -102,23 +102,23 @@ export function random(a: number, b?: number): number {
  * ```ts
  * const f = (a, b) => a + b;
  * const tracker = track(f);
- * tracker.f(1, 2);
- * tracker.f(3, 4);
- * tracker.calls(); // [[[1, 2], 3], [[3, 4], 7]]
+ * tracker(1, 2);
+ * tracker(3, 4);
+ * tracker.data == [
+ * 	[[1, 2], 3],
+ * 	[[2, 3], 5]
+ * ]
  * ```
  */
 export function track<T extends any[], U>(f: (...args: T) => U): Tracker<T, U> {
-	const calls: [T, U][] = [];
-	return {
-		get calls() {
-			return calls;
-		},
-		f(...args) {
-			const result = f.call(this, ...args);
-			calls.push([args, result]);
-			return result;
-		}
-	}
+	const data: [T, U][] = [];
+	return Object.assign(function (...args: T): U {
+		const result = f.call(this, ...args);
+		data.push([args, result]);
+		return result;
+	}, Object.defineProperty({data: []}, "data", {
+		get: () => data
+	}));
 }
 
 type Rect = {
@@ -131,14 +131,14 @@ type Rect = {
 type Tracker<T extends any[], U> = {
 
 	/**
-	 * Holds all tracked data with arguments and returned results.
-	 */
-	readonly calls: [T, U][];
-
-	/**
 	 * Tracked function.
 	 * @param args Function arguments.
 	 * @returns Result.
 	 */
-	readonly f: (...args: T) => U;
+	(...args: T): U;
+
+	/**
+	 * Holds all tracked data with arguments and returned results.
+	 */
+	readonly data: [T, U][];
 }
