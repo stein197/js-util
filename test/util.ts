@@ -197,14 +197,30 @@ describe("util.track()", () => {
 });
 
 // TODO
-describe("util.memoize()", () => {
-	it.skip("Memoized function should return correct result when it takes no arguments");
-	it.skip("Memoized function should return correct result when it takes one argument");
-	it.skip("Memoized function should return correct result when it takes more than one argument");
-	it.skip("Should memoize function when the function has no arguments");
-	it.skip("Should memoize function when the function has one argument");
-	it.skip("Should memoize function when the function has more than one argument");
-	it.skip("Should memoize function when the function takes more arguments on subsequent calls");
-	it.skip("Should memoize function when the function takes less arguments on subsequent calls");
-	it.skip("Should memoize function when it takes complex objects as arguments");
+describe.skip("util.memoize()", () => {
+	describe("No arguments", () => {
+		it("Memoized function should always return correct result");
+		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
+		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
+	});
+	describe("Single argument", () => {
+		it("Memoized function should always return correct result");
+		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
+		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
+	});
+	describe("Many arguments", () => {
+		it("Memoized function should always return correct result");
+		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
+		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
+	});
+	describe("Arguments length grows", () => {
+		it("Memoized function should always return correct result");
+		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same");
+		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same");
+	});
+	describe("Arguments length lessens", () => {
+		it("Memoized function should always return correct result");
+		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same");
+		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same");
+	});
 });
