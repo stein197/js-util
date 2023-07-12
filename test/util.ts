@@ -218,15 +218,51 @@ describe("util.memoize()", () => {
 			assert.deepStrictEqual(fTrack.data, [[[], 10]]);
 		});
 	});
-	describe.skip("Single argument", () => {
-		it("Memoized function should always return correct result");
-		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
-		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
+	describe("Single argument", () => {
+		it("Memoized function should always return correct result", () => {
+			const [, fMem] = make(num => num + num);
+			assert.equal(fMem(5), 10);
+			assert.equal(fMem(10), 20);
+			assert.equal(fMem(5), 10);
+			assert.equal(fMem(10), 20);
+		});
+		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same", () => {
+			const [fTrack, fMem] = make(num => num + num);
+			fMem(5);
+			assert.deepStrictEqual(fTrack.data, [[[5], 10]]);
+			fMem(5);
+			assert.deepStrictEqual(fTrack.data, [[[5], 10]]);
+		});
+		it("Memoized function should be called in subsequent calls when the arguments aren't the same", () => {
+			const [fTrack, fMem] = make(num => num + num);
+			fMem(5);
+			assert.deepStrictEqual(fTrack.data, [[[5], 10]]);
+			fMem(10);
+			assert.deepStrictEqual(fTrack.data, [[[5], 10], [[10], 20]]);
+		});
 	});
-	describe.skip("Many arguments", () => {
-		it("Memoized function should always return correct result");
-		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
-		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
+	describe("Many arguments", () => {
+		it("Memoized function should always return correct result", () => {
+			const [, fMem] = make((a, b, c) => a + b + c);
+			assert.equal(fMem(1, 2, 3), 6);
+			assert.equal(fMem(4, 5, 6), 15);
+			assert.equal(fMem(1, 2, 3), 6);
+			assert.equal(fMem(4, 5, 6), 15);
+		});
+		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same", () => {
+			const [fTrack, fMem] = make((a, b, c) => a + b + c);
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(fTrack.data, [[[1, 2, 3], 6]]);
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(fTrack.data, [[[1, 2, 3], 6]]);
+		});
+		it("Memoized function should be called in subsequent calls when the arguments aren't the same", () => {
+			const [fTrack, fMem] = make((a, b, c) => a + b + c);
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(fTrack.data, [[[1, 2, 3], 6]]);
+			fMem(4, 5, 6);
+			assert.deepStrictEqual(fTrack.data, [[[1, 2, 3], 6], [[4, 5, 6], 15]]);
+		});
 	});
 	describe.skip("Arguments length grows", () => {
 		it("Memoized function should always return correct result");
