@@ -197,28 +197,43 @@ describe("util.track()", () => {
 });
 
 // TODO
-describe.skip("util.memoize()", () => {
+describe("util.memoize()", () => {
+	function make<T extends (...args: any[]) => any>(f: T): [ReturnType<typeof util.track<T>>, ReturnType<typeof util.memoize<ReturnType<typeof util.track<T>>>>] {
+		const fTrack = util.track(f);
+		const fMem = util.memoize(fTrack);
+		return [fTrack, fMem];
+	}
 	describe("No arguments", () => {
+		it("Memoized function should always return correct result", () => {
+			const [, fMem] = make(() => 10);
+			assert.equal(fMem(), 10);
+			assert.equal(fMem(), 10);
+			assert.equal(fMem(), 10);
+		});
+		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same", () => {
+			const [fTrack, fMem] = make(() => 10);
+			fMem();
+			fMem();
+			fMem();
+			assert.deepStrictEqual(fTrack.data, [[[], 10]]);
+		});
+	});
+	describe.skip("Single argument", () => {
 		it("Memoized function should always return correct result");
 		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
 		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
 	});
-	describe("Single argument", () => {
+	describe.skip("Many arguments", () => {
 		it("Memoized function should always return correct result");
 		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
 		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
 	});
-	describe("Many arguments", () => {
-		it("Memoized function should always return correct result");
-		it("Memoized function shouldn't be called in subsequent calls when the arguments are the same");
-		it("Memoized function should be called in subsequent calls when the arguments aren't the same");
-	});
-	describe("Arguments length grows", () => {
+	describe.skip("Arguments length grows", () => {
 		it("Memoized function should always return correct result");
 		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same");
 		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same");
 	});
-	describe("Arguments length lessens", () => {
+	describe.skip("Arguments length lessens", () => {
 		it("Memoized function should always return correct result");
 		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same");
 		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same");
