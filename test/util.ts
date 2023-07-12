@@ -203,6 +203,7 @@ describe("util.memoize()", () => {
 		const fMem = util.memoize(fTrack);
 		return [fMem, fTrack.data];
 	}
+	it.skip("Should preserve \"this\" object refence");
 	describe("No arguments", () => {
 		it("Memoized function should always return correct result", () => {
 			const [fMem] = make(() => 10);
