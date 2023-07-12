@@ -7,7 +7,8 @@
     "clean": "del .\\*.js .\\*.d.ts .\\*.map 2>nul",
     "build": "tsc",
     "pretest": "npm run clean",
-    "test": "ts-mocha test\\*.ts"
+    "test:check": "tsc --noEmit",
+    "test": "npm run test:check && ts-mocha test\\*.ts"
   },
   "repository": {
     "type": "git",
