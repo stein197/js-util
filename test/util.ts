@@ -198,6 +198,9 @@ describe("util.track()", () => {
 
 // TODO
 describe("util.memoize()", () => {
+	it.skip("Memoized function should return correct result when it takes no arguments");
+	it.skip("Memoized function should return correct result when it takes one argument");
+	it.skip("Memoized function should return correct result when it takes more than one argument");
 	it.skip("Should memoize function when the function has no arguments");
 	it.skip("Should memoize function when the function has one argument");
 	it.skip("Should memoize function when the function has more than one argument");
