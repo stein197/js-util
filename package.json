@@ -4,12 +4,12 @@
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {
+    "build": "npm run clean && npm run test && npm run ts",
     "clean": "rimraf --glob ./*.js ./*.d.ts ./*.map",
-    "build": "tsc",
-    "pretest": "npm run clean",
-    "test:check": "tsc --noEmit",
-    "test": "npm run test:check && ts-mocha test\\*.ts",
-    "prepublishOnly": "npm run test && npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "ts-mocha test\\*.ts",
+    "ts": "tsc",
+    "ts:check": "tsc --noEmit"
   },
   "repository": {
     "type": "git",
