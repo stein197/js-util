@@ -110,9 +110,9 @@ export function random(a: number, b?: number): number {
  * ]
  * ```
  */
-export function track<T extends (...args: any[]) => any>(f: T): Tracker<T> {
+export function track<T extends (this: any, ...args: any[]) => any>(f: T): Tracker<T> {
 	const data: [Parameters<T>, ReturnType<T>][] = [];
-	return Object.assign(function (this: any, ...args: Parameters<T>): ReturnType<T> {
+	return Object.assign(function (this: ThisParameterType<T>, ...args: Parameters<T>): ReturnType<T> {
 		const result = f.call(this, ...args);
 		data.push([args, result]);
 		return result;
