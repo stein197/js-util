@@ -158,14 +158,14 @@ type Rect = {
 	height: number;
 }
 
-type Tracker<T extends (...args: any[]) => any> = {
+type Tracker<T extends (this: any, ...args: any[]) => any> = {
 
 	/**
 	 * Tracked function.
 	 * @param args Function arguments.
 	 * @returns Result.
 	 */
-	(...args: Parameters<T>): ReturnType<T>;
+	(this: ThisParameterType<T>, ...args: Parameters<T>): ReturnType<T>;
 
 	/**
 	 * Holds all tracked data with arguments and returned results.
