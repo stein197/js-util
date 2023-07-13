@@ -198,9 +198,9 @@ describe("util.track()", () => {
 
 // TODO: Replace all test functions with single cumulate()
 describe("util.memoize()", () => {
-	function make<T extends (...args: any[]) => any>(f: T): [ReturnType<typeof util.memoize<ReturnType<typeof util.track<T>>>>, ReturnType<typeof util.track<T>>["data"]] {
+	function make<T extends (...args: any[]) => any>(f: T, hasher?: any): [ReturnType<typeof util.memoize<ReturnType<typeof util.track<T>>>>, ReturnType<typeof util.track<T>>["data"]] {
 		const fTrack = util.track(f);
-		const fMem = util.memoize(fTrack);
+		const fMem = util.memoize(fTrack, hasher);
 		return [fMem, fTrack.data];
 	}
 	it.skip("Should preserve \"this\" object refence");
@@ -353,6 +353,36 @@ describe("util.memoize()", () => {
 			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0], [[4, 5, 6], 15], [[4, 5], 9], [[4], 4]]);
 		});
 	});
-	// TODO
-	describe.skip("Using hasher function", () => {});
+	describe("Using hasher function", () => {
+		let lastID = 0;
+		const SYMBOL_USER_ID = Symbol();
+		function createUser(name: string, age: number) {
+			const u = {name, age, [SYMBOL_USER_ID]: lastID++};
+			Object.defineProperty(u, "id", {
+				get() {
+					return this[SYMBOL_USER_ID];
+				}
+			})
+			return u;
+		}
+		beforeEach(() => lastID = 0);
+		it("Should return incorrect results when function needs a custom hash function", () => {
+			const u1 = createUser("John", 12);
+			const u2 = createUser("John", 12);
+			const [fMem, data] = make(user => `id: ${user.id}, name: ${user.name}, age: ${user.age}`);
+			assert.equal(fMem(u1), "id: 0, name: John, age: 12");
+			assert.equal(fMem(u2), "id: 0, name: John, age: 12");
+			assert.deepStrictEqual(data, [[[u1], "id: 0, name: John, age: 12"]]);
+		});
+		it("Should use hasher function", () => {
+			const u1 = createUser("John", 12);
+			const u2 = createUser("John", 12);
+			const hasher = util.track(user => user.id.toString());
+			const [fMem, data] = make(user => `id: ${user.id}, name: ${user.name}, age: ${user.age}`, hasher);
+			assert.equal(fMem(u1), "id: 0, name: John, age: 12");
+			assert.equal(fMem(u2), "id: 1, name: John, age: 12");
+			assert.deepStrictEqual(data, [[[u1], "id: 0, name: John, age: 12"], [[u2], "id: 1, name: John, age: 12"]]);
+			assert.deepStrictEqual(hasher.data, [[[u1], "0"], [[u2], "1"]]);
+		});
+	});
 });
