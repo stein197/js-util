@@ -196,7 +196,7 @@ describe("util.track()", () => {
 	});
 });
 
-// TODO
+// TODO: Replace all test functions with single cumulate()
 describe("util.memoize()", () => {
 	function make<T extends (...args: any[]) => any>(f: T): [ReturnType<typeof util.memoize<ReturnType<typeof util.track<T>>>>, ReturnType<typeof util.track<T>>["data"]] {
 		const fTrack = util.track(f);
@@ -265,14 +265,92 @@ describe("util.memoize()", () => {
 			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[4, 5, 6], 15]]);
 		});
 	});
-	describe.skip("Arguments length grows", () => {
-		it("Memoized function should always return correct result");
-		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same");
-		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same");
+	describe("Arguments length grows", () => {
+		it("Memoized function should always return correct result", () => {
+			const [fMem] = make((...args: number[]) => args.reduce((prev, cur) => prev + cur, 0));
+			assert.equal(fMem(), 0);
+			assert.equal(fMem(1), 1);
+			assert.equal(fMem(1, 2), 3);
+			assert.equal(fMem(1, 2, 3), 6);
+		});
+		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same", () => {
+			const [fMem, data] = make((...args: number[]) => args.reduce((prev, cur) => prev + cur, 0));
+			fMem();
+			assert.deepStrictEqual(data, [[[], 0]]);
+			fMem(1);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1]]);
+			fMem(1, 2);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3]]);
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6]]);
+			fMem();
+			fMem(1);
+			fMem(1, 2);
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6]]);
+		});
+		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same", () => {
+			const [fMem, data] = make((...args: number[]) => args.reduce((prev, cur) => prev + cur, 0));
+			fMem();
+			assert.deepStrictEqual(data, [[[], 0]]);
+			fMem(1);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1]]);
+			fMem(1, 2);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3]]);
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6]]);
+			fMem();
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6]]);
+			fMem(4);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6], [[4], 4]]);
+			fMem(4, 5);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6], [[4], 4], [[4, 5], 9]]);
+			fMem(4, 5, 6);
+			assert.deepStrictEqual(data, [[[], 0], [[1], 1], [[1, 2], 3], [[1, 2, 3], 6], [[4], 4], [[4, 5], 9], [[4, 5, 6], 15]]);
+		});
 	});
-	describe.skip("Arguments length lessens", () => {
-		it("Memoized function should always return correct result");
-		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same");
-		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same");
+	describe("Arguments length lessens", () => {
+		it("Memoized function should always return correct result", () => {
+			const [fMem] = make((...args: number[]) => args.reduce((prev, cur) => prev + cur, 0));
+			assert.equal(fMem(1, 2, 3), 6);
+			assert.equal(fMem(1, 2), 3);
+			assert.equal(fMem(1), 1);
+			assert.equal(fMem(), 0);
+		});
+		it("Memoized function shouldn't be called in subsequent calls and return correct result when the arguments are the same", () => {
+			const [fMem, data] = make((...args: number[]) => args.reduce((prev, cur) => prev + cur, 0));
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6]]);
+			fMem(1, 2);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3]]);
+			fMem(1);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1]]);
+			fMem();
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0]]);
+			fMem(1, 2, 3);
+			fMem(1, 2);
+			fMem(1);
+			fMem();
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0]]);
+		});
+		it("Memoized function should be called in subsequent calls and return correct result when the arguments aren't the same", () => {
+			const [fMem, data] = make((...args: number[]) => args.reduce((prev, cur) => prev + cur, 0));
+			fMem(1, 2, 3);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6]]);
+			fMem(1, 2);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3]]);
+			fMem(1);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1]]);
+			fMem();
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0]]);
+			fMem(4, 5, 6);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0], [[4, 5, 6], 15]]);
+			fMem(4, 5);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0], [[4, 5, 6], 15], [[4, 5], 9]]);
+			fMem(4);
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0], [[4, 5, 6], 15], [[4, 5], 9], [[4], 4]]);
+			fMem();
+			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0], [[4, 5, 6], 15], [[4, 5], 9], [[4], 4]]);
+		});
 	});
 });
