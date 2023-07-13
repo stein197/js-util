@@ -353,4 +353,6 @@ describe("util.memoize()", () => {
 			assert.deepStrictEqual(data, [[[1, 2, 3], 6], [[1, 2], 3], [[1], 1], [[], 0], [[4, 5, 6], 15], [[4, 5], 9], [[4], 4]]);
 		});
 	});
+	// TODO
+	describe.skip("Using hasher function", () => {});
 });

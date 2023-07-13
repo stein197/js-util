@@ -124,32 +124,30 @@ export function track<T extends (...args: any[]) => any>(f: T): Tracker<T> {
 /**
  * Takes a function and returns a memoized version of it.
  * @param f Function to memoize.
+ * @param hasher A function that returns a hash based on passed arguments to the memoized function. By default,
+ *               arguments are just stringified to make a JSON-string and use it as a hash.
  * @returns Memoized function.
  * @example
  * ```ts
- * const f = (a, b) => a + b;
- * const fMemo = memoize(f);
+ * const fMemo = memoize((a, b) => a + b);
  * fMemo(1, 2); // 3; calculated
  * fMemo(1, 2); // 3; taken from the cache
  * fMemo(2, 3); // 5; calculated
  * fMemo(2, 3); // 5; taken from the cache
+ * 
+ * // Use a custom hash function
+ * const f = memoize(user => user.heavyOperation(), user => user.id);
+ * f(user1); // calculated
+ * f(user1); // taken from the cache using custom hasher function
  * ```
  */
-export function memoize<T extends (...args: any[]) => any>(f: T): T {
-	const cache = new Map();
-	return function (this: any, ...args) {
-		const lastArg = args.pop();
-		let curCache = cache;
-		for (const arg of args) {
-			if (!curCache.has(arg))
-				curCache.set(arg, new Map);
-			curCache = cache.get(arg);
-		}
-		if (!curCache.has(lastArg)) {
-			const result = f.call(this, ...args);
-			curCache.set(lastArg, result);
-		}
-		return curCache.get(lastArg);
+export function memoize<T extends (...args: any[]) => any>(f: T, hasher?: (this: ThisParameterType<T>, ...args: Parameters<T>) => string): T {
+	const cache = {};
+	return function (this: any, ...args: Parameters<T>) {
+		const key = hasher ? hasher.apply(this, args) : JSON.stringify(args);
+		if (!(key in cache))
+			cache[key] = f.apply(this, args);
+		return cache[key];
 	} as T;
 }
 
