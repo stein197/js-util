@@ -1,10 +1,10 @@
 {
   "name": "@stein197/util",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && npm run test && npm run ts",
+    "build": "npm run clean && npm run test & npm run ts",
     "clean": "rimraf --glob ./*.js ./*.d.ts ./*.map",
     "prepublishOnly": "npm run build",
     "test": "ts-mocha test\\*.ts",

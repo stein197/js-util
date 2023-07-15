@@ -2,7 +2,17 @@
 
 ## [Unreleased]
 
-## [2.0.0](../../compare/2.0.0..1.26.0) - 2023-07-11
+## [2.1.0](../../compare/2.0.0..2.1.0) - 2023-07-15
+### Added
+- `util.memoize()` function
+- `ts:check` npm script
+- `build` npm script now runs before publishing the library
+
+### Changed
+- `util.track()` signature
+- `clean` npm script now uses `rimraf` module instead of native Windows `del` command
+
+## [2.0.0](../../compare/1.26.0..2.0.0) - 2023-07-11
 ### Changed
 - `util.track()` function signature. Now it returns plain function with `data` property instead of `calls`
 
