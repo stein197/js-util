@@ -458,3 +458,19 @@ describe("html.getTable()", () => {
 		]);
 	});
 });
+
+describe("html.is()", () => {
+	const window = new jsdom.JSDOM().window as unknown as Window;
+
+	it("Should return false for null", () => {
+		assert.equal(html.is(null, "a"), false);
+	});
+	it("Should return correct result when expected is a string", () => {
+		assert.equal(html.is(window.document.createElement("div"), "div"), true);
+		assert.equal(html.is(window.document.createElement("div"), "a"), false);
+	});
+	it("Should return correct result when expected is an array", () => {
+		assert.equal(html.is(window.document.createElement("div"), ["div", "a"]), true);
+		assert.equal(html.is(window.document.createElement("div"), ["a"]), false);
+	});
+});
