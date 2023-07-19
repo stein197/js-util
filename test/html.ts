@@ -458,3 +458,22 @@ describe("html.getTable()", () => {
 		]);
 	});
 });
+
+describe("html.is()", () => {
+	const dom = new jsdom.JSDOM();
+	it("Should return false for null", () => {
+		assert.equal(html.is(null, "div"), false);
+	});
+	it("Should return true when the expected tag name matches the element's one", () => {
+		assert.equal(html.is(dom.window.document.createElement("div"), "div"), true);
+	});
+	it("Should return true when one of the expected tag names matches the element's one", () => {
+		assert.equal(html.is(dom.window.document.createElement("div"), ["div", "p"]), true);
+	});
+	it("Should return false when the expected tag name doesn't match the element's one", () => {
+		assert.equal(html.is(dom.window.document.createElement("div"), "p"), false);
+	});
+	it("Should return false when none of the expected tag names match the element's one", () => {
+		assert.equal(html.is(dom.window.document.createElement("div"), ["p", "a"]), false);
+	});
+});

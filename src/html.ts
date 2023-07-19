@@ -80,9 +80,9 @@ export function selector(element: Element, exclude: string[] = ["class", "id", "
  * ```
  */
 export function getInputValue(input: HTMLInputElement | HTMLSelectElement | HTMLButtonElement | HTMLTextAreaElement): any {
-	if (__is(input, "select"))
+	if (is(input, "select"))
 		return input.multiple ? [...input.selectedOptions].map(opt => opt.value) : input.selectedIndex < 0 ? null : input.value;
-	if (__is(input, "input"))
+	if (is(input, "input"))
 		switch (input.type) {
 			case "checkbox":
 			case "radio":
@@ -238,8 +238,27 @@ export function getTable(table: HTMLTableElement | HTMLTableSectionElement, hand
 	return __getRawTable(table).map((row, rowIndex) => row.map((cell, colIndex) => handler(rowIndex, colIndex, cell)));
 }
 
+/**
+ * Checks if the element is an instance of the passed tag name.
+ * @param element Element to check.
+ * @param expected Tag name(-s) to check against.
+ * @returns `true` if the element is an instance of the passed tag(-s).
+ * @example
+ * ```tsx
+ * is(<div />, "div");        // true
+ * is(<div />, ["div", "p"]); // true
+ * is(<div />, "p");          // false
+ * ```
+ */
+export function is<T extends keyof ElementTagNameMap>(element: Node | null, expected: T | T[]): element is ElementTagNameMap[T] {
+	if (element == null || !("tagName" in element))
+		return false;
+	const name = (element as Element).tagName.toLowerCase();
+	return Array.isArray(expected) ? expected.includes(name as T) : name === expected;
+}
+
 function __getRawTable(table: HTMLTableElement | HTMLTableSectionElement): HTMLTableCellElement[][] {
-	return ((__is(table, "table") ? [
+	return ((is(table, "table") ? [
 		...(table.tHead ? [...table.tHead.children] : []),
 		...[...table.tBodies].map(tBody => [...tBody.children]).flat(Infinity),
 		...(table.tFoot ? [...table.tFoot.children] : [])
@@ -247,12 +266,8 @@ function __getRawTable(table: HTMLTableElement | HTMLTableSectionElement): HTMLT
 }
 
 function __handleTableCell(...[, , cell]: [number, number, HTMLTableCellElement]): any {
-	if (cell.childElementCount === 1 && (__is(cell.firstChild, "input") || __is(cell.firstChild, "select") || __is(cell.firstChild, "button") || __is(cell.firstChild, "textarea")))
+	if (cell.childElementCount === 1 && (is(cell.firstChild, ["input", "select", "button", "textarea"])))
 		return getInputValue(cell.firstChild);
 	const numVal = Number.parseFloat(cell.textContent!);
 	return isNaN(numVal) ? cell.textContent : numVal;
-}
-
-function __is<T extends keyof HTMLElementTagNameMap>(element: Node | null, tag: T): element is HTMLElementTagNameMap[T] {
-	return element != null && "tagName" in element && (element as Element).tagName.toLowerCase() === tag;
 }
