@@ -12,7 +12,6 @@
 		"allowUnusedLabels": false,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
-		"importsNotUsedAsValues": "error",
 		"sourceMap": true,
 		"inlineSources": true
 	},
