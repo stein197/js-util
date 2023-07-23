@@ -162,8 +162,21 @@ export function get<T = any>(object: object, path: string): T | undefined {
 	return curObj as T;
 }
 
-// TODO: Docs
-export function set(object: object, path: string, value: any): void {
+/**
+ * Sets a value to an object, denoted by a string path, delimited by dots. If a property contains a dot, then
+ * it should be escaped with a backslash like this:
+ * ```ts
+ * set({}, "a\\.b", 12); // {"a.b": 12}
+ * @param object Object to set a property to.
+ * @param path Property path.
+ * @param value A value to set
+ * @returns The object itself.
+ * @example
+ * ```ts
+ * set({}, "a.b", 2); // {a: {b: 2}}
+ * ```
+ */
+export function set(object: object, path: string, value: any): object {
 	const parts = parsePath(path);
 	const lastPart = parts.pop()!;
 	let curObj = object;
@@ -173,6 +186,7 @@ export function set(object: object, path: string, value: any): void {
 		curObj = curObj[part];
 	}
 	curObj[lastPart] = value;
+	return object;
 }
 
 /**

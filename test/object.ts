@@ -240,8 +240,25 @@ describe("object.isPlain()", () => {
 // TODO
 describe("object.get()", () => {});
 
-// TODO
-describe("object.set()", () => {});
+describe("object.set()", () => {
+	it("Should modify the passed object", () => {
+		const a = {};
+		object.set(a, "a", 1);
+		assert.deepStrictEqual(a, {a: 1});
+	});
+	it("Should set a property when the path is empty string", () => {
+		assert.deepStrictEqual(object.set({a: 1}, "", 0), {a: 1, "": 0});
+	});
+	it("Should set a property when the path is simple", () => {
+		assert.deepStrictEqual(object.set({}, "a", 1), {a: 1});
+	});
+	it("Should set a property when the path is complex", () => {
+		assert.deepStrictEqual(object.set({}, "a.b", 2), {a: {b: 2}});
+	});
+	it("Should set a property when the path contains escaped dots", () => {
+		assert.deepStrictEqual(object.set({}, "a\\.b", 12), {"a.b": 12});
+	});
+});
 
 describe("object.unset()", () => {
 	it("Should modify the passed object", () => {
