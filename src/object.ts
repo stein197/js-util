@@ -150,10 +150,64 @@ export function isPlain(obj: any): boolean {
 	return proto == null || proto.constructor === Object;
 }
 
+// TODO: Docs
+export function get<T = any>(object: object, path: string): T | undefined {
+	const parts = parsePath(path);
+	let curObj = object;
+	for (const part of parts)
+		if (part in curObj)
+			curObj = curObj[part];
+		else
+			return undefined;
+	return curObj as T;
+}
+
+// TODO: Docs
+export function set(object: object, path: string, value: any): void {
+	const parts = parsePath(path);
+	const lastPart = parts.pop()!;
+	let curObj = object;
+	for (const part of parts) {
+		if (!(part in curObj))
+			curObj[part] = {};
+		curObj = curObj[part];
+	}
+	curObj[lastPart] = value;
+}
+
+// TODO: Docs
+export function unset(object: object, path: string): void {
+	const parts = parsePath(path);
+	const lastPart = parts.pop()!;
+	let curObj = object;
+	for (const part of parts) {
+		if (!(part in parts))
+			return;
+		curObj = curObj[part];
+	}
+	delete curObj[lastPart];
+}
+
+// TODO: Docs
+export function has(object: object, path: string): boolean {
+	const parts = parsePath(path);
+	let curObj = object;
+	for (const part of parts)
+		if (part in curObj)
+			curObj = curObj[part]
+		else
+			return false;
+	return true;
+}
+
 function applyRecursive(f: (o: any) => void, object: any): void {
 	if (object == null || typeof object !== "object")
 		return;
 	for (const key in object)
 		applyRecursive(f, object[key]);
 	f(object);
+}
+
+function parsePath(path: string): string[] {
+	return path.split(/(?<!\\)\./).map(part => part.replace("\\.", "."));
 }

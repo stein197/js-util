@@ -237,6 +237,18 @@ describe("object.isPlain()", () => {
 	});
 });
 
+// TODO
+describe("object.get()", () => {});
+
+// TODO
+describe("object.set()", () => {});
+
+// TODO
+describe("object.unset()", () => {});
+
+// TODO
+describe("object.has()", () => {});
+
 function stub() {
 	return {
 		a: 1,
