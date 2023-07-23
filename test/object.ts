@@ -246,8 +246,40 @@ describe("object.set()", () => {});
 // TODO
 describe("object.unset()", () => {});
 
-// TODO
-describe("object.has()", () => {});
+describe("object.has()", () => {
+	describe("Empty string", () => {
+		it("Should return false when there is no a key with empty string", () => {
+			assert.equal(object.has({}, ""), false);
+		});
+		it("Should return true when there is a key with empty string", () => {
+			assert.equal(object.has({"": false}, ""), true);
+		});
+	});
+	describe("Simple path", () => {
+		it("Should return false when the property doesn't exist", () => {
+			assert.equal(object.has({}, "a"), false);
+		});
+		it("Should return true when the property doesn't exist", () => {
+			assert.equal(object.has({a: 1}, "a"), true);
+		});
+	});
+	describe("Complex path", () => {
+		it("Should return false when the property doesn't exist", () => {
+			assert.equal(object.has({a: {b: 2}}, "a.c"), false);
+		});
+		it("Should return true when the property exists", () => {
+			assert.equal(object.has({a: {b: 2}}, "a.b"), true);
+		});
+	});
+	describe("Path contains escaped dot", () => {
+		it("Should return false when the property doesn't exist", () => {
+			assert.equal(object.has({"a.c": 1}, "a.b"), false);
+		});
+		it("Should return true when the property exists", () => {
+			assert.equal(object.has({"a.b": 1}, "a\\.b"), true);
+		});
+	});
+});
 
 function stub() {
 	return {

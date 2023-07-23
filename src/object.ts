@@ -188,7 +188,16 @@ export function unset(object: object, path: string): void {
 	delete curObj[lastPart];
 }
 
-// TODO: Docs
+/**
+ * Checks if an object has a property, denoted by a string path, delimited by dots.
+ * @param object Object to check.
+ * @param path Property to check against.
+ * @returns `true` if there is a property denoted by the path.
+ * @example
+ * ```ts
+ * has({a: {b: true}}, "a.b"); // true
+ * ```
+ */
 export function has(object: object, path: string): boolean {
 	const parts = parsePath(path);
 	let curObj = object;
