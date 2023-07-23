@@ -150,7 +150,16 @@ export function isPlain(obj: any): boolean {
 	return proto == null || proto.constructor === Object;
 }
 
-// TODO: Docs
+/**
+ * Returns a value from an object, denoted bu a string path, delimited by dots.
+ * @param object Object to return a value from.
+ * @param path Property path to a value.
+ * @returns Value or `undefined` if there's no a property.
+ * @example
+ * ```ts
+ * get({a: {b: 2}}, "a.b"); // 2
+ * ```
+ */
 export function get<T = any>(object: object, path: string): T | undefined {
 	const parts = parsePath(path);
 	let curObj = object;

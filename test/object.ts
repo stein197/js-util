@@ -237,8 +237,40 @@ describe("object.isPlain()", () => {
 	});
 });
 
-// TODO
-describe("object.get()", () => {});
+describe("object.get()", () => {
+	describe("Empty string", () => {
+		it("Should return undefined when there is no a key with empty string", () => {
+			assert.equal(object.get({}, ""), undefined);
+		});
+		it("Should return a value when there is a key with empty string", () => {
+			assert.equal(object.get({"": false}, ""), false);
+		});
+	});
+	describe("Simple path", () => {
+		it("Should return undefined when the property doesn't exist", () => {
+			assert.equal(object.get({}, "a"), undefined);
+		});
+		it("Should return a value when the property doesn't exist", () => {
+			assert.equal(object.get({a: 1}, "a"), 1);
+		});
+	});
+	describe("Complex path", () => {
+		it("Should return undefined when the property doesn't exist", () => {
+			assert.equal(object.get({a: {b: 2}}, "a.c"), undefined);
+		});
+		it("Should return a value when the property exists", () => {
+			assert.equal(object.get({a: {b: 2}}, "a.b"), 2);
+		});
+	});
+	describe("Path contains escaped dot", () => {
+		it("Should return undefined when the property doesn't exist", () => {
+			assert.equal(object.get({"a.c": 1}, "a\\.b"), undefined);
+		});
+		it("Should return a value when the property exists", () => {
+			assert.equal(object.get({"a.b": 1}, "a\\.b"), 1);
+		});
+	});
+});
 
 describe("object.set()", () => {
 	it("Should modify the passed object", () => {
