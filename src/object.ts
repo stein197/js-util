@@ -180,6 +180,7 @@ export function set(object: object, path: string, value: any): void {
  * it should be escaped with a backslash like this:
  * ```ts
  * unset({"a.b": 12}, "a\\.b");
+ * ```
  * @param object Object to delete a property from.
  * @param path Property path by which to delete.
  * @returns The object itself.
