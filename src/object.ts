@@ -175,21 +175,38 @@ export function set(object: object, path: string, value: any): void {
 	curObj[lastPart] = value;
 }
 
-// TODO: Docs
-export function unset(object: object, path: string): void {
+/**
+ * Deletes a property from an object, denoted by a string path, delimited by dots. If a property contains a dot, then
+ * it should be escaped with a backslash like this:
+ * ```ts
+ * unset({"a.b": 12}, "a\\.b");
+ * @param object Object to delete a property from.
+ * @param path Property path by which to delete.
+ * @returns The object itself.
+ * @example
+ * ```ts
+ * unset({a: {b: 2}}, "a.b"); // {a: {}}
+ * ```
+ */
+export function unset(object: object, path: string): object {
 	const parts = parsePath(path);
 	const lastPart = parts.pop()!;
 	let curObj = object;
 	for (const part of parts) {
-		if (!(part in parts))
-			return;
+		if (!(part in curObj))
+			return object;
 		curObj = curObj[part];
 	}
 	delete curObj[lastPart];
+	return object;
 }
 
 /**
- * Checks if an object has a property, denoted by a string path, delimited by dots.
+ * Checks if an object has a property, denoted by a string path, delimited by dots. If a property contains a dot, then
+ * it should be escaped with a backslash like this:
+ * ```ts
+ * has({"a.b": 12}, "a\\.b");
+ * ```
  * @param object Object to check.
  * @param path Property to check against.
  * @returns `true` if there is a property denoted by the path.

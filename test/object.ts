@@ -243,8 +243,45 @@ describe("object.get()", () => {});
 // TODO
 describe("object.set()", () => {});
 
-// TODO
-describe("object.unset()", () => {});
+describe("object.unset()", () => {
+	it("Should modify the passed object", () => {
+		const a = {a: 1, b: 2};
+		object.unset(a, "a");
+		assert.deepStrictEqual(a, {b: 2});
+	});
+	describe("Empty string", () => {
+		it("Should do nothing when there is no a key with empty string", () => {
+			assert.deepStrictEqual(object.unset({a: 1}, ""), {a: 1});
+		});
+		it("Should delete a property there is a key with empty string", () => {
+			assert.deepStrictEqual(object.unset({a: 1, "": 0}, ""), {a: 1});
+		});
+	});
+	describe("Simple path", () => {
+		it("Should do nothing when the property doesn't exist", () => {
+			assert.deepStrictEqual(object.unset({a: 1, b: 2}, "c"), {a: 1, b: 2});
+		});
+		it("Should delete a property when the property exists", () => {
+			assert.deepStrictEqual(object.unset({a: 1, b: 2}, "a"), {b: 2});
+		});
+	});
+	describe("Complex path", () => {
+		it("Should do nothing when the property doesn't exist", () => {
+			assert.deepStrictEqual(object.unset({a: {b: 2}}, "a.c"), {a: {b: 2}});
+		});
+		it("Should delete a property when the property exists", () => {
+			assert.deepStrictEqual(object.unset({a: {b: 2}}, "a.b"), {a: {}});
+		});
+	});
+	describe("Path contains escaped dot", () => {
+		it("Should do nothing when the property doesn't exist", () => {
+			assert.deepStrictEqual(object.unset({"a.b": 12}, "a\\.c"), {"a.b": 12});
+		});
+		it("Should delete a property when the property exists", () => {
+			assert.deepStrictEqual(object.unset({"a.b": 12}, "a\\.b"), {});
+		});
+	});
+});
 
 describe("object.has()", () => {
 	describe("Empty string", () => {
