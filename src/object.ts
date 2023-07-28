@@ -169,6 +169,7 @@ export function get<T = any>(object: object, path: string): T | undefined {
  * it should be escaped with a backslash like this:
  * ```ts
  * set({}, "a\\.b", 12); // {"a.b": 12}
+ * ```
  * @param object Object to set a property to.
  * @param path Property path.
  * @param value A value to set
