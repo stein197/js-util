@@ -95,7 +95,7 @@ export function equal(a: any, b: any): -1 | 1 | boolean {
 	const majorObject = aLessThanB ? b : a;
 	const sign = aEntries.length === bEntries.length || (aEntries.length < bEntries.length ? -1 : 1);
 	const result = minorEntries.map(entry => entry[0] in majorObject ? equal(majorObject[entry[0] as any], entry[1]) : false).reduce((acc, v) => acc === true || acc === v ? v : false, true);
-	return aEntries.length === bEntries.length ? result : (result ? sign : false);
+	return aEntries.length === bEntries.length ? result : result && sign;
 }
 
 /**
