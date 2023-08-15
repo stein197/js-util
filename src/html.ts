@@ -285,7 +285,7 @@ export function is<T extends keyof ElementTagNameMap>(element: Node | null, expe
  */
 export function setAttributes(element: Element, attributes: object, prefix?: string): void {
 	for (const key in attributes) {
-		const name = prefix ? `${prefix}-key` : key;
+		const name = prefix ? `${prefix}-${key}` : key;
 		if (attributes[key] == null)
 			element.removeAttribute(name);
 		else

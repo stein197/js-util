@@ -477,13 +477,34 @@ describe("html.is()", () => {
 	});
 });
 
-describe.skip("html.setAttributes()", () => {
+describe("html.setAttributes()", () => {
 	const dom = new jsdom.JSDOM();
-	it.skip("Should do nothing when the attributes object is empty");
-	it.skip("Should set attributes");
-	it.skip("Should unset attributes with null values");
-	it.skip("Should set attributes with prefix provided");
-	it.skip("Should unset attributes with null values and prefix provided");
+	let elt: HTMLElement;
+	beforeEach(() => {
+		elt = dom.window.document.createElement("div");
+		elt.setAttribute("id", "div");
+		elt.setAttribute("data-name", "name");
+	});
+	it("Should do nothing when the attributes object is empty", () => {
+		html.setAttributes(elt, {});
+		assert.deepStrictEqual(html.getAttributes(elt), {id: "div", "data-name": "name"});
+	});
+	it("Should set attributes", () => {
+		html.setAttributes(elt, {class: "block"});
+		assert.deepStrictEqual(html.getAttributes(elt), {id: "div", "data-name": "name", class: "block"});
+	});
+	it("Should unset attributes with null values", () => {
+		html.setAttributes(elt, {id: null});
+		assert.deepStrictEqual(html.getAttributes(elt), {"data-name": "name"});
+	});
+	it("Should set attributes with prefix provided", () => {
+		html.setAttributes(elt, {value: 1}, "data");
+		assert.deepStrictEqual(html.getAttributes(elt), {id: "div", "data-name": "name", "data-value": "1"});
+	});
+	it("Should unset attributes with null values and prefix provided", () => {
+		html.setAttributes(elt, {name: null}, "data");
+		assert.deepStrictEqual(html.getAttributes(elt), {id: "div"});
+	});
 });
 
 describe("html.getAttributes()", () => {
