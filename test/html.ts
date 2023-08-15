@@ -1,4 +1,3 @@
-import "mocha";
 import * as assert from "node:assert";
 import * as jsdom from "jsdom";
 import * as sandbox from "@stein197/test-sandbox";
@@ -478,11 +477,26 @@ describe("html.is()", () => {
 	});
 });
 
-// TODO
-describe.skip("html.setAttributes()", () => {});
+describe.skip("html.setAttributes()", () => {
+	const dom = new jsdom.JSDOM();
+	it.skip("Should do nothing when the attributes object is empty");
+	it.skip("Should set attributes");
+	it.skip("Should unset attributes with null values");
+	it.skip("Should set attributes with prefix provided");
+	it.skip("Should unset attributes with null values and prefix provided");
+});
 
-// TODO
-describe.skip("html.getAttributes()", () => {});
+describe("html.getAttributes()", () => {
+	const dom = new jsdom.JSDOM();
+	it("Should return an empty object when an element does not have any attributes", () => {
+		assert.deepStrictEqual(html.getAttributes(dom.window.document.createElement("div")), {});
+	});
+	it("Should return correct result", () => {
+		const elt = dom.window.document.createElement("div")
+		elt.setAttribute("id", "div");
+		elt.setAttribute("data-name", "name");
+		assert.deepStrictEqual(html.getAttributes(elt), {id: "div", "data-name": "name"});
+	});
+});
 
-// TODO
 describe.skip("html.setStyle()", () => {});
