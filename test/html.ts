@@ -477,3 +477,12 @@ describe("html.is()", () => {
 		assert.equal(html.is(dom.window.document.createElement("div"), ["p", "a"]), false);
 	});
 });
+
+// TODO
+describe.skip("html.setAttributes()", () => {});
+
+// TODO
+describe.skip("html.getAttributes()", () => {});
+
+// TODO
+describe.skip("html.setStyle()", () => {});

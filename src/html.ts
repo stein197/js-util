@@ -257,6 +257,78 @@ export function is<T extends keyof ElementTagNameMap>(element: Node | null, expe
 	return Array.isArray(expected) ? expected.includes(name as T) : name === expected;
 }
 
+/**
+ * Set a map of attributes to an element.
+ * @param element Element to set attributes to.
+ * @param attributes Attributes to be set. Attributes with null values will be deleted from the element.
+ * @param prefix Optional prefix. If provided, all attribute names will be prefixed with `${prefix}-`.
+ * @example
+ * Set attributes without prefix
+ * ```tsx
+ * const elt = <div id="div" />;
+ * setAttributes(div, {
+ * 	div: null,
+ * 	class: "div",
+ * });
+ * elt == <div class="div" />
+ * ```
+ * @example
+ * Set attributes with prefix
+ * ```tsx
+ * const elt = <div id="div" />;
+ * setAttributes(div, {
+ * 	attr1: 1,
+ * 	attr2: 2
+ * }, "data");
+ * elt == <div id="div" data-attr1="1" data-attr2="2" />
+ * ```
+ */
+export function setAttributes(element: Element, attributes: object, prefix?: string): void {
+	for (const key in attributes) {
+		const name = prefix ? `${prefix}-key` : key;
+		if (attributes[key] == null)
+			element.removeAttribute(name);
+		else
+			element.setAttribute(name, attributes[key]);
+	}
+}
+
+/**
+ * Retrieve a map of attributes of an element.
+ * @param element Element to get attributes from.
+ * @returns A map of attributes.
+ * @example
+ * ```tsx
+ * const elt = <div id="div" class="block" />;
+ * getAttributes(elt) == {id: "div", class: "block"}
+ * ```
+ */
+export function getAttributes(element: Element): object {
+	const result = {};
+	for (const name of element.getAttributeNames())
+		result[name] = element.getAttribute(name);
+	return result;
+}
+
+/**
+ * Set a map of styles to an element.
+ * @param element Element to set styles to.
+ * @param style Styles to be set. Styles with null values will be deleted from the element.
+ * @example
+ * ```tsx
+ * const elt = <div style="color: red" />;
+ * setStyle(elt, {
+ * 	color: null,
+ * 	fontSize: "12px"
+ * });
+ * elt == <div style="font-size: 12px" />
+ * ```
+ */
+export function setStyle(element: ElementCSSInlineStyle, style: Partial<CSSStyleDeclaration>): void {
+	for (const key in style)
+		element.style[key] = style[key]!;
+}
+
 function __getRawTable(table: HTMLTableElement | HTMLTableSectionElement): HTMLTableCellElement[][] {
 	return ((is(table, "table") ? [
 		...(table.tHead ? [...table.tHead.children] : []),
