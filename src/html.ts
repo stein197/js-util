@@ -326,7 +326,7 @@ export function getAttributes(element: Element): object {
  */
 export function setStyle(element: ElementCSSInlineStyle, style: Partial<CSSStyleDeclaration>): void {
 	for (const key in style)
-		element.style[key] = style[key]!;
+		element.style[key] = style[key] ?? "";
 }
 
 function __getRawTable(table: HTMLTableElement | HTMLTableSectionElement): HTMLTableCellElement[][] {

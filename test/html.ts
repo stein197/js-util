@@ -520,4 +520,27 @@ describe("html.getAttributes()", () => {
 	});
 });
 
-describe.skip("html.setStyle()", () => {});
+describe("html.setStyle()", () => {
+	const dom = new jsdom.JSDOM();
+	it("Should set styles", () => {
+		const elt = dom.window.document.createElement("elt");
+		html.setStyle(elt, {
+			color: "red",
+			position: "absolute"
+		});
+		const style = dom.window.getComputedStyle(elt);
+		assert.deepStrictEqual(style.color, "red");
+		assert.deepStrictEqual(style.position, "absolute");
+	});
+	it("Should unset styles with null values", () => {
+		const elt = dom.window.document.createElement("elt");
+		elt.style.color = "red";
+		html.setStyle(elt, {
+			color: undefined,
+			position: "absolute"
+		});
+		const style = dom.window.getComputedStyle(elt);
+		assert.deepStrictEqual(style.color, "");
+		assert.deepStrictEqual(style.position, "absolute");
+	});
+});
