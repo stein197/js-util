@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && npm run test & npm run ts",
-    "clean": "rimraf --glob ./*.js ./*.d.ts ./*.map",
-    "test": "ts-mocha test\\*.ts",
+    "clean": "tsc --build --clean",
+    "test": "ts-mocha test/*.ts",
     "ts": "tsc",
     "ts:check": "tsc --noEmit",
     "prepublishOnly": "npm run build"
