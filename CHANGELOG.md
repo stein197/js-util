@@ -2,6 +2,21 @@
 
 ## [Unreleased]
 
+## [2.3.0](../../compare/2.2.0..2.3.0) - 2023-08-16
+### Added
+- Functions:
+	- `object.get()`
+	- `object.set()`
+	- `object.unset()`
+	- `object.has()`
+	- `html.getAttributes()`
+	- `html.setAttributes()`
+	- `html.setStyle()`
+
+### Changed
+- Updated typescript package from 4.8.4 to 5.1.6
+- Refactored `object.equal()`
+
 ## [2.2.0](../../compare/2.1.0..2.2.0) - 2023-07-19
 ### Added
 - `html.is()` function
