@@ -1,7 +1,9 @@
+export = PromiseState;
+
 /**
  * Enum that denotes statest that promises can have.
  */
-export enum PromiseState {
+enum PromiseState {
 
 	/**
 	 * Promise is pending.
@@ -18,5 +20,3 @@ export enum PromiseState {
 	 */
 	Fulfilled
 }
-
-export default PromiseState;
