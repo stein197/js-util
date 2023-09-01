@@ -386,3 +386,6 @@ describe("util.memoize()", () => {
 		});
 	});
 });
+
+// TODO
+describe.skip("util.except()", () => {});
