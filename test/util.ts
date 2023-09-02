@@ -387,5 +387,95 @@ describe("util.memoize()", () => {
 	});
 });
 
-// TODO
-describe.skip("util.except()", () => {});
+describe("util.except()", () => {
+	describe("except(...)", () => {
+		it("The function passed to except() should always be called", () => {
+			const f = util.track(() => {});
+			util.except(f);
+			assert.equal(f.data.length, 1);
+		});
+		it("Should happen nothing when the callback in except() throws an error", () => {
+			assert.doesNotThrow(() => util.except(() => {
+				throw new Error()
+			}));
+		});
+	});
+	describe("except(...).catch(...)", () => {
+		it("catch() should be called when an error is thrown in except()", () => {
+			const f = util.track(() => {});
+			util.except(() => {
+				throw new Error();
+			}).catch(f);
+			assert.equal(f.data.length, 1);
+		});
+		it("catch() should not be called when there weren't any errors in except()", () => {
+			const f = util.track(() => {});
+			util.except(() => {}).catch(f);
+			assert.equal(f.data.length, 0);
+		});
+		it("catch() should accept the error object thrown in except()", () => {
+			const f = util.track(() => {});
+			util.except(() => {
+				throw "error";
+			}).catch(f);
+			assert.equal(f.data[0][0], "error");
+		});
+		it("The next catch() should be called when an error is thrown in the previous catch()", () => {
+			const f = util.track(() => {});
+			util.except(() => {
+				throw new Error();
+			}).catch(() => {
+				throw "error";
+			}).catch(f);
+			assert.equal(f.data.length, 1);
+		});
+		it("The next catch() should not be called when there weren't any errors in the previous catch()", () => {
+			const f = util.track(() => {});
+			util.except(() => {
+				throw new Error();
+			}).catch(() => {}).catch(f);
+			assert.equal(f.data.length, 0);
+		});
+		it("The next catch() should accept the error object thrown in the previous catch()", () => {
+			const f = util.track(() => {});
+			util.except(() => {
+				throw new Error();
+			}).catch(() => {
+				throw "error";
+			}).catch(f);
+			assert.equal(f.data[0][0], "error");
+		});
+	});
+	describe("except(...).finally(...)", () => {
+		it("finally() should be called when an error is thrown in except()", () => {
+			const f = util.track(() => {});
+			util.except(() => {
+				throw "error";
+			}).finally(f);
+			assert.equal(f.data.length, 1);
+		});
+		it("finally() should be called when there weren't any errors in except()", () => {
+			const f = util.track(() => {});
+			util.except(() => {}).finally(f);
+			assert.equal(f.data.length, 1);
+		});
+	});
+	describe("except(...).catch(...).finally(...)", () => {
+		it("All callbacks should be called when an error is thrown in except()", () => {
+			const f1 = util.track(() => {});
+			const f2 = util.track(() => {});
+			util.except(() => {
+				throw "error";
+			}).catch(f1).finally(f2);
+			assert.equal(f1.data.length, 1);
+			assert.equal(f2.data.length, 1);
+		});
+		it("Only except() and finally() should be called when there weren't any errors in except()", () => {
+			const f1 = util.track(() => {});
+			const f2 = util.track(() => {});
+			util.except(() => {}).catch(f1).finally(f2);
+			assert.equal(f1.data.length, 0);
+			assert.equal(f2.data.length, 1);
+		});
+	});
+});
