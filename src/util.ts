@@ -151,6 +151,64 @@ export function memoize<T extends (...args: any[]) => any>(f: T, hasher?: (this:
 	} as T;
 }
 
+/**
+ * Wrapper around `try...catch` block that allows chaining of `catch` blocks.
+ * @param f Function to be called.
+ * @example
+ * The classic way to handle multiple exceptions
+ * ```ts
+ * try {
+ * 	func1();
+ * } catch (1) {
+ * 	try {
+ * 		func2();
+ * 	} catch (e2) {
+ * 		func3();
+ * 	}
+ * } finally {
+ * 	func4();
+ * }
+ * ```
+ * @example
+ * The same example but with {@link except} function instead
+ * ```ts
+ * except(() => {
+ * 	func1();
+ * }).catch(() => {
+ * 	func2();
+ * }).catch(() => {
+ * 	func3();
+ * }).finally(() => {
+ * 	func4();
+ * });
+ * ```
+ */
+export function except(f: () => void): Except {
+	let error: any = null;
+	const obj = {
+		catch(f: (e: any) => void) {
+			if (error != null)
+				try {
+					f(error);
+					error = null;
+				} catch (e) {
+					error = e;
+				}
+			return this;
+		},
+		finally(f: () => void) {
+			f();
+			error = null;
+		}
+	};
+	try {
+		f();
+	} catch (e) {
+		error = e;
+	}
+	return obj;
+}
+
 type Rect = {
 	x: number;
 	y: number;
@@ -171,4 +229,20 @@ type Tracker<T extends (this: any, ...args: any[]) => any> = {
 	 * Holds all tracked data with arguments and returned results.
 	 */
 	readonly data: [Parameters<T>, ReturnType<T>][];
+}
+
+type Except = {
+
+	/**
+	 * Run a function if the previous call to {@link except} or {@link Except.catch} threw an error.
+	 * @param f Function to call.
+	 * @returns This object.
+	 */
+	catch<T = any>(f: (error: T) => void): Except;
+
+	/**
+	 * Run a function after all previous operations.
+	 * @param f Function to run.
+	 */
+	finally(f: () => void): void;
 }
