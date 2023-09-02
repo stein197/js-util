@@ -8,17 +8,16 @@ export = PendingPromise;
  * ```ts
  * const pd = new PendingPromise(() => console.log("Callback"));
  * > "Callback"
- * pd.promise.then(value => console.log("Resolved")).catch(value => console.log("Rejected"));
+ * pd.then(value => console.log("Resolved")).catch(value => console.log("Rejected"));
  * pd.resolve(true);
  * > "Resolved"
  * ```
  */
-class PendingPromise<T, U> {
+class PendingPromise<T, U> implements Promise<T> {
 
-	/**
-	 * Created promise.
-	 */
-	public readonly promise: Promise<T>;
+	public readonly [Symbol.toStringTag]: string = "PendingPromise";
+
+	private readonly promise: Promise<T>;
 	private __resolve?: (value: T) => void;
 	private __reject?: (value: U) => void;
 	private __ran: boolean = false;
@@ -69,6 +68,18 @@ class PendingPromise<T, U> {
 		this.__reject(value);
 		this.__deleteCallbacks();
 		this.__state = PromiseState.Rejected;
+	}
+
+	public then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2> {
+		return this.promise.then(onfulfilled, onrejected);
+	}
+
+	public catch<TResult = never>(onrejected?: ((reason: any) => (PromiseLike<TResult> | TResult)) | undefined | null): Promise<T | TResult> {
+		return this.promise.catch(onrejected);
+	}
+
+	public finally(onfinally?: (() => void) | undefined | null): Promise<T> {
+		return this.promise.finally(onfinally);
 	}
 
 	/**

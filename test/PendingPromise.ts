@@ -41,7 +41,7 @@ describe("PendingPromise", () => {
 			assert.equal(p.state, PromiseState.Pending);
 			timeout(100).then(() => assert.equal(p.state, PromiseState.Pending));
 			timeout(200).then(() => p.resolve("fulfilled"));
-			p.promise.then(result => {
+			p.then(result => {
 				assert.equal(result, "fulfilled");
 				assert.equal(p.state, PromiseState.Fulfilled);
 				done();
@@ -54,7 +54,7 @@ describe("PendingPromise", () => {
 			assert.equal(p.state, PromiseState.Pending);
 			timeout(100).then(() => assert.equal(p.state, PromiseState.Pending));
 			timeout(200).then(() => p.reject("rejected"));
-			p.promise.catch(result => {
+			p.catch(result => {
 				assert.equal(result, "rejected");
 				assert.equal(p.state, PromiseState.Rejected);
 				done();
