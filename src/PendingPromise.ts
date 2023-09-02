@@ -72,7 +72,7 @@ class PendingPromise<T, U> {
 	}
 
 	/**
-	 * Run the passed callback if the wrapper was created with `immediate` set to `false`.
+	 * Run the passed callback if the wrapper was created with `immediate` set to `false`. Subsequent calls do nothing.
 	 */
 	public run(): void {
 		if (this.__ran)

@@ -1,7 +1,7 @@
 export = PromiseState;
 
 /**
- * Enum that denotes statest that promises can have.
+ * Enum that denotes statess that promises can have.
  */
 enum PromiseState {
 
