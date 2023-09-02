@@ -4,32 +4,29 @@ import PromiseState = require("../src/PromiseState");
 import {track} from "../src/util";
 
 describe("PendingPromise", () => {
+	let f: ReturnType<typeof util.track>;
+	beforeEach(() => f = track(() => {}));
 	describe("new PendingPromise", () => {
 		it("The callback should be called when immediate is true", () => {
-			const f = track(() => {});
 			const p = new PendingPromise(f, true);
 			assert.equal(f.data.length, 1);
 		});
 		it("The callback should not be called when immediate is false", () => {
-			const f = track(() => {});
 			const p = new PendingPromise(f, false);
 			assert.equal(f.data.length, 0);
 		});
 	});
 	describe("PendingPromise.state", () => {
 		it("Should be pending right after instantiating", () => {
-			const f = track(() => {});
 			const p = new PendingPromise(f);
 			assert.equal(p.state, PromiseState.Pending);
 		});
 		it("Should be fulfilled right after calling resolve()", () => {
-			const f = track(() => {});
 			const p = new PendingPromise<void, void>(f);
 			p.resolve();
 			assert.equal(p.state, PromiseState.Fulfilled);
 		});
 		it("Should be rejected right after calling reject()", () => {
-			const f = track(() => {});
 			const p = new PendingPromise<void, void>(f);
 			p.reject();
 			assert.equal(p.state, PromiseState.Rejected);
@@ -63,21 +60,18 @@ describe("PendingPromise", () => {
 	});
 	describe("PendingPromise.run()", () => {
 		it("Should run the passed callback when the immediate flag is false", () => {
-			const f = track(() => {});
 			const p = new PendingPromise(f, false);
 			assert.equal(f.data.length, 0);
 			p.run();
 			assert.equal(f.data.length, 1);
 		});
 		it("Shouldn't run the passed callback when the immediate flag is true", () => {
-			const f = track(() => {});
 			const p = new PendingPromise(f, true);
 			assert.equal(f.data.length, 1);
 			p.run();
 			assert.equal(f.data.length, 1);
 		});
 		it("Shouldn't run the passed callback twice", () => {
-			const f = track(() => {});
 			const p = new PendingPromise(f, false);
 			assert.equal(f.data.length, 0);
 			p.run();
