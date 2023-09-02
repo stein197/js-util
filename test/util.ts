@@ -388,9 +388,10 @@ describe("util.memoize()", () => {
 });
 
 describe("util.except()", () => {
+	let f: ReturnType<typeof util.track>;
+	beforeEach(() => f = util.track(() => {}));
 	describe("except(...)", () => {
 		it("The function passed to except() should always be called", () => {
-			const f = util.track(() => {});
 			util.except(f);
 			assert.equal(f.data.length, 1);
 		});
@@ -402,26 +403,22 @@ describe("util.except()", () => {
 	});
 	describe("except(...).catch(...)", () => {
 		it("catch() should be called when an error is thrown in except()", () => {
-			const f = util.track(() => {});
 			util.except(() => {
 				throw new Error();
 			}).catch(f);
 			assert.equal(f.data.length, 1);
 		});
 		it("catch() should not be called when there weren't any errors in except()", () => {
-			const f = util.track(() => {});
 			util.except(() => {}).catch(f);
 			assert.equal(f.data.length, 0);
 		});
 		it("catch() should accept the error object thrown in except()", () => {
-			const f = util.track(() => {});
 			util.except(() => {
 				throw "error";
 			}).catch(f);
 			assert.equal(f.data[0][0], "error");
 		});
 		it("The next catch() should be called when an error is thrown in the previous catch()", () => {
-			const f = util.track(() => {});
 			util.except(() => {
 				throw new Error();
 			}).catch(() => {
@@ -430,14 +427,12 @@ describe("util.except()", () => {
 			assert.equal(f.data.length, 1);
 		});
 		it("The next catch() should not be called when there weren't any errors in the previous catch()", () => {
-			const f = util.track(() => {});
 			util.except(() => {
 				throw new Error();
 			}).catch(() => {}).catch(f);
 			assert.equal(f.data.length, 0);
 		});
 		it("The next catch() should accept the error object thrown in the previous catch()", () => {
-			const f = util.track(() => {});
 			util.except(() => {
 				throw new Error();
 			}).catch(() => {
@@ -448,14 +443,12 @@ describe("util.except()", () => {
 	});
 	describe("except(...).finally(...)", () => {
 		it("finally() should be called when an error is thrown in except()", () => {
-			const f = util.track(() => {});
 			util.except(() => {
 				throw "error";
 			}).finally(f);
 			assert.equal(f.data.length, 1);
 		});
 		it("finally() should be called when there weren't any errors in except()", () => {
-			const f = util.track(() => {});
 			util.except(() => {}).finally(f);
 			assert.equal(f.data.length, 1);
 		});
