@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+## [2.4.0](../../compare/2.3.0..2.4.0) - 2023-09-02
+### Added
+- Classes:
+	- `PendingPromise`
+- Functions:
+	- `util.except()`
+
+## Changed
+- `PromiseState` is exported in a CommonJS way
+
 ## [2.3.0](../../compare/2.2.0..2.3.0) - 2023-08-16
 ### Added
 - Functions:

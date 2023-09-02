@@ -1,10 +1,10 @@
 {
   "name": "@stein197/util",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Handy JavaScript utilities",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && npm run test & npm run ts",
+    "build": "npm run clean && npm run test && npm run ts",
     "clean": "tsc --build --clean",
     "test": "ts-mocha test/*.ts",
     "ts": "tsc",

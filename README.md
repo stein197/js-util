@@ -18,12 +18,13 @@ const moduleName = require("@stein197/util/moduleName");
 - `array`
 - `char`
 - `KeyboardCode`
-- `PromiseState`
 - `file`
 - `html`
 - `json`
 - `mime`
 - `object`
+- `PendingPromise`
+- `PromiseState`
 - `semver`
 - `string`
 - `time`
