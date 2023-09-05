@@ -186,3 +186,50 @@ describe("array.set()", () => {
 		assert.equal(a[3], "d");
 	});
 });
+
+describe("array.shift()", () => {
+	it("Should do nothing when the array is empty", () => {
+		const a = [];
+		array.shift(a, 0);
+		array.shift(a, -10);
+		array.shift(a, 15);
+		assert.deepStrictEqual(a, []);
+	});
+	it("Should do nothing when the array has only one element", () => {
+		const a = ["a"];
+		array.shift(a, -10);
+		assert.deepStrictEqual(a, ["a"]);
+		array.shift(a, 5);
+		assert.deepStrictEqual(a, ["a"]);
+	});
+	it("Should do nothing when the offset is 0", () => {
+		const a = ["a", "b", "c", "d", "e", "f"];
+		array.shift(a, 0);
+		assert.deepStrictEqual(a, ["a", "b", "c", "d", "e", "f"]);
+	});
+	it("Should do nothing when the offset is equal to the array length", () => {
+		const a = ["a", "b", "c", "d", "e", "f"];
+		array.shift(a, 6);
+		assert.deepStrictEqual(a, ["a", "b", "c", "d", "e", "f"]);
+		array.shift(a, -6);
+		assert.deepStrictEqual(a, ["a", "b", "c", "d", "e", "f"]);
+	});
+	it("Should do nothing when the offset is multiple of the array length", () => {
+		const a = ["a", "b", "c", "d", "e", "f"];
+		array.shift(a, 12);
+		assert.deepStrictEqual(a, ["a", "b", "c", "d", "e", "f"]);
+		array.shift(a, -12);
+		assert.deepStrictEqual(a, ["a", "b", "c", "d", "e", "f"]);
+	});
+	it("Should correctly shift the array", () => {
+		const a = ["a", "b", "c", "d", "e", "f"];
+		array.shift(a, 2);
+		assert.deepStrictEqual(a, ["e", "f", "a", "b", "c", "d"]);
+		array.shift(a, -1);
+		assert.deepStrictEqual(a, ["f", "a", "b", "c", "d", "e"]);
+		array.shift(a, 7);
+		assert.deepStrictEqual(a, ["e", "f", "a", "b", "c", "d"]);
+		array.shift(a, -5);
+		assert.deepStrictEqual(a, ["d", "e", "f", "a", "b", "c"]);
+	});
+});

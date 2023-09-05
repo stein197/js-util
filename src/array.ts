@@ -160,6 +160,24 @@ export function set<T>(array: T[], index: number, value: T): void {
 	array[__getRealIndex(array.length, index)] = value;
 }
 
+/**
+ * Shift elements inside an array to the left or to the right. Elements that shifted off the array are placed at the
+ * opposite side.
+ * @param array Array to shift.
+ * @param offset Index offset. Negative number shift the array to the left while the positive one shift to the right.
+ * @example
+ * ```ts
+ * const a = ["a", "b", "c", "d", "e", "f"];
+ * shift(a, -2);
+ * console.log(a); // ["c", "d", "e", "f", "a", "b"]
+ * shift(a, 4);
+ * console.log(a); // ["e", "f", "a", "b", "c", "d"]
+ * ```
+ */
+export function shift(array: any[], offset: number): void {
+	array.unshift(...array.splice(-(offset % array.length)));
+}
+
 function __getRealIndex(length: number, index: number): number {
 	return index >= 0 ? index : length + index;
 }
