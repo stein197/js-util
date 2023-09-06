@@ -233,3 +233,72 @@ describe("array.shift()", () => {
 		assert.deepStrictEqual(a, ["d", "e", "f", "a", "b", "c"]);
 	});
 });
+
+describe("array.orderBy()", () => {
+	let arr: {id: number; name: string; age: number}[];
+	beforeEach(() => arr = [
+		{id: 1, name: "John", age: 12},
+		{id: 2, name: "Peter", age: 12},
+		{id: 3, name: "Anna", age: 8},
+		{id: 4, name: "Anna", age: 32}
+	]);
+	describe("array.orderBy(array, key, order)", () => {
+		it("Should do nothing when the array is empty", () => {
+			arr = [];
+			array.orderBy(arr, "age");
+			assert.deepStrictEqual(arr, []);
+		});
+		it("Should not move objects that are equal by the compared key", () => {
+			array.orderBy(arr, "age");
+			assert.deepStrictEqual(arr, [
+				{id: 3, name: "Anna", age: 8},
+				{id: 1, name: "John", age: 12},
+				{id: 2, name: "Peter", age: 12},
+				{id: 4, name: "Anna", age: 32},
+			]);
+		});
+		it("Should correctly sort array when the order is ascending", () => {
+			array.orderBy(arr, "name", "asc");
+			assert.deepStrictEqual(arr, [
+				{id: 3, name: "Anna", age: 8},
+				{id: 4, name: "Anna", age: 32},
+				{id: 1, name: "John", age: 12},
+				{id: 2, name: "Peter", age: 12}
+			]);
+		});
+		it("Should correctly sort array when the order is descending", () => {
+			array.orderBy(arr, "name", "desc");
+			assert.deepStrictEqual(arr, [
+				{id: 2, name: "Peter", age: 12},
+				{id: 1, name: "John", age: 12},
+				{id: 3, name: "Anna", age: 8},
+				{id: 4, name: "Anna", age: 32}
+			]);
+		});
+	});
+	describe("array.orderBy(array, order)", () => {
+		it("Should do nothing when the array is empty", () => {
+			arr = [];
+			array.orderBy(arr, {age: "desc", name: "asc"});
+			assert.deepStrictEqual(arr, []);
+		});
+		it("Should correctly sort array when the order is ascending", () => {
+			array.orderBy(arr, {age: "desc", name: "asc"});
+			assert.deepStrictEqual(arr, [
+				{id: 4, name: "Anna", age: 32},
+				{id: 1, name: "John", age: 12},
+				{id: 2, name: "Peter", age: 12},
+				{id: 3, name: "Anna", age: 8}
+			]);
+		});
+		it("Should correctly sort array when the order is descending", () => {
+			array.orderBy(arr, {age: "asc", name: "desc"});
+			assert.deepStrictEqual(arr, [
+				{id: 3, name: "Anna", age: 8},
+				{id: 2, name: "Peter", age: 12},
+				{id: 1, name: "John", age: 12},
+				{id: 4, name: "Anna", age: 32}
+			]);
+		});
+	});
+});

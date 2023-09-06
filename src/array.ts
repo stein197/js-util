@@ -178,6 +178,71 @@ export function shift(array: any[], offset: number): void {
 	array.unshift(...array.splice(-(offset % array.length)));
 }
 
+/**
+ * Order an array of objects by a given key.
+ * @param array Array of objects.
+ * @param key Object key to order by.
+ * @param order Direction of the order. Could be "asc" or "desc". "asc" by default.
+ * @example
+ * ```ts
+ * const arr = [
+ * 	{id: 1, name: "John", age: 12},
+ * 	{id: 2, name: "Anna", age: 32},
+ * 	{id: 3, name: "Kate", age: 15}
+ * ];
+ * orderBy(arr, "age", "desc");
+ * arr == [
+ * 	{id: 2, name: "Anna", age: 32},
+ * 	{id: 3, name: "Kate", age: 15},
+ * 	{id: 1, name: "John", age: 12}
+ * ];
+ * ```
+ */
+export function orderBy<T extends object>(array: T[], key: keyof T, order?: SortOrder): void;
+
+/**
+ * Order an array of objects by given keys.
+ * @param array Array of objects.
+ * @param order An object than maps object keys to order directions.
+ * @example
+ * ```ts
+ * const arr = [
+ * 	{id: 1, name: "John", age: 12},
+ * 	{id: 2, name: "Anna", age: 32},
+ * 	{id: 3, name: "Kate", age: 15},
+ * 	{id: 4, name: "Nick", age: 12}
+ * ];
+ * orderBy(arr, {
+ * 	age: "desc", // Sort by age at first
+ * 	name: "asc"  // Sort by name at last
+ * });
+ * arr == [
+ * 	{id: 2, name: "Anna", age: 32},
+ * 	{id: 3, name: "Kate", age: 15},
+ * 	{id: 1, name: "John", age: 12},
+ * 	{id: 4, name: "Nick", age: 12}
+ * ];
+ * ```
+ */
+export function orderBy<T extends object>(array: T[], order: {[K in keyof T]?: SortOrder}): void;
+
+export function orderBy<T extends object>(array: T[], a: any, b?: any): void {
+	const order: {[K in keyof T]?: SortOrder} = typeof a === "string" ? {[a]: b ?? "asc"} : a;
+	array.sort((a, b) => {
+		for (const k in order) {
+			const dir = order[k];
+			switch (true) {
+				case a[k] === b[k]: continue;
+				case a[k] < b[k]: return dir === "asc" ? -1 : 1;
+				case a[k] > b[k]: return dir === "asc" ? 1 : -1;
+			}
+		}
+		return 0;
+	});
+}
+
 function __getRealIndex(length: number, index: number): number {
 	return index >= 0 ? index : length + index;
 }
+
+type SortOrder = "asc" | "desc";
