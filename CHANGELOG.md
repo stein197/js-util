@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [2.5.0](../../compare/2.4.0..2.5.0) - 2023-09-09
+### Added
+- Functions:
+	- `array.shift()`
+	- `array.orderBy()`
+
 ## [2.4.0](../../compare/2.3.0..2.4.0) - 2023-09-02
 ### Added
 - Classes:
