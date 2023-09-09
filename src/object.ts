@@ -18,18 +18,18 @@ import * as util from "./util";
  * merge([{a: 1}], [{a: 1}, {b: 2}], "unique"); // [{a: 1}, {b: 2}]
  * ```
  */
-export function merge<T extends object, U extends object>(a: T, b: U, arrays: "merge" | "append" | "unique" = "merge"): T & U {
+export function merge<T1 extends object, T2 extends object>(a: T1, b: T2, arrays: "merge" | "append" | "unique" = "merge"): T1 & T2 {
 	const isArray = Array.isArray(a) && Array.isArray(b);
 	if (isArray && arrays === "append")
 		return [
 			...clone(a),
 			...clone(b)
-		] as T & U;
+		] as T1 & T2;
 	if (isArray && arrays === "unique")
 		return array.unique([
 			...clone(a),
 			...clone(b)
-		], true) as T & U;
+		], true) as T1 & T2;
 	const result = Array.isArray(a) && Array.isArray(b) ? [] : {};
 	const keyArray = array.unique([...Object.keys(a), ...Object.keys(b)]);
 	for (const key of keyArray) {
@@ -45,7 +45,7 @@ export function merge<T extends object, U extends object>(a: T, b: U, arrays: "m
 			result[key] = merge(aValue, bValue, arrays);
 		}
 	}
-	return result as T & U;
+	return result as T1 & T2;
 }
 
 /**
