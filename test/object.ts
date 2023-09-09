@@ -11,45 +11,45 @@ const complexObjectCopy = {a: 1, b: {c: [1, 2, 3]}};
 const diffComplexObject = {a: 1, b: {c: [1, 3]}};
 const partComplexObject = {b: {c: []}};
 
-describe("object.deepMerge()", () => {
+describe("object.merge()", () => {
 	it("Should return empty object when both objects are empty", () => {
-		assert.deepStrictEqual(object.deepMerge({}, {}), {});
+		assert.deepStrictEqual(object.merge({}, {}), {});
 	});
 	it("Should return the first object when the latter one is empty", () => {
-		assert.deepStrictEqual(object.deepMerge({a: 1, b: 2, c: 3}, {}), {a: 1, b: 2, c: 3});
+		assert.deepStrictEqual(object.merge({a: 1, b: 2, c: 3}, {}), {a: 1, b: 2, c: 3});
 	});
 	it("Should return the second object when the first one is empty", () => {
-		assert.deepStrictEqual(object.deepMerge({}, {a: 1, b: 2, c: 3}), {a: 1, b: 2, c: 3});
+		assert.deepStrictEqual(object.merge({}, {a: 1, b: 2, c: 3}), {a: 1, b: 2, c: 3});
 	});
 	it("Should replace values in the first object with the values of the second object", () => {
-		assert.deepStrictEqual(object.deepMerge({a: 1, b: 2}, {b: "2", c: "3"}), {a: 1, b: "2", c: "3"});
+		assert.deepStrictEqual(object.merge({a: 1, b: 2}, {b: "2", c: "3"}), {a: 1, b: "2", c: "3"});
 	});
 	it("Should correctly merge nested objects", () => {
-		assert.deepStrictEqual(object.deepMerge({a: 1, b: {c: 2, d: {e: 5, f: 6}}}, {b: {d: {f: "6", g: 7}}}), {a: 1, b: {c: 2, d: {e: 5, f: "6", g: 7}}});
+		assert.deepStrictEqual(object.merge({a: 1, b: {c: 2, d: {e: 5, f: 6}}}, {b: {d: {f: "6", g: 7}}}), {a: 1, b: {c: 2, d: {e: 5, f: "6", g: 7}}});
 	});
 	it("Should return an object when one is an object and another one is an array", () => {
-		assert.deepStrictEqual(object.deepMerge({}, []), {});
+		assert.deepStrictEqual(object.merge({}, []), {});
 	});
 	it("Should keep the value of the first object when the second one does not have corresponding key", () => {
-		assert.deepStrictEqual(object.deepMerge({a: 1, b: 2}, {a: "1"}), {a: "1", b: 2});
+		assert.deepStrictEqual(object.merge({a: 1, b: 2}, {a: "1"}), {a: "1", b: 2});
 	});
 	it("Should return the value of the second object when the first one does not have corresponding key", () => {
-		assert.deepStrictEqual(object.deepMerge({a: 1}, {a: "1", b: 2}), {a: "1", b: 2});
+		assert.deepStrictEqual(object.merge({a: 1}, {a: "1", b: 2}), {a: "1", b: 2});
 	});
 	it("Should correctly merge arrays", () => {
-		assert.deepStrictEqual(object.deepMerge(["a", "b", "c"], [, "a", "b", "c"]), ["a", "a", "b", "c"]);
+		assert.deepStrictEqual(object.merge(["a", "b", "c"], [, "a", "b", "c"]), ["a", "a", "b", "c"]);
 	});
 	it("Should correctly merge object and array", () => {
-		assert.deepStrictEqual(object.deepMerge(["a", "b", "c"], {a: 1, b: 2, c: 3}), {0: "a", 1: "b", 2: "c", a: 1, b: 2, c: 3});
+		assert.deepStrictEqual(object.merge(["a", "b", "c"], {a: 1, b: 2, c: 3}), {0: "a", 1: "b", 2: "c", a: 1, b: 2, c: 3});
 	});
 	it("Should merge arrays by keys when \"arrays\" is \"merge\"", () => {
-		assert.deepStrictEqual(object.deepMerge([{a: 1}], [{b: 2}], "merge"), [{a: 1, b: 2}]);
+		assert.deepStrictEqual(object.merge([{a: 1}], [{b: 2}], "merge"), [{a: 1, b: 2}]);
 	});
 	it("Should append elements of the second array when \"arrays\" is \"append\"", () => {
-		assert.deepStrictEqual(object.deepMerge([{a: 1}], [{b: 2}], "append"), [{a: 1}, {b: 2}]);
+		assert.deepStrictEqual(object.merge([{a: 1}], [{b: 2}], "append"), [{a: 1}, {b: 2}]);
 	});
 	it("Should filter out unique elements in array when \"arrays\" is \"uniqie\"", () => {
-		assert.deepStrictEqual(object.deepMerge([{a: 1}, {b: 2}], [{b: 2}, {c: 3}], "unique"), [{a: 1}, {b: 2}, {c: 3}]);
+		assert.deepStrictEqual(object.merge([{a: 1}, {b: 2}], [{b: 2}, {c: 3}], "unique"), [{a: 1}, {b: 2}, {c: 3}]);
 	});
 });
 

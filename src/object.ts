@@ -13,12 +13,12 @@ import * as util from "./util";
  *               - "unique" - The same as the previous one but removes duplicates.
  * @example
  * ```ts
- * deepMerge({a: 1}, {b: {c: 3}}); // {a: 1, b: {c: 3}}
- * deepMerge({a: 1, b: {c: 3}}, {b: {c: {d: 4}}}); // {a: 1, b: {c: {d: 4}}}
- * deepMerge([{a: 1}], [{a: 1}, {b: 2}], "unique"); // [{a: 1}, {b: 2}]
+ * merge({a: 1}, {b: {c: 3}}); // {a: 1, b: {c: 3}}
+ * merge({a: 1, b: {c: 3}}, {b: {c: {d: 4}}}); // {a: 1, b: {c: {d: 4}}}
+ * merge([{a: 1}], [{a: 1}, {b: 2}], "unique"); // [{a: 1}, {b: 2}]
  * ```
  */
-export function deepMerge<T extends object, U extends object>(a: T, b: U, arrays: "merge" | "append" | "unique" = "merge"): T & U {
+export function merge<T extends object, U extends object>(a: T, b: U, arrays: "merge" | "append" | "unique" = "merge"): T & U {
 	const isArray = Array.isArray(a) && Array.isArray(b);
 	if (isArray && arrays === "append")
 		return [
@@ -42,7 +42,7 @@ export function deepMerge<T extends object, U extends object>(a: T, b: U, arrays
 		} else if (!aKeyExists || util.isPrimitive(aValue) || util.isPrimitive(bValue)) {
 			result[key] = clone(bValue);
 		} else {
-			result[key] = deepMerge(aValue, bValue, arrays);
+			result[key] = merge(aValue, bValue, arrays);
 		}
 	}
 	return result as T & U;
