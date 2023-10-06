@@ -160,7 +160,7 @@ export function isPlain(obj: any): boolean {
  * get({a: {b: 2}}, "a.b"); // 2
  * ```
  */
-export function get<T = any>(object: object, path: string): T | undefined {
+export function get<T = any>(object: object, path: string | string[]): T | undefined {
 	return getInfoByPath(object, path)[1];
 }
 
@@ -179,7 +179,7 @@ export function get<T = any>(object: object, path: string): T | undefined {
  * set({}, "a.b", 2); // {a: {b: 2}}
  * ```
  */
-export function set(object: object, path: string, value: any): object {
+export function set(object: object, path: string | string[], value: any): object {
 	return setInfoByPath(object, path, [true, value]);
 }
 
@@ -197,7 +197,7 @@ export function set(object: object, path: string, value: any): object {
  * unset({a: {b: 2}}, "a.b"); // {a: {}}
  * ```
  */
-export function unset(object: object, path: string): object {
+export function unset(object: object, path: string | string[]): object {
 	return setInfoByPath(object, path, [false]);
 }
 
@@ -215,7 +215,7 @@ export function unset(object: object, path: string): object {
  * has({a: {b: true}}, "a.b"); // true
  * ```
  */
-export function has(object: object, path: string): boolean {
+export function has(object: object, path: string | string[]): boolean {
 	return getInfoByPath(object, path)[0];
 }
 
@@ -227,11 +227,11 @@ function applyRecursive(f: (o: any) => void, object: any): void {
 	f(object);
 }
 
-function parsePath(path: string): string[] {
-	return path.split(/(?<!\\)\./).map(part => part.replace("\\.", "."));
+function parsePath(path: string | string[]): string[] {
+	return typeof path === "string" ? path.split(/(?<!\\)\./).map(part => part.replace("\\.", ".")) : path;
 }
 
-function getInfoByPath(object: object, path: string): [exists: boolean, value: any] {
+function getInfoByPath(object: object, path: string | string[]): [exists: boolean, value: any] {
 	const parts = parsePath(path);
 	let curObj = object;
 	for (const part of parts)
@@ -242,7 +242,7 @@ function getInfoByPath(object: object, path: string): [exists: boolean, value: a
 	return [true, curObj];
 }
 
-function setInfoByPath(object: object, path: string, info: [exists: boolean, value?: any]): object {
+function setInfoByPath(object: object, path: string | string[], info: [exists: boolean, value?: any]): object {
 	const parts = parsePath(path);
 	const lastPart = parts.pop()!;
 	const [exists, value] = info;

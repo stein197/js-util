@@ -249,25 +249,31 @@ describe("object.get()", () => {
 	describe("Simple path", () => {
 		it("Should return undefined when the property doesn't exist", () => {
 			assert.equal(object.get({}, "a"), undefined);
+			assert.equal(object.get({}, ["a"]), undefined);
 		});
 		it("Should return a value when the property doesn't exist", () => {
 			assert.equal(object.get({a: 1}, "a"), 1);
+			assert.equal(object.get({a: 1}, ["a"]), 1);
 		});
 	});
 	describe("Complex path", () => {
 		it("Should return undefined when the property doesn't exist", () => {
 			assert.equal(object.get({a: {b: 2}}, "a.c"), undefined);
+			assert.equal(object.get({a: {b: 2}}, ["a", "c"]), undefined);
 		});
 		it("Should return a value when the property exists", () => {
 			assert.equal(object.get({a: {b: 2}}, "a.b"), 2);
+			assert.equal(object.get({a: {b: 2}}, ["a", "b"]), 2);
 		});
 	});
 	describe("Path contains escaped dot", () => {
 		it("Should return undefined when the property doesn't exist", () => {
 			assert.equal(object.get({"a.c": 1}, "a\\.b"), undefined);
+			assert.equal(object.get({"a.c": 1}, ["a.b"]), undefined);
 		});
 		it("Should return a value when the property exists", () => {
 			assert.equal(object.get({"a.b": 1}, "a\\.b"), 1);
+			assert.equal(object.get({"a.b": 1}, ["a.b"]), 1);
 		});
 	});
 });
@@ -283,12 +289,15 @@ describe("object.set()", () => {
 	});
 	it("Should set a property when the path is simple", () => {
 		assert.deepStrictEqual(object.set({}, "a", 1), {a: 1});
+		assert.deepStrictEqual(object.set({}, ["a"], 1), {a: 1});
 	});
 	it("Should set a property when the path is complex", () => {
 		assert.deepStrictEqual(object.set({}, "a.b", 2), {a: {b: 2}});
+		assert.deepStrictEqual(object.set({}, ["a", "b"], 2), {a: {b: 2}});
 	});
 	it("Should set a property when the path contains escaped dots", () => {
 		assert.deepStrictEqual(object.set({}, "a\\.b", 12), {"a.b": 12});
+		assert.deepStrictEqual(object.set({}, ["a.b"], 12), {"a.b": 12});
 	});
 });
 
@@ -309,25 +318,31 @@ describe("object.unset()", () => {
 	describe("Simple path", () => {
 		it("Should do nothing when the property doesn't exist", () => {
 			assert.deepStrictEqual(object.unset({a: 1, b: 2}, "c"), {a: 1, b: 2});
+			assert.deepStrictEqual(object.unset({a: 1, b: 2}, ["c"]), {a: 1, b: 2});
 		});
 		it("Should delete a property when the property exists", () => {
 			assert.deepStrictEqual(object.unset({a: 1, b: 2}, "a"), {b: 2});
+			assert.deepStrictEqual(object.unset({a: 1, b: 2}, ["a"]), {b: 2});
 		});
 	});
 	describe("Complex path", () => {
 		it("Should do nothing when the property doesn't exist", () => {
 			assert.deepStrictEqual(object.unset({a: {b: 2}}, "a.c"), {a: {b: 2}});
+			assert.deepStrictEqual(object.unset({a: {b: 2}}, ["a", "c"]), {a: {b: 2}});
 		});
 		it("Should delete a property when the property exists", () => {
 			assert.deepStrictEqual(object.unset({a: {b: 2}}, "a.b"), {a: {}});
+			assert.deepStrictEqual(object.unset({a: {b: 2}}, ["a", "b"]), {a: {}});
 		});
 	});
 	describe("Path contains escaped dot", () => {
 		it("Should do nothing when the property doesn't exist", () => {
 			assert.deepStrictEqual(object.unset({"a.b": 12}, "a\\.c"), {"a.b": 12});
+			assert.deepStrictEqual(object.unset({"a.b": 12}, ["a.c"]), {"a.b": 12});
 		});
 		it("Should delete a property when the property exists", () => {
 			assert.deepStrictEqual(object.unset({"a.b": 12}, "a\\.b"), {});
+			assert.deepStrictEqual(object.unset({"a.b": 12}, ["a.b"]), {});
 		});
 	});
 });
@@ -344,25 +359,31 @@ describe("object.has()", () => {
 	describe("Simple path", () => {
 		it("Should return false when the property doesn't exist", () => {
 			assert.equal(object.has({}, "a"), false);
+			assert.equal(object.has({}, ["a"]), false);
 		});
 		it("Should return true when the property doesn't exist", () => {
 			assert.equal(object.has({a: 1}, "a"), true);
+			assert.equal(object.has({a: 1}, ["a"]), true);
 		});
 	});
 	describe("Complex path", () => {
 		it("Should return false when the property doesn't exist", () => {
 			assert.equal(object.has({a: {b: 2}}, "a.c"), false);
+			assert.equal(object.has({a: {b: 2}}, ["a", "c"]), false);
 		});
 		it("Should return true when the property exists", () => {
 			assert.equal(object.has({a: {b: 2}}, "a.b"), true);
+			assert.equal(object.has({a: {b: 2}}, ["a", "b"]), true);
 		});
 	});
 	describe("Path contains escaped dot", () => {
 		it("Should return false when the property doesn't exist", () => {
 			assert.equal(object.has({"a.c": 1}, "a.b"), false);
+			assert.equal(object.has({"a.c": 1}, ["a", "b"]), false);
 		});
 		it("Should return true when the property exists", () => {
 			assert.equal(object.has({"a.b": 1}, "a\\.b"), true);
+			assert.equal(object.has({"a.b": 1}, ["a.b"]), true);
 		});
 	});
 });
