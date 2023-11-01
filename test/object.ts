@@ -388,6 +388,27 @@ describe("object.has()", () => {
 	});
 });
 
+describe("object.flip()", () => {
+	it("Should return an empty object when the object is empty", () => {
+		assert.deepStrictEqual(object.flip({}), {});
+	});
+	it("Should return correct result", () => {
+		const sym = Symbol();
+		assert.deepStrictEqual(object.flip({
+			a: 1,
+			b: "2",
+			c: sym
+		}), {1: "a", 2: "b", [sym]: "c"});
+	});
+	it("Should keep only the last key when there are keys with equal values", () => {
+		assert.deepStrictEqual(object.flip({
+			a: 1,
+			b: 2,
+			c: 1
+		}), {1: "c", 2: "b"});
+	});
+});
+
 function stub() {
 	return {
 		a: 1,

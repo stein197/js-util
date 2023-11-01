@@ -219,6 +219,19 @@ export function has(object: object, path: string | string[]): boolean {
 	return getInfoByPath(object, path)[0];
 }
 
+/**
+ * Flip keys and values.
+ * @param object Object to flip. An object should be plain (should contain only symbols, numbers or strings as keys).
+ * @returns Object with flipped keys and values.
+ * @example
+ * ```ts
+ * flip({a: 1, b: 2, c: 3}); // {1: "a", 2: "b", 3: "c"}
+ * ```
+ */
+export function flip<T extends {[K in string]: symbol | number | string}>(object: T): {[K in keyof T as T[K]]: K} {
+	return Object.fromEntries(Object.entries(object).map(([key, value]) => [value, key])) as {[K in keyof T as T[K]]: K};
+}
+
 function applyRecursive(f: (o: any) => void, object: any): void {
 	if (object == null || typeof object !== "object")
 		return;
