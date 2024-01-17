@@ -226,6 +226,7 @@ export function orderBy<T extends object>(array: T[], key: keyof T, order?: Sort
  */
 export function orderBy<T extends object>(array: T[], order: {[K in keyof T]?: SortOrder}): void;
 
+// TODO: Make orderBy<T extends object>(array: T[], order: {[K in keyof T]?: boolean | ((a: T[K], b: T[K]) => number)})
 export function orderBy<T extends object>(array: T[], a: any, b?: any): void {
 	const order: {[K in keyof T]?: SortOrder} = typeof a === "string" ? {[a]: b ?? "asc"} : a;
 	array.sort((a, b) => {
